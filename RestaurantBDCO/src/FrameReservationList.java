@@ -75,7 +75,6 @@ public class FrameReservationList extends javax.swing.JFrame {
         });
 
         jButton2.setText("Delete Reservation");
-        jButton2.setActionCommand("Delete Reservation");
         jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
