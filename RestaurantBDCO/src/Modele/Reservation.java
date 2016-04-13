@@ -2,24 +2,22 @@ package Modele;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Calendar;
+import java.util.Date;
 import java.sql.*;
 
 /** Une reservation */
-public abstract class Reservation {
+public class Reservation {
     private ArrayList<Integer> codeTable;
     private int nbPersonnes;
     private String nomClient;
     private Date jour;
-    private float heure;
     private int tel;
 
-    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date jour, float heure) {
+    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date jour) {
         this.codeTable = codeTable;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
         this.jour = jour;
-        this.heure = heure;
     }
 
     public ArrayList<Integer> getCodeTable() {
@@ -28,10 +26,6 @@ public abstract class Reservation {
 
     public int getNbPersonnes() {
         return nbPersonnes;
-    }
-
-    public float getHeure() {
-        return heure;
     }
 
     public Date getJour() {
@@ -50,10 +44,6 @@ public abstract class Reservation {
         this.codeTable = codeTable;
     }
 
-    public void setHeure(float heure) {
-        this.heure = heure;
-    }
-
     public void setJour(Date jour) {
         this.jour = jour;
     }
@@ -70,4 +60,4 @@ public abstract class Reservation {
         this.tel = tel;
     }
  
-   }
+}
