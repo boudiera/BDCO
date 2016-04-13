@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.sql.*;
 
 /** Une reservation */
-public class Reservation {
+public abstract class Reservation {
     private ArrayList<Integer> codeTable;
     private int nbPersonnes;
     private String nomClient;
