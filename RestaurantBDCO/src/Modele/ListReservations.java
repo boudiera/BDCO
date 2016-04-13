@@ -4,27 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListReservations {
-	private List<Reservation> listeRes;
-	
-	public ListReservations() {
-		this.listeRes=new ArrayList<Reservation>();
-	}
-        
-        public void addReservation(Reservation res){
-            this.listeRes.add(res);
-        }
-        
-        public void deleteReservation(Reservation res){
-            this.listeRes.remove(res);
-        }
+    private List<Reservation> ListReservations;
 
-    public List<Reservation> getListeRes() {
-        return listeRes;
+    public ListReservations() {
+        this.ListReservations=new ArrayList<>();
+        updateListReservations();
     }
 
-    public void setListeRes(List<Reservation> listeRes) {
-        this.listeRes = listeRes;
+    public void addReservation(Reservation res){
+        this.ListReservations.add(res);
     }
-           
+
+    public void deleteReservation(Reservation res){
+        this.ListReservations.remove(res);
+    }
+
+    public List<Reservation> getListReservations() {
+        return ListReservations;
+    }
+
+    public void setListReservations(List<Reservation> ListReservations) {
+        this.ListReservations = ListReservations;
+    }
+    
+    public void updateListReservations(){
+        
+        // Call factory method !!
+        // Update the current ArrayList of Reservations !!
+        
+    }
 
 }

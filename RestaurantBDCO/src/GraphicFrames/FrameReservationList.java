@@ -1,6 +1,10 @@
 package GraphicFrames;
 
 import Modele.*;
+import java.sql.*;
+import java.util.Date;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,9 +28,23 @@ public class FrameReservationList extends javax.swing.JFrame {
         
         this.ReservationList = new ListReservations();
         
-        //for(Reservation : this.ReservationList.getReservation()){
-            
-        //}        
+        ArrayList<Integer> CodesTables = new ArrayList<Integer>();
+        CodesTables.add(2); CodesTables.add(5); CodesTables.add(6); CodesTables.add(15);
+        
+        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "Nome ABC", (Date) new Date(2016, 12, 20, 15, 30)));
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Date");
+        model.addColumn("Name");
+        model.addColumn("Phone");
+        model.addColumn("# People");
+        model.addColumn("Table(s)");
+        
+        this.ReservationsTable.setModel(model);
+        
+        for(Reservation r : this.ReservationList.getListReservations()){
+            model.addRow(new Object[]{r.getJour().getDay()+"/"+(r.getJour().getMonth()+1)});
+        }        
     }
 
     /**
@@ -40,7 +58,7 @@ public class FrameReservationList extends javax.swing.JFrame {
 
         WindowTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ReservationsList = new javax.swing.JTable();
+        ReservationsTable = new javax.swing.JTable();
         OpenSelectedReservation = new javax.swing.JButton();
         DeleteSelectedReservation = new javax.swing.JButton();
         AddNewReservation = new javax.swing.JButton();
@@ -51,72 +69,17 @@ public class FrameReservationList extends javax.swing.JFrame {
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WindowTitle.setText("Reservations List");
 
-        ReservationsList.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"01/02 13:45", "Adalberto da Silva Soares", "+55 54 3519-4469",  new Integer(55), "1, 5, 8, 5, 3"},
-                {null, null, "0783676544", null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Date", "Name", "Phone", "#People", "Table(s)"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        ReservationsList.setColumnSelectionAllowed(true);
-        ReservationsList.setRowHeight(30);
-        ReservationsList.getTableHeader().setReorderingAllowed(false);
-        ReservationsList.addMouseListener(new java.awt.event.MouseAdapter() {
+        ReservationsTable.setModel(new DefaultTableModel());
+        ReservationsTable.setColumnSelectionAllowed(true);
+        ReservationsTable.setRowHeight(30);
+        ReservationsTable.getTableHeader().setReorderingAllowed(false);
+        ReservationsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ReservationsListMouseClicked(evt);
+                ReservationsTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(ReservationsList);
-        ReservationsList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (ReservationsList.getColumnModel().getColumnCount() > 0) {
-            ReservationsList.getColumnModel().getColumn(0).setPreferredWidth(50);
-            ReservationsList.getColumnModel().getColumn(1).setPreferredWidth(100);
-            ReservationsList.getColumnModel().getColumn(2).setPreferredWidth(60);
-            ReservationsList.getColumnModel().getColumn(3).setPreferredWidth(10);
-            ReservationsList.getColumnModel().getColumn(4).setPreferredWidth(50);
-        }
+        jScrollPane1.setViewportView(ReservationsTable);
+        ReservationsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         OpenSelectedReservation.setText("Open Selected Reservation");
         OpenSelectedReservation.setActionCommand("Open Reservation #??");
@@ -189,9 +152,9 @@ public class FrameReservationList extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
-    private void ReservationsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsListMouseClicked
+    private void ReservationsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMouseClicked
         //this.ReservationsList.getValueAt(this.ReservationsList.getSelectedRow(), )
-    }//GEN-LAST:event_ReservationsListMouseClicked
+    }//GEN-LAST:event_ReservationsTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -232,7 +195,7 @@ public class FrameReservationList extends javax.swing.JFrame {
     private javax.swing.JButton AddNewReservation;
     private javax.swing.JButton DeleteSelectedReservation;
     private javax.swing.JButton OpenSelectedReservation;
-    private javax.swing.JTable ReservationsList;
+    private javax.swing.JTable ReservationsTable;
     private javax.swing.JLabel WindowTitle;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
