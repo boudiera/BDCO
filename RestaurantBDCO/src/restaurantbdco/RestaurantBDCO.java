@@ -5,6 +5,8 @@
  */
 package restaurantbdco;
 
+import GraphicFrames.*;
+
 /**
  *
  * @author trentini
@@ -16,6 +18,8 @@ public class RestaurantBDCO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        FrameReservationList.main(null);
     }
     
 }
