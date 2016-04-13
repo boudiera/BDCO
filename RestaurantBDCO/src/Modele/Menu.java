@@ -10,5 +10,14 @@ public class Menu extends Article {
 		super(name, TypeArticle.Menu, price, speciality);
                 list = new ArrayList<UniqueArticle>();
 	}
+
+    public List<UniqueArticle> getList() {
+        return list;
+    }
+
+    public void setList(List<UniqueArticle> list) {
+        this.list = list;
+    }
+       
 	
 }

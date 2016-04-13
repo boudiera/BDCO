@@ -18,4 +18,13 @@ public class ListReservations {
             this.listeRes.remove(res);
         }
 
+    public List<Reservation> getListeRes() {
+        return listeRes;
+    }
+
+    public void setListeRes(List<Reservation> listeRes) {
+        this.listeRes = listeRes;
+    }
+           
+
 }
