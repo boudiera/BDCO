@@ -11,13 +11,16 @@ public class Reservation {
     private int nbPersonnes;
     private String nomClient;
     private Date jour;
-    private int tel;
+    private String tel;
+    private Service service;
 
-    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date jour) {
+    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, String tel, Date jour, Service service) {
         this.codeTable = codeTable;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
         this.jour = jour;
+        this.tel=tel;
+        this.service=service;
     }
 
     public ArrayList<Integer> getCodeTable() {
@@ -36,7 +39,7 @@ public class Reservation {
         return nomClient;
     }
 
-    public int getTel() {
+    public String getTel() {
         return tel;
     }
 
@@ -56,7 +59,7 @@ public class Reservation {
         this.nomClient = nomClient;
     }
 
-    public void setTel(int tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
  
