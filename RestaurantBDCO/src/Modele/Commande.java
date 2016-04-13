@@ -1,13 +1,14 @@
 package Modele;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Command {
+public class Commande {
 	private float price;
 	private final List<Article> listArticles;
         
-        public Command(List<Article> list){
+        public Commande(List<Article> list){
             this.price=0;
             this.listArticles=list;
             for(Article art : this.listArticles){
