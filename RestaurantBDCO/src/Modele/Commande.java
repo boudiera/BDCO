@@ -19,4 +19,13 @@ public class Commande {
         public float getPrice(){
             return this.price;
         }
+
+    public List<Article> getListArticles() {
+        return listArticles;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+     
 }

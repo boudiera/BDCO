@@ -26,4 +26,5 @@ public class Carte {
     public List<List<Article>> getCarte(){
         return this.tablist;
     }
+ 
 }

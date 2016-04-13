@@ -19,7 +19,9 @@ public class RestaurantBDCO {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        FrameReservationList.main(null);
+        GraphicController GC = new GraphicController();
+        GC.start();
+        
     }
     
 }

@@ -20,4 +20,18 @@ public abstract class Article {
         public TypeArticle getType(){
             return this.type;
         }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setType(TypeArticle type) {
+        this.type = type;
+    }
+        
+       
 }
