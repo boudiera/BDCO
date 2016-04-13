@@ -6,20 +6,21 @@ import java.util.Calendar;
 import java.sql.*;
 
 /** Une reservation */
-public abstract class Reservation {
+public class Reservation {
     private ArrayList<Integer> codeTable;
     private int nbPersonnes;
     private String nomClient;
     private Date jour;
-    private float heure;
-    private int tel;
+    private int heure;
+    private String tel;
 
-    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date jour, float heure) {
+    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date jour, int heure, String tel) {
         this.codeTable = codeTable;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
         this.jour = jour;
         this.heure = heure;
+        this.tel=tel;
     }
 
     public ArrayList<Integer> getCodeTable() {
@@ -30,7 +31,7 @@ public abstract class Reservation {
         return nbPersonnes;
     }
 
-    public float getHeure() {
+    public int getHeure() {
         return heure;
     }
 
@@ -42,7 +43,7 @@ public abstract class Reservation {
         return nomClient;
     }
 
-    public int getTel() {
+    public String getTel() {
         return tel;
     }
 
@@ -50,7 +51,7 @@ public abstract class Reservation {
         this.codeTable = codeTable;
     }
 
-    public void setHeure(float heure) {
+    public void setHeure(int heure) {
         this.heure = heure;
     }
 
@@ -66,7 +67,7 @@ public abstract class Reservation {
         this.nomClient = nomClient;
     }
 
-    public void setTel(int tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
  
