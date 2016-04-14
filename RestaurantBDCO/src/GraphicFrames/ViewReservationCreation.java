@@ -14,15 +14,35 @@ import javax.swing.JOptionPane;
  *
  * @author trentini
  */
-public class FrameReservationCreation extends javax.swing.JFrame {
+public class ViewReservationCreation extends AbstractView {
 
+    private ControllerGraphic GC = null;
+    
     /**
      * Creates new form FrameReservationCreation
      */
-    public FrameReservationCreation() {
+    public ViewReservationCreation() {
         initComponents();
+        
+        this.GC = null;
+    }
+    public ViewReservationCreation(ControllerGraphic GC) {
+        initComponents();
+        
+        this.GC = GC;
     }
 
+    @Override
+    public void dispose() {
+        GC.closeFrameReservationCreation();
+        super.dispose();
+    }
+    
+    @Override
+    public void addController(Object c) {
+        this.GC = (ControllerGraphic) c;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +78,7 @@ public class FrameReservationCreation extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         createButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -376,20 +396,21 @@ public class FrameReservationCreation extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameReservationCreation().setVisible(true);
+                new ViewReservationCreation().setVisible(true);
             }
         });
     }

@@ -26,12 +26,12 @@ public class Textual_ReservationList {
          int i = 1;
          System.out.println("------------- AFFICHAGE DES RESERVATIONS ---------- \n");
          
-         for (Reservation reservation : this.listReservations.getListReservations()){
+         for (Reservation reservation : this.listReservations.getList()){
             i++;
             System.out.print("Reservation "+ i);
             System.out.print(" Nom : " + reservation.getNomClient());
             System.out.print(" Date : "+ reservation.getDate().getDay()+"/"+ reservation.getDate().getMonth()+"/"+reservation.getDate().getYear());
-            System.out.print(" Telephone : " + reservation.getTel());
+            System.out.print(" Telephone : " + reservation.getPhone());
             
             System.out.print(" Heure : " + reservation.getDate().getHours()+"h"+reservation.getDate().getMinutes());
            

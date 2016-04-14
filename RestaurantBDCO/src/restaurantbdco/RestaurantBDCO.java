@@ -19,8 +19,7 @@ public class RestaurantBDCO {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        GraphicController GC = new GraphicController();
-        GC.start();
+        RunGraphicMVC.run(args);
         
     }
     

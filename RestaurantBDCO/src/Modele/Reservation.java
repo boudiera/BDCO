@@ -8,18 +8,17 @@ public class Reservation {
     private int nbPersonnes;
     private String nomClient;
     private ReservationDate date;
-    private String tel;
+    private String phone;
     private Service service;
 
-    public Reservation(ListTables codeTable, int nbPersonnes, String nomClient, String tel, ReservationDate date, Service service) {
+    public Reservation(ListTables codeTable, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
         this.codeTable = codeTable;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
         this.date = date;
-        this.tel = tel;
+        this.phone = phone;
         this.service = service;
     }
-
 
     public ArrayList<Integer> getCodeTable() {
         return codeTable;
@@ -31,16 +30,14 @@ public class Reservation {
 
     public ReservationDate getDate() {
         return date;
-    }
-
-    
+    }    
 
     public String getNomClient() {
         return nomClient;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPhone() {
+        return phone;
     }
 
     public void setCodeTable(ListTables codeTable) {
@@ -59,8 +56,8 @@ public class Reservation {
         this.nomClient = nomClient;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setService(Service service) {
@@ -71,8 +68,4 @@ public class Reservation {
         return service;
     }
 
-    
-    
-    
-    
 }
