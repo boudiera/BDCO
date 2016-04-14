@@ -4,24 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.sql.*;
+import java.util.Calendar;
 
 /** Une reservation */
 public class Reservation {
     private ArrayList<Integer> codeTable;
     private int nbPersonnes;
     private String nomClient;
-    private Date jour;
+    private Date date;
     private String tel;
     private Service service;
 
-    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, String tel, Date jour, Service service) {
+    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date date, String tel, Service service) {
         this.codeTable = codeTable;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
-        this.jour = jour;
-        this.tel=tel;
-        this.service=service;
+        this.date = date;
+        this.tel = tel;
+        this.service = service;
     }
+
 
     public ArrayList<Integer> getCodeTable() {
         return codeTable;
@@ -31,9 +33,11 @@ public class Reservation {
         return nbPersonnes;
     }
 
-    public Date getJour() {
-        return jour;
+    public Date getDate() {
+        return date;
     }
+
+    
 
     public String getNomClient() {
         return nomClient;
@@ -47,9 +51,7 @@ public class Reservation {
         this.codeTable = codeTable;
     }
 
-    public void setJour(Date jour) {
-        this.jour = jour;
-    }
+ 
 
     public void setNbPersonnes(int nbPersonnes) {
         this.nbPersonnes = nbPersonnes;
@@ -62,5 +64,17 @@ public class Reservation {
     public void setTel(String tel) {
         this.tel = tel;
     }
- 
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    
+    
+    
+    
 }

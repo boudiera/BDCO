@@ -8,7 +8,8 @@ package TextualInterface;
 import Modele.ListReservations;
 import Modele.Reservation;
 import Modele.ReservationFactory;
-import java.sql.Date;
+import java.util.Date;
+import Modele.*;
 import java.util.ArrayList;
 
 /**
@@ -23,10 +24,15 @@ public class TestTextuel {
     public static void main(String[] args) {
         // TODO code application logic here
         ListReservations LR= new ListReservations();
-        Date date= new Date(0) ;
+        Date date= new Date(1994,05,16,20,45);
         ArrayList<Integer> num = new ArrayList<>();
         num.add(5);
-        LR.addReservation(new Reservation(num, 3, "Patrick", date, 1245, "0675214899"));
+        num.add(4);
+        ArrayList<Integer> num2 = new ArrayList<>();
+        num2.add(6);
+        
+        LR.addReservation(new Reservation(num, 3, "Patrick", date,"0476556969",Service.Evening));
+        LR.addReservation(new Reservation(num2, 1, "José",date,"0476686969",Service.Midday));
         Textual_ReservationList IT_text= new Textual_ReservationList(LR);
         IT_text.PrintReservations();
         IT_text.gestionEvent();

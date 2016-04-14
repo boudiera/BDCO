@@ -5,9 +5,11 @@
  */
 package TextualInterface;
 
-import Modele.Reservation;
-import java.sql.Date;
+
+import Modele.Service;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -15,17 +17,67 @@ import java.util.ArrayList;
  */
 public class Textual_AjoutReservation {
    ArrayList<Integer> codeTable;
-   int nbPersonnes;
+   String nbPersonnes;
    String nomClient;
-   Date jour;
-   int heure;
+   Date date;
    String tel;
-    public Textual_AjoutReservation(){
-        System.out.println();
+   Service service = null;
+    public Textual_AjoutReservation () throws Exception{
+        String jour,mois,annee,heure,minute;
+        // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
+        System.out.println("----------------------Creation d'une réservation ---------------- \n");
+  
+        System.out.println(" Veuillez entrer la date de la reservation : ");
+        System.out.println(" Jour : ");
+        jour = lectureEntree();
+        
+        System.out.println(" Mois : ");
+        mois = lectureEntree();
+        
+        System.out.println(" Année : ");
+        annee = lectureEntree();
+        
+        System.out.println(" Veuillez entrer l'horaire de la reservation");
+        System.out.println("Heure : ");
+        heure = lectureEntree();
+       
+        System.out.println("Minute");
+        minute = lectureEntree();
+        
+        //Service
+        System.out.println(" Veuillez entrer le nombre de personne : ");
+        this.nbPersonnes = lectureEntree();
+        
+        
+        
+        System.out.println(" Veuillez entrer le nom du client : ");
+        this.nomClient = lectureEntree();
+        
+       
+        this.date = new Date(Integer.parseInt(annee),Integer.parseInt(mois),Integer.parseInt(jour),Integer.parseInt(heure),Integer.parseInt(minute));
+         
+        System.out.println(" Veuillez entrer le nom du client : ");
+        this.nomClient = lectureEntree();
+        
+        System.out.println(" Veuillez entrer le numero de telephone ");
+        this.tel = lectureEntree();
+       
+        System.out.println(" Veuillez entrer  numero de telephone ");
+        
+    
+   
     }
     
-    public void CreerReservation(){
+    private String lectureEntree() throws Exception {
         
-        
+        Scanner sc = new Scanner(System.in);
+        String choix = sc.nextLine();
+               
+        if (choix.equalsIgnoreCase("q"))
+                   throw  new Exception("Annulation de la reservation");
+        return choix;
     }
+    
+    
+   
 }
