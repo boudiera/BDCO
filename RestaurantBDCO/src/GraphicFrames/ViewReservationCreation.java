@@ -39,7 +39,7 @@ public class ViewReservationCreation extends AbstractView {
     }
     
     @Override
-    public void addController(Object c) {
+    public void addController(AbstractControllerGraphic c) {
         this.GC = (ControllerGraphic) c;
     }
     

@@ -9,8 +9,8 @@ package GraphicFrames;
  *
  * @author Iago Felipe Trentin
  */
-public abstract class AbstractView extends javax.swing.JFrame{
+public interface AbstractControllerGraphic {
     
-    public abstract void addController(AbstractControllerGraphic c);
-    
+    public void setMainView(AbstractView mainView);
+    public void startMainView();
 }

@@ -24,6 +24,6 @@ public class RunGraphicMVC {
         
         MainView.addController(GC);
         GC.setMainView(MainView);
-        GC.start();
+        GC.startMainView();
     }
 }

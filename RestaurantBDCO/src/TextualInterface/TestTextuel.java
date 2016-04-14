@@ -19,7 +19,7 @@ public class TestTextuel {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ListReservations LR= new ListReservations();
+        ListReservations LR = ListReservations.singletonListReservations();
         ReservationDate date= new ReservationDate(1994,05,16,20,45);
         ListTables num = new ListTables();
         num.add(5);

@@ -9,7 +9,7 @@ package GraphicFrames;
  *
  * @author trentini
  */
-public class ControllerGraphic {
+public class ControllerGraphic implements AbstractControllerGraphic{
     AbstractView Principal;
     
     ViewReservationDetails ReservationDetails;
@@ -19,7 +19,7 @@ public class ControllerGraphic {
         this.Principal = mainView;
     }
     
-    public void start(){
+    public void startMainView(){
         this.Principal.setVisible(true);
     };
     
