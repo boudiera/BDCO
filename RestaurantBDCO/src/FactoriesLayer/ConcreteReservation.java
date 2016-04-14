@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class ConcreteReservation extends Reservation {
 
-    public ConcreteReservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date jour, int heure, String tel) {
-        super(codeTable, nbPersonnes, nomClient, jour, heure, tel);
+    public ConcreteReservation(ListTables codeTable, int nbPersonnes, String nomClient, String tel, java.util.Date jour, Service service) {
+        super(codeTable, nbPersonnes, nomClient, tel, jour, service);
     }
  
 }

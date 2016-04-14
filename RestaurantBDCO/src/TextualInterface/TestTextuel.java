@@ -26,7 +26,7 @@ public class TestTextuel {
         Date date= new Date(0) ;
         ArrayList<Integer> num = new ArrayList<>();
         num.add(5);
-        LR.addReservation(new Reservation(num, 3, "Patrick", date, 1245, "0675214899"));
+        //LR.addReservation(new Reservation(num, 3, "Patrick", date, 1245, "0675214899"));
         Textual_ReservationList IT_text= new Textual_ReservationList(LR);
         IT_text.PrintReservations();
         IT_text.gestionEvent();

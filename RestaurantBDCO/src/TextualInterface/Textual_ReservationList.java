@@ -22,9 +22,9 @@ public class Textual_ReservationList {
     }
     
     public void PrintReservations(){
-        for (Reservation r : this.listReservations.getListeRes()){
+        /*for (Reservation r : this.listReservations.getListeRes()){
             System.out.println("nom: " + r.getNomClient() + " date: "+ r.getHeure()/100 + ":" + r.getHeure()%100 + " tel: " + r.getTel() );
-        }
+        }*/
     }
     
     public void afficheMenu(){

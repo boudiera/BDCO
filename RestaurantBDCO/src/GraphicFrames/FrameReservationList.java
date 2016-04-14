@@ -28,10 +28,11 @@ public class FrameReservationList extends javax.swing.JFrame {
         
         this.ReservationList = new ListReservations();
         
-        ArrayList<Integer> CodesTables = new ArrayList<Integer>();
+        ListTables CodesTables = new ListTables();
         CodesTables.add(2); CodesTables.add(5); CodesTables.add(6); CodesTables.add(15);
         
-        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "Nome ABC", (Date) new Date(2016, 12, 20, 15, 30)));
+        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "Nome ABC", "123456", (Date) new Date(2016, 11, 20, 15, 30), Service.Midday));
+        this.ReservationList.addReservation(new Reservation(new ListTables(), 12, "Nome ABC", "123456", (Date) new Date(2016, 11, 20, 15, 30), Service.Midday));
         
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Date");
@@ -43,7 +44,10 @@ public class FrameReservationList extends javax.swing.JFrame {
         this.ReservationsTable.setModel(model);
         
         for(Reservation r : this.ReservationList.getListReservations()){
-            model.addRow(new Object[]{r.getJour().getDay()+"/"+(r.getJour().getMonth()+1)});
+            String day   = ( r.getJour().getDate() <= 10 ) ? ("0"+r.getJour().getDate()) : (""+r.getJour().getDate());
+            String month = ( r.getJour().getMonth()+1 <= 10) ? ("0"+(r.getJour().getMonth()+1)) : (""+(r.getJour().getMonth()+1));
+            
+            model.addRow(new Object[]{ day + " / " + month, r.getNomClient(), r.getTel(), r.getNbPersonnes(), r.getCodeTable() });
         }        
     }
 

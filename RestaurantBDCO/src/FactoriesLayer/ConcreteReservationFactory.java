@@ -30,10 +30,10 @@ public class ConcreteReservationFactory extends ReservationFactory{
                 stmt=connexion.getConnection().prepareStatement(STMT_2);
                 rsetTable = stmt.executeQuery();
                 
-                res.add(new ConcreteReservation(rset.getInt(), rset.getString(2)));
+                //res.add(new ConcreteReservation(rset.getInt(), rset.getString(2)));
             }
             //  Fermeture
-            rset.close();
+            //rset.close();
             stmt.close();
             return res;
         } catch (SQLException e) {
