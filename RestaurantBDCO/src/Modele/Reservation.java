@@ -16,9 +16,10 @@ public class Reservation {
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
         this.date = date;
-        this.tel=tel;
-        this.service=service;
+        this.tel = tel;
+        this.service = service;
     }
+
 
     public ArrayList<Integer> getCodeTable() {
         return codeTable;
@@ -31,6 +32,8 @@ public class Reservation {
     public ReservationDate getJour() {
         return date;
     }
+
+    
 
     public String getNomClient() {
         return nomClient;
@@ -59,5 +62,17 @@ public class Reservation {
     public void setTel(String tel) {
         this.tel = tel;
     }
- 
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    
+    
+    
+    
 }
