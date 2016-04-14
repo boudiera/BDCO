@@ -53,7 +53,7 @@ public class FrameReservationList extends javax.swing.JFrame {
         this.ReservationsTable.setModel(model);
         
         for(Reservation r : this.ReservationList.getListReservations()){
-            model.addRow(new Object[]{ r.getJour().writeDateSortable(), r.getNomClient(), r.getTel(), r.getNbPersonnes(), r.getCodeTable() });
+            model.addRow(new Object[]{ r.getDate().writeDateSortable(), r.getNomClient(), r.getTel(), r.getNbPersonnes(), r.getCodeTable() });
         }
         
         setReservationTableSortable(model);

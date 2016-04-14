@@ -29,7 +29,7 @@ public class Reservation {
         return nbPersonnes;
     }
 
-    public ReservationDate getJour() {
+    public ReservationDate getDate() {
         return date;
     }
 
@@ -47,7 +47,7 @@ public class Reservation {
         this.codeTable = codeTable;
     }
 
-    public void setJour(ReservationDate jour) {
+    public void setDate(ReservationDate jour) {
         this.date = jour;
     }
 
