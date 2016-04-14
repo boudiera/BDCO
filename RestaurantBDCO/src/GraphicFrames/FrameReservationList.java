@@ -1,10 +1,11 @@
 package GraphicFrames;
 
 import Modele.*;
-import java.sql.*;
-import java.util.Date;
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,8 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrameReservationList extends javax.swing.JFrame {
 
-    ListReservations ReservationList;
-    Reservation SelectedReservation;
+    private ListReservations ReservationList;
+    private Reservation SelectedReservation;
     
     /**
      * Creates new form FrameReservationList
@@ -32,8 +33,9 @@ public class FrameReservationList extends javax.swing.JFrame {
         ListTables CodesTables = new ListTables();
         CodesTables.add(2); CodesTables.add(5); CodesTables.add(6); CodesTables.add(15);
         
-        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "BB", "123456", (Date) new Date(2016, 11, 20, 15, 30), Service.Midday));
-        this.ReservationList.addReservation(new Reservation(new ListTables(), 12, "AA", "123456", (Date) new Date(2016, 11, 20, 15, 30), Service.Midday));
+        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.Midday));
+        this.ReservationList.addReservation(new Reservation(new ListTables(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.Midday));
+        this.ReservationList.addReservation(new Reservation(new ListTables(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.Midday));
         
         DefaultTableModel model = new DefaultTableModel(){
             @Override
@@ -51,15 +53,27 @@ public class FrameReservationList extends javax.swing.JFrame {
         this.ReservationsTable.setModel(model);
         
         for(Reservation r : this.ReservationList.getListReservations()){
-            String day   = ( r.getJour().getDate() <= 10 ) ? ("0"+r.getJour().getDate()) : (""+r.getJour().getDate());
-            String month = ( r.getJour().getMonth()+1 <= 10) ? ("0"+(r.getJour().getMonth()+1)) : (""+(r.getJour().getMonth()+1));
-            
-            model.addRow(new Object[]{ day + " / " + month, r.getNomClient(), r.getTel(), r.getNbPersonnes(), r.getCodeTable() });
+            model.addRow(new Object[]{ r.getJour().writeDateSortable(), r.getNomClient(), r.getTel(), r.getNbPersonnes(), r.getCodeTable() });
         }
+        
+        setReservationTableSortable(model);
     }
     
     public void updateReservationTable(){
         
+    }
+    
+    private void setReservationTableSortable(DefaultTableModel model){
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.ReservationsTable.getModel());
+        this.ReservationsTable.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        
+        int columnIndexToSort = 1;
+        sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        sorter.setSortable(model.findColumn("# People"), false);
+        sorter.setSortable(model.findColumn("Table(s)"), false);
+        sorter.sort();
     }
 
     /**
@@ -72,7 +86,7 @@ public class FrameReservationList extends javax.swing.JFrame {
     private void initComponents() {
 
         WindowTitle = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        PaneOfReservationTable = new javax.swing.JScrollPane();
         ReservationsTable = new javax.swing.JTable();
         OpenSelectedReservation = new javax.swing.JButton();
         DeleteSelectedReservation = new javax.swing.JButton();
@@ -93,7 +107,7 @@ public class FrameReservationList extends javax.swing.JFrame {
                 ReservationsTableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(ReservationsTable);
+        PaneOfReservationTable.setViewportView(ReservationsTable);
         ReservationsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         OpenSelectedReservation.setText("Open Selected Reservation");
@@ -127,7 +141,7 @@ public class FrameReservationList extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(PaneOfReservationTable)
                     .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(AddNewReservation)
@@ -143,7 +157,7 @@ public class FrameReservationList extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(WindowTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addComponent(PaneOfReservationTable, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddNewReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,8 +231,8 @@ public class FrameReservationList extends javax.swing.JFrame {
     private javax.swing.JButton AddNewReservation;
     private javax.swing.JButton DeleteSelectedReservation;
     private javax.swing.JButton OpenSelectedReservation;
+    private javax.swing.JScrollPane PaneOfReservationTable;
     private javax.swing.JTable ReservationsTable;
     private javax.swing.JLabel WindowTitle;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
