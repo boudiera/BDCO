@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class FrameReservationList extends javax.swing.JFrame {
 
     ListReservations ReservationList;
+    Reservation SelectedReservation;
     
     /**
      * Creates new form FrameReservationList
@@ -28,12 +29,19 @@ public class FrameReservationList extends javax.swing.JFrame {
         
         this.ReservationList = new ListReservations();
         
-        ArrayList<Integer> CodesTables = new ArrayList<Integer>();
+        ListTables CodesTables = new ListTables();
         CodesTables.add(2); CodesTables.add(5); CodesTables.add(6); CodesTables.add(15);
         
-        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "Nome ABC", (Date) new Date(2016, 12, 20, 15, 30)));
+        this.ReservationList.addReservation(new Reservation(CodesTables, 12, "BB", "123456", (Date) new Date(2016, 11, 20, 15, 30), Service.Midday));
+        this.ReservationList.addReservation(new Reservation(new ListTables(), 12, "AA", "123456", (Date) new Date(2016, 11, 20, 15, 30), Service.Midday));
         
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;   //all cells false
+            }
+        };
+        
         model.addColumn("Date");
         model.addColumn("Name");
         model.addColumn("Phone");
@@ -43,8 +51,15 @@ public class FrameReservationList extends javax.swing.JFrame {
         this.ReservationsTable.setModel(model);
         
         for(Reservation r : this.ReservationList.getListReservations()){
-            model.addRow(new Object[]{r.getJour().getDay()+"/"+(r.getJour().getMonth()+1)});
-        }        
+            String day   = ( r.getJour().getDate() <= 10 ) ? ("0"+r.getJour().getDate()) : (""+r.getJour().getDate());
+            String month = ( r.getJour().getMonth()+1 <= 10) ? ("0"+(r.getJour().getMonth()+1)) : (""+(r.getJour().getMonth()+1));
+            
+            model.addRow(new Object[]{ day + " / " + month, r.getNomClient(), r.getTel(), r.getNbPersonnes(), r.getCodeTable() });
+        }
+    }
+    
+    public void updateReservationTable(){
+        
     }
 
     /**
@@ -70,12 +85,12 @@ public class FrameReservationList extends javax.swing.JFrame {
         WindowTitle.setText("Reservations List");
 
         ReservationsTable.setModel(new DefaultTableModel());
-        ReservationsTable.setColumnSelectionAllowed(true);
         ReservationsTable.setRowHeight(30);
+        ReservationsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         ReservationsTable.getTableHeader().setReorderingAllowed(false);
         ReservationsTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ReservationsTableMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ReservationsTableMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(ReservationsTable);
@@ -152,9 +167,16 @@ public class FrameReservationList extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
-    private void ReservationsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMouseClicked
-        //this.ReservationsList.getValueAt(this.ReservationsList.getSelectedRow(), )
-    }//GEN-LAST:event_ReservationsTableMouseClicked
+    private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed
+        if(this.ReservationsTable.getSelectedRow() == -1){
+            this.DeleteSelectedReservation.setEnabled(false);
+            this.OpenSelectedReservation.setEnabled(false);
+        }else{
+            this.SelectedReservation = this.ReservationList.getListReservations().get(this.ReservationsTable.getSelectedRow());
+            this.DeleteSelectedReservation.setEnabled(true);
+            this.OpenSelectedReservation.setEnabled(true);
+        }
+    }//GEN-LAST:event_ReservationsTableMousePressed
 
     /**
      * @param args the command line arguments

@@ -1,21 +1,21 @@
 package Modele;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
-import java.sql.*;
 import java.util.Calendar;
 
 /** Une reservation */
 public class Reservation {
-    private ArrayList<Integer> codeTable;
+    private ListTables codeTable;
     private int nbPersonnes;
     private String nomClient;
     private Date date;
     private String tel;
     private Service service;
 
-    public Reservation(ArrayList<Integer> codeTable, int nbPersonnes, String nomClient, Date date, String tel, Service service) {
+
+    public Reservation(ListTables codeTable, int nbPersonnes, String nomClient, Date date, String tel, Service service) {
+
         this.codeTable = codeTable;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
@@ -47,7 +47,7 @@ public class Reservation {
         return tel;
     }
 
-    public void setCodeTable(ArrayList<Integer> codeTable) {
+    public void setCodeTable(ListTables codeTable) {
         this.codeTable = codeTable;
     }
 

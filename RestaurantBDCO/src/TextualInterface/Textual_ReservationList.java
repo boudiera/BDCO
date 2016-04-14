@@ -23,6 +23,7 @@ public class Textual_ReservationList {
     }
     
     public void PrintReservations(){
+<<<<<<< HEAD
          int i = 1;
          System.out.println("------------- AFFICHAGE DES RESERVATIONS ---------- \n");
          
@@ -43,6 +44,11 @@ public class Textual_ReservationList {
          }
           System.out.println("");
           System.out.println("");
+=======
+        /*for (Reservation r : this.listReservations.getListeRes()){
+            System.out.println("nom: " + r.getNomClient() + " date: "+ r.getHeure()/100 + ":" + r.getHeure()%100 + " tel: " + r.getTel() );
+        }*/
+>>>>>>> fe80b54008ba26a77aa303c0ed54e09a75a7180b
     }
     
     public void afficheMenu(){

@@ -27,12 +27,16 @@ public class TestTextuel {
         Date date= new Date(1994,05,16,20,45);
         ArrayList<Integer> num = new ArrayList<>();
         num.add(5);
+<<<<<<< HEAD
         num.add(4);
         ArrayList<Integer> num2 = new ArrayList<>();
         num2.add(6);
         
         LR.addReservation(new Reservation(num, 3, "Patrick", date,"0476556969",Service.Evening));
         LR.addReservation(new Reservation(num2, 1, "José",date,"0476686969",Service.Midday));
+=======
+        //LR.addReservation(new Reservation(num, 3, "Patrick", date, 1245, "0675214899"));
+>>>>>>> fe80b54008ba26a77aa303c0ed54e09a75a7180b
         Textual_ReservationList IT_text= new Textual_ReservationList(LR);
         IT_text.PrintReservations();
         IT_text.gestionEvent();
