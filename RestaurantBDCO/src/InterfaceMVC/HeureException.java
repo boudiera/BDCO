@@ -9,14 +9,14 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class HeureException extends Exception {
+public class HeureException extends AddReservationException {
 
     /**
      * Creates a new instance of <code>HeureException</code> without detail
      * message.
      */
     public HeureException() {
-        System.out.println("La saisie de l'heure est incorrecte");
+        message="La saisie de l'heure est incorrecte";
     }
 
     /**

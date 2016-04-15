@@ -9,13 +9,13 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class MauvaiseDateException extends Exception {
+public class MauvaiseDateException extends AddReservationException {
 
     /**
      * Creates a new instance of <code>Exception</code> without detail message.
      */
     public MauvaiseDateException() {
-        System.out.println("La date saisie est passée!");
+        message="La date saisie est passée";
     }
 
     /**

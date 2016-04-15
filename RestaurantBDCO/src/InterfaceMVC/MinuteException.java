@@ -9,14 +9,13 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class MinuteException extends Exception {
-
+public class MinuteException extends AddReservationException {
     /**
      * Creates a new instance of <code>MinuteException</code> without detail
      * message.
      */
     public MinuteException() {
-        System.out.println("La saisie des minutes est incorrecte");
+        message="La saisie des minutes est incorrecte";
     }
 
     /**

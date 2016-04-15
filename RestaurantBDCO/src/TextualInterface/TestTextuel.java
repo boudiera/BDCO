@@ -5,7 +5,7 @@
  */
 package TextualInterface;
 
-import FactoriesLayer.ConcreteReservationFactory;
+import FactoriesLayer.ConcreteRequeteFactory;
 import FactoriesLayer.ConnectionInfo;
 import FactoriesLayer.TheConnection;
 import InterfaceMVC.Controller;
@@ -43,7 +43,7 @@ public class TestTextuel {
         
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-        Factory.reservations = new ConcreteReservationFactory(connection);
+        Factory.reservations = new ConcreteRequeteFactory(connection);
        
         IT_text.setController(controller);
         IT_text.showView(true);

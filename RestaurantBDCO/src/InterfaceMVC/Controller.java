@@ -32,16 +32,14 @@ public class Controller {
         return Factory.reservations.getReservationsList();
     }
 
-    public void VerifyAddReservation(String annee,String mois, String jour, String heure, String minute, String nbPersonnes, String tel) throws MauvaiseDateException,NbPersonneException, MoisException,JourException, HeureException, MinuteException, TelephoneException{
+    public void VerifyAddReservation(String annee,String mois, String jour, String heure, String minute, String nbPersonnes, String tel) throws AddReservationException{
         int anneeEnt=Integer.parseInt(annee);
         int moisEnt=Integer.parseInt(mois);
         int jourEnt=Integer.parseInt(jour);
         int heureEnt=Integer.parseInt(heure);
         int minuteEnt=Integer.parseInt(minute);
         int nbPersonnesEnt= Integer.parseInt(nbPersonnes);
-        
-        System.out.println(Calendar.getInstance().getTime().getDate()+"/"+Calendar.getInstance().getTime().getMonth()+ "/"+Calendar.getInstance().getTime().getYear() );
-        System.out.println((Calendar.getInstance().getTime().getYear()== (anneeEnt-1900))+"/"+(Calendar.getInstance().getTime().getMonth()+1==moisEnt)+"/"+(Calendar.getInstance().getTime().getDate()==jourEnt));
+       
         //gestion date antérieure à celle du jour
         if (Calendar.getInstance().getTime().getYear()> (anneeEnt-1900))
             throw new MauvaiseDateException();
