@@ -7,22 +7,25 @@ package TextualInterface;
 import java.util.*;
 import java.lang.*;
 import Modele.*;
-
+import InterfaceMVC.*;
 
 
 /**
  *
  * @author mourinf
  */
-public class Textual_ReservationList {
+public class Textual_ReservationList extends AbstractView {
     ArrayList<Reservation> listReservations;
-
+  
     
     public Textual_ReservationList (ArrayList<Reservation> listReservations){
         this.listReservations=listReservations;
     }
     
-    public void PrintReservations(){
+    public void showView(boolean view){
+        if (!view){
+            return;
+        }
          int i = 0;
          System.out.println("--------------------------------------~AFFICHAGE DES RESERVATIONS~---------------------------------------");
             System.out.println("---------------------------------------------------------------------------------------------------------");
@@ -82,8 +85,6 @@ public class Textual_ReservationList {
                    System.exit(0);
               
         } while (true);
-      
-      
       
     }
 }

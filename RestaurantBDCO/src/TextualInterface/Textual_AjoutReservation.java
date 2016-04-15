@@ -6,6 +6,7 @@
 package TextualInterface;
 
 
+import InterfaceMVC.AbstractView;
 import Modele.Service;
 import java.util.Date;
 import java.util.ArrayList;
@@ -15,21 +16,27 @@ import java.util.Scanner;
  *
  * @author mourinf
  */
-public class Textual_AjoutReservation {
-   ArrayList<Integer> codeTable;
-   String nbPersonnes;
-   String nomClient;
-   Date date;
-   String tel;
-   Service service = null;
+public class Textual_AjoutReservation extends AbstractView {
+
     public Textual_AjoutReservation () throws Exception{
+    }
+
+    @Override
+    public void showView(boolean b) throws Exception{
         String jour,mois,annee,heure,minute;
+        ArrayList<Integer> codeTable;
+        String nbPersonnes;
+        String nomClient;
+        Date date;
+        String tel;
+        Service service = null;
         // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
         System.out.println("----------------------Creation d'une réservation ---------------- \n");
   
         System.out.println(" Veuillez entrer la date de la reservation : ");
         System.out.println(" Jour : ");
         jour = lectureEntree();
+       
         
         System.out.println(" Mois : ");
         mois = lectureEntree();
@@ -46,27 +53,27 @@ public class Textual_AjoutReservation {
         
         //Service
         System.out.println(" Veuillez entrer le nombre de personne : ");
-        this.nbPersonnes = lectureEntree();
+        nbPersonnes = lectureEntree();
         
         
         
         System.out.println(" Veuillez entrer le nom du client : ");
-        this.nomClient = lectureEntree();
+        nomClient = lectureEntree();
         
        
-        this.date = new Date(Integer.parseInt(annee),Integer.parseInt(mois),Integer.parseInt(jour),Integer.parseInt(heure),Integer.parseInt(minute));
+        date = new Date(Integer.parseInt(annee),Integer.parseInt(mois),Integer.parseInt(jour),Integer.parseInt(heure),Integer.parseInt(minute));
          
         System.out.println(" Veuillez entrer le nom du client : ");
-        this.nomClient = lectureEntree();
+        nomClient = lectureEntree();
         
         System.out.println(" Veuillez entrer le numero de telephone ");
-        this.tel = lectureEntree();
+        tel = lectureEntree();
        
         System.out.println(" Veuillez entrer  numero de telephone ");
         
-    
-   
     }
+    
+    
     
     private String lectureEntree() throws Exception {
         

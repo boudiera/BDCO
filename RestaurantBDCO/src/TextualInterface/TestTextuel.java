@@ -30,9 +30,10 @@ public class TestTextuel {
         LR.add(new Reservation(1,num, 55, "Patrick", "0476556969",date,Service.Evening));
         LR.add(new Reservation(2,num2, 1, "José","0476686969",date,Service.Midday));
         Textual_ReservationList IT_text= new Textual_ReservationList(LR);
-        IT_text.PrintReservations();
+        IT_text.showView(true);
         IT_text.gestionEvent();
 
     }
     
 }
+
