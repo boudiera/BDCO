@@ -16,6 +16,7 @@ import InterfaceMVC.MoisException;
 import InterfaceMVC.NbPersonneException;
 import InterfaceMVC.TelephoneException;
 import Modele.Service;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -43,7 +44,6 @@ public class Textual_AjoutReservation extends AbstractView {
         Service service = null;
         // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
         System.out.println("----------------------Creation d'une réservation ---------------- \n");
-  
         System.out.println(" Veuillez entrer la date de la reservation : ");
         System.out.println(" Jour : ");
         jour = lectureEntree();
@@ -91,10 +91,10 @@ public class Textual_AjoutReservation extends AbstractView {
         
         Scanner sc = new Scanner(System.in);
         String choix = sc.nextLine();
-               
+       
         if (choix.equalsIgnoreCase("q")){
-                   this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());
-                   System.exit(0);
+                   System.out.println(" ------------- ANNULATION DE LA RESERVATION ------------");
+                   this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());           
         }           
         return choix;
     }

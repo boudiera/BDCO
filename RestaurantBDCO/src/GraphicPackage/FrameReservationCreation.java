@@ -16,28 +16,22 @@ import javax.swing.JOptionPane;
  *
  * @author trentini
  */
-public class ViewReservationCreation extends javax.swing.JFrame {
+public class FrameReservationCreation extends javax.swing.JFrame {
 
     private ControllerGraphic GC = null;
     
     /**
      * Creates new form FrameReservationCreation
      */
-    public ViewReservationCreation() {
+    public FrameReservationCreation() {
         initComponents();
-        
-        this.GC = null;
     }
     
-    public ViewReservationCreation(ControllerGraphic GC) {
-        initComponents();
-        
-        this.GC = GC;
-    }
-
     @Override
     public void dispose() {
-        GC.closeFrameReservationCreation();
+        GlobalGraphicView.singletonGlobalGraphicView().setWindow(EnumWindow.ReservationList);
+        GlobalGraphicView.singletonGlobalGraphicView().showView(true);
+
         super.dispose();
     }
     
@@ -358,15 +352,16 @@ public class ViewReservationCreation extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonKeyPressed
 
     private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
-        /*CreateReservation res=null;
+        /*
+        CreateReservation res=null;
         try {
             Date date = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
             Service ser;
             if (midday.isSelected()) {
-                ser = Service.Midday;
+                ser = Service.MIDI;
             } else {
-                ser = Service.Evening;
+                ser = Service.SOIR;
             }
             res = new CreateReservation(clientName.getText(), clientPhone.getText(),
                     Integer.parseInt(nbPeople.getText()), date, ser);
@@ -395,21 +390,23 @@ public class ViewReservationCreation extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationCreation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewReservationCreation().setVisible(true);
+                new FrameReservationCreation().setVisible(true);
             }
         });
     }
@@ -441,9 +438,4 @@ public class ViewReservationCreation extends javax.swing.JFrame {
     private javax.swing.JTextField nbPeople;
     private javax.swing.JTextField year;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void setVisible(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

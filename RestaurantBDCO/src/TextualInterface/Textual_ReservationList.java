@@ -31,7 +31,8 @@ public class Textual_ReservationList extends AbstractView {
             return;
         }
         
-        ArrayList<Reservation> listReservations = new ArrayList<Reservation>();
+        ArrayList<Reservation> listReservations = this.getController().getReservationList();
+        /*
         ReservationDate date= new ReservationDate(1994,05,16,20,45);
         ArrayList<Table> num= new ArrayList<Table>();
         num.add(new Table(5, null,5,4, 3));
@@ -41,11 +42,11 @@ public class Textual_ReservationList extends AbstractView {
         
         listReservations.add(new Reservation(1,num, 55, "Patrick", "0476556969",date,Service.SOIR));
         listReservations.add(new Reservation(2,num2, 1, "José","0476686969",date,Service.MIDI));
+        */
+       
         
         
-        
-        
-         int i = 0;
+         
          System.out.println("--------------------------------------~AFFICHAGE DES RESERVATIONS~---------------------------------------");
             System.out.println("---------------------------------------------------------------------------------------------------------");
             System.out.print("| Reservation |");
@@ -57,9 +58,9 @@ public class Textual_ReservationList extends AbstractView {
             System.out.println("  Code Table   ");
             
          for (Reservation reservation : listReservations){
-            i++;
+            
             System.out.println("---------------------------------------------------------------------------------------------------------");
-            System.out.print("|      "+i+"      |");
+            System.out.print("|      "+reservation.getCodeReservation()+"      |");
             System.out.print(" "+reservation.AffichageNomClient()+"|");
             System.out.print("  "+reservation.getDate().writeDay()+"/"+ reservation.getDate().writeMonth()+"/"+reservation.getDate().getYear()+"  |");
             System.out.print("  "+reservation.getPhone()+"  |");

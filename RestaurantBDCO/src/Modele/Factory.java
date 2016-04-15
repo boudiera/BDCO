@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
-
-import GraphicPackage.*;
+package Modele;
 
 /**
  *
- * @author trentini
+ * @author boudiera
  */
-public class ControllerGraphic extends Controller{
-   
-    public void startView(){
-        this.getView().showView(true);
-    };
-
+public class Factory {
+    public static ReservationFactory reservations;   
 }

@@ -5,8 +5,8 @@
  */
 package InterfaceMVC;
 
+import Modele.Factory;
 import Modele.Reservation;
-import Modele.ReservationFactory;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,8 +29,7 @@ public class Controller {
     }
     
     public ArrayList<Reservation> getReservationList(){
-        //return this.reservFactory.reservations();
-        return null;
+        return Factory.reservations.getReservationsList();
     }
 
     public void VerifyAddReservation(Date date, String nbPersonnes, String tel) throws MauvaiseDateException,NbPersonneException, MoisException,JourException, HeureException, MinuteException, TelephoneException{

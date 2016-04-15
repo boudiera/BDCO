@@ -1,10 +1,13 @@
 package GraphicPackage;
 
-import InterfaceMVC.AbstractView;
-import InterfaceMVC.Controller;
-import InterfaceMVC.ControllerGraphic;
+import FactoriesLayer.ConcreteReservationFactory;
+import FactoriesLayer.ConnectionInfo;
+import FactoriesLayer.TheConnection;
+import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
+import InterfaceMVC.*;
 import Modele.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -20,23 +23,26 @@ import javax.swing.table.*;
  *
  * @author trentini
  */
-public class ViewReservationList extends javax.swing.JFrame {
+public class FrameReservationList extends javax.swing.JFrame {
 
-    final private static ViewReservationList Window = new ViewReservationList();
-    private ControllerGraphic GC = null;
+    final private static FrameReservationList singletonWindow = new FrameReservationList();
     
     private ArrayList<Reservation> ListReservs;
     private Reservation SelectedReservation;
+
+    public Reservation getSelectedReservation() {
+        return SelectedReservation;
+    }
     
     /**
      * Creates new form FrameReservationList
      */
-    private ViewReservationList() {
+    private FrameReservationList() {
         initComponents();
         
         this.ListReservs = new ArrayList<>();
         
-        ///*   TEST CODE
+        /*   TEST CODE
         ArrayList<Table> CodesTables = new ArrayList<>();
         CodesTables.add(new Table(2, "window", 4, 3, 2));
         CodesTables.add(new Table(5, "window", 4, 3, 2));
@@ -46,35 +52,58 @@ public class ViewReservationList extends javax.swing.JFrame {
         this.ListReservs.add(new Reservation(1, CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.MIDI));
         this.ListReservs.add(new Reservation(5, new ArrayList<Table>(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.MIDI));
         this.ListReservs.add(new Reservation(6, new ArrayList<Table>(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.MIDI));
-        //*/   END OF TEST CODE
+        //END OF TEST CODE
+        */
         
         updateReservationTable();
     }
     
-    public static ViewReservationList singletonFrameReservationList(){
-        return ViewReservationList.Window;
+    public static FrameReservationList singletonFrameReservationList(){
+        return FrameReservationList.singletonWindow;
     }
         
     private void updateReservationTable(){
+        
+        Factory.reservations = new ConcreteReservationFactory(new TheConnection(new ConnectionInfo()));
+        this.ListReservs.clear();
+        this.ListReservs.addAll(Factory.reservations.getReservationsList());
+        
         DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;   //all cells false
             }
         };
-
+        
+        model.addColumn("Code");
         model.addColumn("Date");
         model.addColumn("Name");
         model.addColumn("Phone");
         model.addColumn("# People");
         model.addColumn("Table(s)");
-
+        
         this.ReservationsTable.setModel(model);
         for (Reservation r : this.ListReservs) {
-            model.addRow(new Object[]{r.getDate().writeDateSortable(), r.getNomClient(), r.getPhone(), r.getNbPersonnes(), r.getCodeTable()});
+           String stringListTables = "[ ";
+           Iterator<Table> i = r.getCodeTable().iterator();
+           if(!i.hasNext())
+               stringListTables += "none";
+           while(i.hasNext()){
+               stringListTables += i.next().getCodeTable();
+               if(i.hasNext())
+                   stringListTables += ", ";
+           }
+           stringListTables += " ]";
+            
+            model.addRow(new Object[]{ r.getCodeReservation(), r.getDate().writeDateSortable(),
+                r.getNomClient(), r.getPhone(), r.getNbPersonnes(), stringListTables});
         }
         
         setReservationTableSortable(model);
+        
+        this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMinWidth(0);
+        this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMaxWidth(0);
+        this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setWidth(0);
     }
     
     private void setReservationTableSortable(DefaultTableModel model){
@@ -200,7 +229,8 @@ public class ViewReservationList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSelectedReservationActionPerformed
-        // TODO add your handling code here:
+        singletonGlobalGraphicView().setWindow(EnumWindow.ResevationDetails);
+        singletonGlobalGraphicView().showView(true);
     }//GEN-LAST:event_OpenSelectedReservationActionPerformed
 
     private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
@@ -208,7 +238,8 @@ public class ViewReservationList extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
-        GC.buttonAddNewReservation();
+        singletonGlobalGraphicView().setWindow(EnumWindow.ReservationCreation);
+        singletonGlobalGraphicView().showView(true);
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed
@@ -239,21 +270,23 @@ public class ViewReservationList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewReservationList().setVisible(true);
+                new FrameReservationList().setVisible(true);
             }
         });
     }

@@ -17,8 +17,10 @@ public class ConcreteReservationFactory extends ReservationFactory{
     }
 
     @Override
-    public ArrayList<Reservation> reservations() {
+    public ArrayList<Reservation> getReservationsList() {
+        connexion.open();
         try {
+            System.out.println("On commence la requete");
             String STMT_1 = "select R.CodeReservation, R.NbPersonnes, R.Jour, "
                     + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
                     + "from Reservation R, Client C "
@@ -27,11 +29,13 @@ public class ConcreteReservationFactory extends ReservationFactory{
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
             //  Execution  de la  requete
-            ResultSet  rsetReservation = stmt.executeQuery ();
-            
+            ResultSet rsetReservation = stmt.executeQuery();
+          
             //  Conversion  du  resultat  en ArrayList <Reservation>
-            ArrayList <Reservation> resReservation = new ArrayList<Reservation> ();
+            ArrayList<Reservation> resReservation = new ArrayList<Reservation> ();
+            System.out.println("Avant le while");
             while (rsetReservation.next()) {
+                System.out.println("Dans le while");
                 // Requete de recherche des tables
                 String STMT_2 = "select T.CodeTable, T.NbPlace0, T.NbPlace1, "
                         + "T.NbPlace2, T.Localisation "
@@ -45,7 +49,7 @@ public class ConcreteReservationFactory extends ReservationFactory{
                 ArrayList<Table> resTable = new ArrayList<Table>();
                 while (rsetTable.next()) {
                     resTable.add(new Table(rsetTable.getInt("CodeTable"),
-                            rsetTable.getString("Location"),
+                            rsetTable.getString("Localisation"),
                             rsetTable.getInt("NbPlace0"),
                             rsetTable.getInt("NbPlace1"),
                             rsetTable.getInt("NbPlace2")));
@@ -72,16 +76,17 @@ public class ConcreteReservationFactory extends ReservationFactory{
                 //Fermeture
                 rsetTable.close();
             }
-            
+            System.out.println("Requete terminee");
             //  Fermeture
             rsetReservation.close();
             stmt.close();
+            connexion.close();
             return resReservation;
         } catch (SQLException e) {
             System.err.println("failed");
             e.printStackTrace (System.err);
             return null;
-        } 
+        }
     }
     
     @Override

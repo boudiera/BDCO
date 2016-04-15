@@ -5,6 +5,9 @@
  */
 package TextualInterface;
 
+import FactoriesLayer.ConcreteReservationFactory;
+import FactoriesLayer.ConnectionInfo;
+import FactoriesLayer.TheConnection;
 import InterfaceMVC.Controller;
 import Modele.*;
 import java.util.ArrayList;
@@ -34,8 +37,14 @@ public class TestTextuel {
 
 
        
+        
         Textual_ReservationList IT_text= Textual_ReservationList.singletonViewTextualReservationList();
         Controller controller = new Controller();
+        
+        ConnectionInfo info = new ConnectionInfo();
+        TheConnection connection = new TheConnection(info);
+        Factory.reservations = new ConcreteReservationFactory(connection);
+       
         IT_text.setController(controller);
         IT_text.showView(true);
        
