@@ -352,15 +352,16 @@ public class FrameReservationCreation extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonKeyPressed
 
     private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
+        /*
         CreateReservation res=null;
         try {
             Date date = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
             Service ser;
             if (midday.isSelected()) {
-                ser = Service.Midday;
+                ser = Service.MIDI;
             } else {
-                ser = Service.Evening;
+                ser = Service.SOIR;
             }
             res = new CreateReservation(clientName.getText(), clientPhone.getText(),
                     Integer.parseInt(nbPeople.getText()), date, ser);
@@ -369,6 +370,7 @@ public class FrameReservationCreation extends javax.swing.JFrame {
         }
         if (res!=null)
             res.execute();
+        */
     }//GEN-LAST:event_createButtonMouseClicked
 
     /**

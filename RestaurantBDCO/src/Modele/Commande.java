@@ -1,12 +1,11 @@
 package Modele;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Commande {
 	private float price;
-	private final List<Article> listArticles;
+	private List<Article> listArticles;
         
         public Commande(List<Article> list){
             this.price=0;
