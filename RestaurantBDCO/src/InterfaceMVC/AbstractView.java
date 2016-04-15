@@ -23,6 +23,8 @@ public abstract class AbstractView {
         return this.controller;
     }
     
-    public abstract void showView(boolean b) throws Exception;
+
+    public abstract void showView(boolean b);
     
+
 }

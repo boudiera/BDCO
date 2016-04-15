@@ -151,13 +151,13 @@ public class ReservationDate extends Date{
         
         switch (this.getMonth()){
             case 0 : s = "Jan"; break;
-            case 1 : s = "Feb"; break;
+            case 1 : s = "Fev"; break;
             case 2 : s = "Mar"; break;
-            case 3 : s = "Apr"; break;
-            case 4 : s = "May"; break;
+            case 3 : s = "Avr"; break;
+            case 4 : s = "Mai"; break;
             case 5 : s = "Jun"; break;
             case 6 : s = "Jul"; break;
-            case 7 : s = "Aug"; break;
+            case 7 : s = "Aou"; break;
             case 8 : s = "Sep"; break;
             case 9 : s = "Oct"; break;
             case 10: s = "Nov"; break;

@@ -14,23 +14,22 @@ import GraphicPackage.ViewReservationDetails;
  * @author trentini
  */
 public class ControllerGraphic extends Controller{
-    AbstractView Principal;
-    
+   
     ViewReservationDetails ReservationDetails;
     ViewCommande Commande;
 
     public void startView(){
-        this.Principal.showView(true);
+        this.getView().showView(true);
     };
     
     public void buttonAddNewReservation(){
-        this.Principal.showView(false);
+        this.getView().showView(false);
 
         ViewReservationCreation ReservationCreation = new ViewReservationCreation(this);
         ReservationCreation.setVisible(true);
     }
 
     public void closeFrameReservationCreation() {
-        this.Principal.showView(true);
+        this.getView().showView(true);
     }
 }

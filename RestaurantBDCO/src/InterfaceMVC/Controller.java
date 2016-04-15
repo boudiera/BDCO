@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 public class Controller {
     
-    private ReservationFactory reservFactory;
     private AbstractView View;
     
     public AbstractView getView(){
@@ -24,10 +23,12 @@ public class Controller {
     
     public void setView(AbstractView v){
         this.View = v;
+        this.View.showView(true);
     }
     
     public ArrayList<Reservation> getReservationList(){
-        return this.reservFactory.reservations();
+        //return this.reservFactory.reservations();
+        return null;
     }
 
 }

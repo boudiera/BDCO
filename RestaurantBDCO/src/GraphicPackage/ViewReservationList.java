@@ -22,7 +22,7 @@ import javax.swing.table.*;
  */
 public class ViewReservationList extends javax.swing.JFrame {
 
-    private static ViewReservationList Window = null;
+    final private static ViewReservationList Window = new ViewReservationList();
     private ControllerGraphic GC = null;
     
     private ArrayList<Reservation> ListReservs;
@@ -31,7 +31,7 @@ public class ViewReservationList extends javax.swing.JFrame {
     /**
      * Creates new form FrameReservationList
      */
-    public ViewReservationList() {
+    private ViewReservationList() {
         initComponents();
         
         this.ListReservs = new ArrayList<>();
@@ -43,18 +43,15 @@ public class ViewReservationList extends javax.swing.JFrame {
         CodesTables.add(new Table(6, "window", 4, 3, 2));
         CodesTables.add(new Table(15, "window", 4, 3, 2));
 
-        this.ListReservs.add(new Reservation(1, CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.Midday));
-        this.ListReservs.add(new Reservation(5, new ArrayList<Table>(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.Midday));
-        this.ListReservs.add(new Reservation(6, new ArrayList<Table>(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.Midday));
+        this.ListReservs.add(new Reservation(1, CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.MIDI));
+        this.ListReservs.add(new Reservation(5, new ArrayList<Table>(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.MIDI));
+        this.ListReservs.add(new Reservation(6, new ArrayList<Table>(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.MIDI));
         //*/   END OF TEST CODE
         
         updateReservationTable();
     }
     
     public static ViewReservationList singletonFrameReservationList(){
-        if(ViewReservationList.Window == null){
-            ViewReservationList.Window = new ViewReservationList();
-        }
         return ViewReservationList.Window;
     }
         

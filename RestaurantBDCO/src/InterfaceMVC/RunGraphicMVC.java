@@ -5,9 +5,8 @@
  */
 package InterfaceMVC;
 
-import GraphicPackage.GraphicViews;
-import GraphicPackage.ViewReservationList;
-import InterfaceMVC.AbstractView;
+import GraphicPackage.*;
+import InterfaceMVC.*;
 
 /**
  *
@@ -25,6 +24,7 @@ public class RunGraphicMVC {
         ControllerGraphic GC = new ControllerGraphic();
         
         MainView.setController(GC);
+        
         GC.setView(MainView);
         GC.startView();
     }

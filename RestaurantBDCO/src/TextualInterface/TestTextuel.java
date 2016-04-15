@@ -19,6 +19,7 @@ public class TestTextuel {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+
         ArrayList<Reservation> LR = new ArrayList<Reservation>();
         ReservationDate date= new ReservationDate(1994,9,38,20,45);
         ArrayList<Table> num= new ArrayList<Table>();
@@ -29,7 +30,10 @@ public class TestTextuel {
         
         LR.add(new Reservation(1,num, 55, "Patrick", "0476556969",date,Service.SOIR));
         LR.add(new Reservation(2,num2, 1, "José","0476686969",date,Service.MIDI));
-        Textual_ReservationList IT_text= new Textual_ReservationList(LR);
+
+
+       
+        Textual_ReservationList IT_text= Textual_ReservationList.singletonViewTextualReservationList();
         IT_text.showView(true);
         IT_text.gestionEvent();
 
