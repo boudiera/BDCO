@@ -5,8 +5,7 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.Controller;
-import InterfaceMVC.AbstractView;
+import InterfaceMVC.*;
 
 /**
  *
