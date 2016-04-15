@@ -20,7 +20,6 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     public ArrayList<Reservation> getReservationsList() {
         connexion.open();
         try {
-            System.out.println("On commence la requete");
             String STMT_1 = "select R.CodeReservation, R.NbPersonnes, R.Jour, "
                     + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
                     + "from Reservation R, Client C "
@@ -33,9 +32,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
           
             //  Conversion  du  resultat  en ArrayList <Reservation>
             ArrayList<Reservation> resReservation = new ArrayList<Reservation> ();
-            System.out.println("Avant le while");
             while (rsetReservation.next()) {
-                System.out.println("Dans le while");
                 // Requete de recherche des tables
                 String STMT_2 = "select T.CodeTable, T.NbPlace0, T.NbPlace1, "
                         + "T.NbPlace2, T.Localisation "
@@ -76,7 +73,6 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                 //Fermeture
                 rsetTable.close();
             }
-            System.out.println("Requete terminee");
             //  Fermeture
             rsetReservation.close();
             stmt.close();
