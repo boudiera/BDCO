@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /** Une reservation */
 public class Reservation {
-    private int codeReservation;
+    private final int codeReservation;
     private ArrayList<Table> listCodeTables;
     private int nbPersonnes;
     private String nomClient;
@@ -22,18 +22,27 @@ public class Reservation {
         this.service = service;
     }
 
-    public ArrayList<Table> getCodeTable() {
-        return listCodeTables;
+    
+        public String AfficheNombrePersonnes(){
+        int tailleNombre= 1;
+        String affNbPersonne="";
+        int nbpers= this.nbPersonnes;
+        
+            while (nbpers/10>0){
+                    nbpers=nbpers/10;
+                    tailleNombre++;
+            }
+            for (int j=1; j<=Math.floor(13-tailleNombre)/2;j++){
+                affNbPersonne=affNbPersonne.concat(" ");
+            }
+           affNbPersonne=affNbPersonne+nbpers;
+           for (int j=1; j<13-tailleNombre-Math.floor(13-tailleNombre)/2;j++){
+                affNbPersonne=affNbPersonne.concat(" ");
+           }
+           affNbPersonne=affNbPersonne.concat("|");
+           return affNbPersonne;
     }
-
-    public int getNbPersonnes() {
-        return nbPersonnes;
-    }
-
-    public ReservationDate getDate() {
-        return date;
-    }    
-
+           
     public String AffichageNomClient() {
         String S="";
         int taille=this.nomClient.length();
@@ -49,7 +58,31 @@ public class Reservation {
         }
         return nomClient;
     }
+    
+   
+    
+    public ArrayList<Table> getCodeTable() {
+        return listCodeTables;
+    }
 
+    public int getNbPersonnes() {
+        return nbPersonnes;
+    }
+
+    public ReservationDate getDate() {
+        return date;
+    }  
+    
+
+    public int getCodeReservation() {
+        return codeReservation;
+    }
+
+    public ArrayList<Table> getListCodeTables() {
+        return listCodeTables;
+    }
+
+    
     public String getNomClient() {
         return nomClient;
     }
