@@ -1,10 +1,10 @@
 package Modele;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Observable;
 
 /** Une liste de reservations */
-public abstract class RequeteFactory {
+public abstract class RequeteFactory extends Observable{
     // Renvoie TOUTES les réservations
     public abstract ArrayList<Reservation> getReservationsList();
     

@@ -9,20 +9,11 @@ package TextualInterface;
 import InterfaceMVC.AbstractView;
 import InterfaceMVC.Exceptions.ReservationException;
 import InterfaceMVC.Controller;
-import InterfaceMVC.Exceptions.HeureException;
-import InterfaceMVC.Exceptions.JourException;
-import InterfaceMVC.Exceptions.WrongDateException;
-import InterfaceMVC.Exceptions.MinuteException;
-import InterfaceMVC.Exceptions.MonthException;
-import InterfaceMVC.Exceptions.NbPersonneException;
-import InterfaceMVC.Exceptions.TelephoneException;
 import Modele.Service;
 
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

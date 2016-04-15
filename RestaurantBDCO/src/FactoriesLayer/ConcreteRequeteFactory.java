@@ -10,10 +10,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ConcreteRequeteFactory extends RequeteFactory{
-    private TheConnection connexion;
+    final private static ConcreteRequeteFactory CONCRETE_REQUETE_FACTORY = new ConcreteRequeteFactory();
+    
+    private static TheConnection connexion;
 
-    public ConcreteRequeteFactory(TheConnection connexion) {
-        this.connexion = connexion;
+    private ConcreteRequeteFactory() {
+    }
+    
+    public static ConcreteRequeteFactory singletonConcreteRequeteFactory(TheConnection connexion){
+        ConcreteRequeteFactory.connexion = connexion;
+        return ConcreteRequeteFactory.CONCRETE_REQUETE_FACTORY;
+    }
+    
+    public static ConcreteRequeteFactory singletonConcreteRequeteFactory(){
+        connexion = new TheConnection(new ConnectionInfo());
+        return ConcreteRequeteFactory.CONCRETE_REQUETE_FACTORY;
     }
 
     @Override // REnvoie TOUTES les réservations
@@ -77,6 +88,10 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             rsetReservation.close();
             stmt.close();
             connexion.close();
+            
+            this.setChanged();
+            this.notifyObservers(resReservation);
+            
             return resReservation;
         } catch (SQLException e) {
             System.err.println("failed");

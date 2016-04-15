@@ -6,7 +6,6 @@
 package restaurantbdco;
 
 import InterfaceMVC.RunGraphicMVC;
-import TextualInterface.TestTextuel;
 
 /**
  *

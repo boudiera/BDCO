@@ -43,7 +43,7 @@ public class TestTextuel {
         
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-        Factory.reservations = new ConcreteRequeteFactory(connection);
+        Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory(connection);
        
         IT_text.setController(controller);
         IT_text.showView(true);

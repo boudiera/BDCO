@@ -1,14 +1,8 @@
 package GraphicPackage;
 
-import FactoriesLayer.ConcreteRequeteFactory;
-import FactoriesLayer.ConnectionInfo;
-import FactoriesLayer.TheConnection;
-import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
-import InterfaceMVC.*;
+import FactoriesLayer.*;
 import Modele.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.*;
@@ -23,15 +17,15 @@ import javax.swing.table.*;
  *
  * @author trentini
  */
-public class FrameReservationList extends javax.swing.JFrame {
+public class FrameReservationList extends javax.swing.JFrame implements WindowView{
 
     final private static FrameReservationList singletonWindow = new FrameReservationList();
     
-    private ArrayList<Reservation> ListReservs;
-    private Reservation SelectedReservation;
+    private ArrayList<Reservation> listReservations = new ArrayList<>();
+    private Reservation selectedReservation;
 
     public Reservation getSelectedReservation() {
-        return SelectedReservation;
+        return selectedReservation;
     }
     
     /**
@@ -39,9 +33,9 @@ public class FrameReservationList extends javax.swing.JFrame {
      */
     private FrameReservationList() {
         initComponents();
-        
-        this.ListReservs = new ArrayList<>();
-        
+        Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory();
+        updateReservationTable(Factory.reservations.getReservationsList());
+
         /*   TEST CODE
         ArrayList<Table> CodesTables = new ArrayList<>();
         CodesTables.add(new Table(2, "window", 4, 3, 2));
@@ -54,36 +48,31 @@ public class FrameReservationList extends javax.swing.JFrame {
         this.ListReservs.add(new Reservation(6, new ArrayList<Table>(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.MIDI));
         //END OF TEST CODE
         */
-        
-        updateReservationTable();
     }
     
     public static FrameReservationList singletonFrameReservationList(){
         return FrameReservationList.singletonWindow;
     }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg instanceof ArrayList<?>){
+            updateReservationTable((ArrayList<Reservation>) arg);
+        }
+    }
+    
+    private void updateReservationTable(ArrayList<Reservation> resReservation){
+        this.listReservations.clear();
+        this.listReservations.addAll(resReservation);
         
-    private void updateReservationTable(){
-        
-        Factory.reservations = new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
-        this.ListReservs.clear();
-        this.ListReservs.addAll(Factory.reservations.getReservationsList());
-        
-        DefaultTableModel model = new DefaultTableModel() {
+        DefaultTableModel model = new DefaultTableModel(new String[]{ "Code", "Date", "Name", "Phone", "# People", "Table(s)" }, 0){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;   //all cells false
             }
         };
         
-        model.addColumn("Code");
-        model.addColumn("Date");
-        model.addColumn("Name");
-        model.addColumn("Phone");
-        model.addColumn("# People");
-        model.addColumn("Table(s)");
-        
-        this.ReservationsTable.setModel(model);
-        for (Reservation r : this.ListReservs) {
+        for (Reservation r : this.listReservations) {
            String stringListTables = "[ ";
            Iterator<Table> i = r.getCodeTable().iterator();
            if(!i.hasNext())
@@ -96,14 +85,18 @@ public class FrameReservationList extends javax.swing.JFrame {
            stringListTables += " ]";
             
             model.addRow(new Object[]{ r.getCodeReservation(), r.getDate().writeDateSortable(),
-                r.getNomClient(), r.getPhone(), r.getNbPersonnes(), stringListTables});
+                r.getClientName(), r.getPhone(), r.getNbPersonnes(), stringListTables});
         }
         
+        this.ReservationsTable.setModel(model);
+
         setReservationTableSortable(model);
-        
-        this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMinWidth(0);
-        this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMaxWidth(0);
-        this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setWidth(0);
+
+        try{
+            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMinWidth(0);
+            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMaxWidth(0);
+            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setWidth(0);
+        }catch(Exception e){}
     }
     
     private void setReservationTableSortable(DefaultTableModel model){
@@ -111,20 +104,22 @@ public class FrameReservationList extends javax.swing.JFrame {
         this.ReservationsTable.setRowSorter(sorter);
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         
-        sortKeys.add(new RowSorter.SortKey(model.findColumn("Name"), SortOrder.ASCENDING));
-        sorter.setSortKeys(sortKeys);
-        
-        int unsortableColumn;
-        
-        unsortableColumn = model.findColumn("# People");
-        if(unsortableColumn != -1){
-            sorter.setSortable(unsortableColumn, false);
-        }
-        
-        unsortableColumn = model.findColumn("Table(s)");
-        if(unsortableColumn != -1){
-            sorter.setSortable(unsortableColumn, false);
-        }
+        try{
+            sortKeys.add(new RowSorter.SortKey(model.findColumn("Name"), SortOrder.ASCENDING));
+            sorter.setSortKeys(sortKeys);
+
+            int unsortableColumn;
+
+            unsortableColumn = model.findColumn("# People");
+            if(unsortableColumn != -1){
+                sorter.setSortable(unsortableColumn, false);
+            }
+
+            unsortableColumn = model.findColumn("Table(s)");
+            if(unsortableColumn != -1){
+                sorter.setSortable(unsortableColumn, false);
+            }
+        }catch(Exception e){}
         
         sorter.sort();
     }
@@ -228,7 +223,7 @@ public class FrameReservationList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSelectedReservationActionPerformed
-        singletonGlobalGraphicView().showView(EnumWindow.ResevationDetails);
+        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ResevationDetails);
     }//GEN-LAST:event_OpenSelectedReservationActionPerformed
 
     private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
@@ -236,7 +231,7 @@ public class FrameReservationList extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
-        singletonGlobalGraphicView().showView(EnumWindow.ReservationCreation);
+        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ReservationCreation);
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed
@@ -244,7 +239,13 @@ public class FrameReservationList extends javax.swing.JFrame {
             this.DeleteSelectedReservation.setEnabled(false);
             this.OpenSelectedReservation.setEnabled(false);
         }else{
-            this.SelectedReservation = this.ListReservs.get(this.ReservationsTable.getSelectedRow());
+            for(Reservation r : this.listReservations){
+                if(r.getCodeReservation() == (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0)){
+                    this.selectedReservation = r;
+                    break;
+                }
+            }
+
             this.DeleteSelectedReservation.setEnabled(true);
             this.OpenSelectedReservation.setEnabled(true);
         }

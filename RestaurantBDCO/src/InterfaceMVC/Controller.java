@@ -10,7 +10,6 @@ import Modele.Factory;
 import Modele.Reservation;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  *
@@ -33,7 +32,7 @@ public class Controller {
         return Factory.reservations.getReservationsList();
     }
 
-    public void verifyAddReservation(String year,String month, String day, String hour, String minute, String nbPeople, String phone) throws ReservationException {
+    public void verifyAddReservation(String year, String month, String day, String hour, String minute, String nbPeople, String phone) throws ReservationException {
         int yearIn=Integer.parseInt(year);
         int monthIn=Integer.parseInt(month);
         int dayIn=Integer.parseInt(day);
@@ -67,9 +66,8 @@ public class Controller {
             throw new JourException();
         }
         
-        //gestion nombre client négatif
-        
-        if (nbPeopleIn<0)
+        //gestion nombre client négatif ou nul
+        if (nbPeopleIn<=0)
             throw new NbPersonneException();
          
         //gestion d'heure:

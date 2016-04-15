@@ -5,8 +5,10 @@
  */
 package InterfaceMVC;
 
+import FactoriesLayer.ConcreteRequeteFactory;
+import FactoriesLayer.ConnectionInfo;
+import FactoriesLayer.TheConnection;
 import GraphicPackage.*;
-import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
 
 /**
  *
@@ -20,11 +22,13 @@ public class RunGraphicMVC {
     public static void run(String[] args) {
         // TODO code application logic here
 
-        AbstractView MainView = singletonGlobalGraphicView();
-        Controller GC = new ControllerGraphic();
+        AbstractView MainView = GlobalGraphicView.singletonGlobalGraphicView();
+        Controller GC = new Controller();
         
-        ((GlobalGraphicView) MainView).showView(EnumWindow.ReservationList);
+        ((GlobalGraphicView) MainView).setActiveView(EnumWindow.ReservationList);
         MainView.setController(GC);
+        
+        ConcreteRequeteFactory.singletonConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
 
         GC.setView(MainView);
     }
