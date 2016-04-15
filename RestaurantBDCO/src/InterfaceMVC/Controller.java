@@ -74,7 +74,7 @@ public class Controller {
         //gestion d'heure:
         
         if(heureEnt<0 || heureEnt>24)
-            throw new HeureException();
+            throw new Exceptions().HeureException();
         
         //gestion minutes
         if(minuteEnt<0 || minuteEnt>59)

@@ -1,6 +1,6 @@
 package GraphicPackage;
 
-import FactoriesLayer.ConcreteReservationFactory;
+import FactoriesLayer.ConcreteRequeteFactory;
 import FactoriesLayer.ConnectionInfo;
 import FactoriesLayer.TheConnection;
 import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
@@ -64,7 +64,7 @@ public class FrameReservationList extends javax.swing.JFrame {
         
     private void updateReservationTable(){
         
-        Factory.reservations = new ConcreteReservationFactory(new TheConnection(new ConnectionInfo()));
+        Factory.reservations = new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
         this.ListReservs.clear();
         this.ListReservs.addAll(Factory.reservations.getReservationsList());
         

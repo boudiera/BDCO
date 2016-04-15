@@ -5,7 +5,6 @@
  */
 package GraphicPackage;
 
-import FactoriesLayer.ConcreteReservationFactory;
 import FactoriesLayer.ConnectionInfo;
 import FactoriesLayer.TheConnection;
 import Modele.Article;

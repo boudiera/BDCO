@@ -39,7 +39,7 @@ public class GlobalGraphicView extends AbstractView {
                 this.activeWindow = new FrameReservationDetails();
                 break;
             case Commande:
-                this.activeWindow = null;
+                this.activeWindow = new FrameCommande();
                 break;
         }
     }

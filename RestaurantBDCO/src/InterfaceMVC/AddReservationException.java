@@ -10,7 +10,9 @@ package InterfaceMVC;
  * @author mourinf
  */
 public abstract class AddReservationException extends Exception {
-protected String message;
+    
+    protected String message;
+    
     /**
      * Creates a new instance of <code>AddReservationException</code> without
      * detail message.
@@ -29,8 +31,8 @@ protected String message;
     }
 
   
+    @Override
     public String getMessage() {
         return message; //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

@@ -7,25 +7,8 @@ package InterfaceMVC;
 
 /**
  *
- * @author mourinf
+ * @author trentini
  */
-public class HeureException extends AddReservationException {
-
-    /**
-     * Creates a new instance of <code>HeureException</code> without detail
-     * message.
-     */
-    public HeureException() {
-        message="La saisie de l'heure est incorrecte";
-    }
-
-    /**
-     * Constructs an instance of <code>HeureException</code> with the specified
-     * detail message.
-     *
-     * @param msg the detail message.
-     */
-    public HeureException(String msg) {
-        super(msg);
-    }
+public class HeureException {
+    
 }

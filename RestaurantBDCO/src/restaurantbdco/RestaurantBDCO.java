@@ -20,7 +20,7 @@ public class RestaurantBDCO {
     public static void main(String[] args) {
         // TODO code application logic here
         TestTextuel.main(args);
-        RunGraphicMVC.run(args);
+        //RunGraphicMVC.run(args);
         
     }
     
