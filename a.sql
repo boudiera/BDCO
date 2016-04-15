@@ -1,3 +1,5 @@
+-- Creation des differentes tables
+
 CREATE TABLE PrixTotal (
     Valeur INTEGER,
     CONSTRAINT valeur_pk PRIMARY KEY (Valeur),

@@ -18,17 +18,14 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         this.connexion = connexion;
     }
     
-    @Override
-    public void createReservation(String NomClient, String NumTelClient) {
+    @Override // Creation et insertion d'une reservation
+    public void createReservation() {
         connexion.open();
         
-        String STMT_1 = "insert into Client"
-                + "values (SeqClient.nextval, ?, ?)";
-                
-        
-        String STMT = "insert into Reservation"
+        String STMT_2 = "insert into Reservation"
                 + "values (A FINIR)";
-    }
-    
+        String STMT_3 = "insert into Occupe"
+                + "values (A FINIR)";
+    }    
     
 }

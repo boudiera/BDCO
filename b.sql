@@ -1,4 +1,7 @@
+-- Insetions de n-uplets de test
+
 CREATE SEQUENCE SeqClient;
+CREATE SEQUENCE SeqReservation;
 
 INSERT INTO Client
 	VALUES (0, 'Clément', '0675962922');
