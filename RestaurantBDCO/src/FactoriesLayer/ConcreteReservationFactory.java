@@ -17,7 +17,7 @@ public class ConcreteReservationFactory extends ReservationFactory{
     }
 
     @Override
-    public ArrayList<Reservation> reservations() {
+    public ArrayList<Reservation> getReservationsList() {
         connexion.open();
         try {
             System.out.println("On commence la requete");

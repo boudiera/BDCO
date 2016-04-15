@@ -29,7 +29,7 @@ public class Controller {
     
     public ArrayList<Reservation> getReservationList(){
         //return this.reservFactory.reservations();
-        return Factory.reservations.reservations();
+        return Factory.reservations.getReservationsList();
     }
 
 }

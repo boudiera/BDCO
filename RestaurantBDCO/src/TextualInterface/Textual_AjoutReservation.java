@@ -81,8 +81,8 @@ public class Textual_AjoutReservation extends AbstractView {
         String choix = sc.nextLine();
                
         if (choix.equalsIgnoreCase("q")){
-                   this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());
-                   System.exit(0);
+                   System.out.print(" Annulation de la reservation \n");
+                   this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());           
         }           
         return choix;
     }
