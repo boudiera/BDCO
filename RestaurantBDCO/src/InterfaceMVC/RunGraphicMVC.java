@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurantbdco;
+package InterfaceMVC;
 
-import GraphicViews.ViewReservationList;
-import GraphicViews.AbstractView;
-import GraphicViews.ControllerGraphic;
+import GraphicPackage.GraphicViews;
+import GraphicPackage.ViewReservationList;
+import InterfaceMVC.AbstractView;
 
 /**
  *
@@ -21,11 +21,11 @@ public class RunGraphicMVC {
     public static void run(String[] args) {
         // TODO code application logic here
 
-        AbstractView MainView = ViewReservationList.singletonFrameReservationList();
+        AbstractView MainView = new GraphicViews();
         ControllerGraphic GC = new ControllerGraphic();
         
-        MainView.addController(GC);
-        GC.setMainView(MainView);
-        GC.startMainView();
+        MainView.setController(GC);
+        GC.setView(MainView);
+        GC.startView();
     }
 }

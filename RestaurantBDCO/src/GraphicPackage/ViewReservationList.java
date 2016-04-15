@@ -1,9 +1,11 @@
-package GraphicViews;
+package GraphicPackage;
 
+import InterfaceMVC.AbstractView;
+import InterfaceMVC.Controller;
+import InterfaceMVC.ControllerGraphic;
 import Modele.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.*;
@@ -18,12 +20,12 @@ import javax.swing.table.*;
  *
  * @author trentini
  */
-public class ViewReservationList extends AbstractView {
+public class ViewReservationList extends javax.swing.JFrame {
 
     private static ViewReservationList Window = null;
     private ControllerGraphic GC = null;
     
-    private ListReservations ListReservs;
+    private ArrayList<Reservation> ListReservs;
     private Reservation SelectedReservation;
     
     /**
@@ -32,18 +34,18 @@ public class ViewReservationList extends AbstractView {
     public ViewReservationList() {
         initComponents();
         
-        this.ListReservs = ListReservations.singletonListReservations();
+        this.ListReservs = new ArrayList<>();
         
         ///*   TEST CODE
-        ListTables CodesTables = new ListTables();
-        CodesTables.add(2);
-        CodesTables.add(5);
-        CodesTables.add(6);
-        CodesTables.add(15);
+        ArrayList<Table> CodesTables = new ArrayList<>();
+        CodesTables.add(new Table(2, "window", 4, 3, 2));
+        CodesTables.add(new Table(5, "window", 4, 3, 2));
+        CodesTables.add(new Table(6, "window", 4, 3, 2));
+        CodesTables.add(new Table(15, "window", 4, 3, 2));
 
-        this.ListReservs.addReservation(new Reservation(CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.Midday));
-        this.ListReservs.addReservation(new Reservation(new ListTables(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.Midday));
-        this.ListReservs.addReservation(new Reservation(new ListTables(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.Midday));
+        this.ListReservs.add(new Reservation(1, CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.Midday));
+        this.ListReservs.add(new Reservation(5, new ArrayList<Table>(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.Midday));
+        this.ListReservs.add(new Reservation(6, new ArrayList<Table>(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.Midday));
         //*/   END OF TEST CODE
         
         updateReservationTable();
@@ -56,11 +58,6 @@ public class ViewReservationList extends AbstractView {
         return ViewReservationList.Window;
     }
         
-    @Override
-    public void addController(AbstractController c) {
-        this.GC = (ControllerGraphic) c;
-    }
-    
     private void updateReservationTable(){
         DefaultTableModel model = new DefaultTableModel() {
             @Override
@@ -76,7 +73,7 @@ public class ViewReservationList extends AbstractView {
         model.addColumn("Table(s)");
 
         this.ReservationsTable.setModel(model);
-        for (Reservation r : this.ListReservs.getList()) {
+        for (Reservation r : this.ListReservs) {
             model.addRow(new Object[]{r.getDate().writeDateSortable(), r.getNomClient(), r.getPhone(), r.getNbPersonnes(), r.getCodeTable()});
         }
         
@@ -222,7 +219,7 @@ public class ViewReservationList extends AbstractView {
             this.DeleteSelectedReservation.setEnabled(false);
             this.OpenSelectedReservation.setEnabled(false);
         }else{
-            this.SelectedReservation = this.ListReservs.getList().get(this.ReservationsTable.getSelectedRow());
+            this.SelectedReservation = this.ListReservs.get(this.ReservationsTable.getSelectedRow());
             this.DeleteSelectedReservation.setEnabled(true);
             this.OpenSelectedReservation.setEnabled(true);
         }

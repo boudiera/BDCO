@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /** Une reservation */
 public class Reservation {
-    private int codeReservation;
+    private final int codeReservation;
     private ArrayList<Table> listCodeTables;
     private int nbPersonnes;
     private String nomClient;
@@ -22,6 +22,41 @@ public class Reservation {
         this.service = service;
     }
 
+    
+        public String AfficheNombrePersonnes(){
+        int tailleNombre= String.valueOf(this.nbPersonnes).length(); 
+        String affNbPersonne="";
+        int nbpers= this.nbPersonnes;
+
+            for (int j=1; j<=Math.floor(15-tailleNombre)/2;j++){
+                affNbPersonne=affNbPersonne.concat(" ");
+            }
+           affNbPersonne=affNbPersonne+nbpers;
+           for (int j=1; j<15-tailleNombre-Math.floor(15-tailleNombre)/2;j++){
+                affNbPersonne=affNbPersonne.concat(" ");
+           }
+           affNbPersonne=affNbPersonne.concat("|");
+           return affNbPersonne;
+    }
+           
+    public String AffichageNomClient() {
+        String S="";
+        int taille=this.nomClient.length();
+        if (this.nomClient.length()<13){
+            for( int i=1; i<=Math.floor((13-taille)/2); i++){
+                S=S.concat(" ");
+            }
+            S=S+this.nomClient;
+            for( int i=1; i<=13-taille-Math.floor((13-taille)/2); i++){
+                S=S.concat(" ");
+            }
+            return S;
+        }
+        return nomClient;
+    }
+    
+   
+    
     public ArrayList<Table> getCodeTable() {
         return listCodeTables;
     }
@@ -32,11 +67,22 @@ public class Reservation {
 
     public ReservationDate getDate() {
         return date;
-    }    
+    }  
+    
 
+    public int getCodeReservation() {
+        return codeReservation;
+    }
+
+    public ArrayList<Table> getListCodeTables() {
+        return listCodeTables;
+    }
+
+    
     public String getNomClient() {
         return nomClient;
     }
+   
 
     public String getPhone() {
         return phone;

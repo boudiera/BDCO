@@ -6,8 +6,7 @@
 package TextualInterface;
 import java.util.*;
 import java.lang.*;
-import Modele.ListReservations;
-import Modele.Reservation;
+import Modele.*;
 
 
 
@@ -16,38 +15,49 @@ import Modele.Reservation;
  * @author mourinf
  */
 public class Textual_ReservationList {
-    ListReservations listReservations;
+    ArrayList<Reservation> listReservations;
+
     
-    public Textual_ReservationList (ListReservations listReservations){
+    public Textual_ReservationList (ArrayList<Reservation> listReservations){
         this.listReservations=listReservations;
     }
     
     public void PrintReservations(){
-         int i = 1;
-         System.out.println("------------- AFFICHAGE DES RESERVATIONS ---------- \n");
-         
-         for (Reservation reservation : this.listReservations.getList()){
-            i++;
-            System.out.print("Reservation "+ i);
-            System.out.print(" Nom : " + reservation.getNomClient());
-            System.out.print(" Date : "+ reservation.getDate().getDay()+"/"+ reservation.getDate().getMonth()+"/"+reservation.getDate().getYear());
-            System.out.print(" Telephone : " + reservation.getPhone());
+         int i = 0;
+         System.out.println("--------------------------------------~AFFICHAGE DES RESERVATIONS~---------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------");
+            System.out.print("| Reservation |");
+            System.out.print("      Nom     |");
+            System.out.print("     Date     |"); 
+            System.out.print("    Telephone |");
+            System.out.print("     Heure    |");
+            System.out.print(" nbPersonnes  |");
+            System.out.println("  Code Table   ");
             
-            System.out.print(" Heure : " + reservation.getDate().getHours()+"h"+reservation.getDate().getMinutes());
-           
-            System.out.print(" Code Table : ");
-            for (int codetable: reservation.getCodeTable()){
-                 System.out.print(codetable+" ");
+         for (Reservation reservation : this.listReservations){
+            i++;
+            System.out.println("---------------------------------------------------------------------------------------------------------");
+            System.out.print("|      "+i+"      |");
+            System.out.print(" "+reservation.AffichageNomClient()+"|");
+            System.out.print("    "+reservation.getDate().getDay()+"/"+ reservation.getDate().getMonth()+"/"+reservation.getDate().getYear()+"  |");
+            System.out.print("   "+reservation.getPhone()+" |");
+            System.out.print("     "+reservation.getDate().getHours()+"h"+reservation.getDate().getMinutes()+"    |");
+            
+            
+            System.out.print(reservation.AfficheNombrePersonnes());
+            // affichage code Table
+            System.out.print("       ");
+            for (Table table : reservation.getCodeTable()){
+                 System.out.print(table.getCodeTable()+" ");
             }
-             System.out.println("");
+             System.out.println();
          }
           System.out.println("");
           System.out.println("");
     }
     
     public void afficheMenu(){
-        System.out.println("Tapez le numero de la reservation pour l'afficher \n"
-                + "Appuyez sur c pour entrer une nouvelle reservation \n"
+        System.out.println("Appuyez sur c pour entrer une nouvelle reservation \n"
                 + "Appuyez sur q pour quitter");
     }
     

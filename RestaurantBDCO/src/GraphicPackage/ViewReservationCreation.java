@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicViews;
+package GraphicPackage;
 
-import ControlModele.CreateReservation;
+import InterfaceMVC.Controller;
+import InterfaceMVC.AbstractView;
+import InterfaceMVC.ControllerGraphic;
 import Modele.Service;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -14,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author trentini
  */
-public class ViewReservationCreation extends AbstractView {
+public class ViewReservationCreation extends javax.swing.JFrame {
 
     private ControllerGraphic GC = null;
     
@@ -26,6 +28,7 @@ public class ViewReservationCreation extends AbstractView {
         
         this.GC = null;
     }
+    
     public ViewReservationCreation(ControllerGraphic GC) {
         initComponents();
         
@@ -36,11 +39,6 @@ public class ViewReservationCreation extends AbstractView {
     public void dispose() {
         GC.closeFrameReservationCreation();
         super.dispose();
-    }
-    
-    @Override
-    public void addController(AbstractController c) {
-        this.GC = (ControllerGraphic) c;
     }
     
     /**
@@ -360,7 +358,7 @@ public class ViewReservationCreation extends AbstractView {
     }//GEN-LAST:event_createButtonKeyPressed
 
     private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
-        CreateReservation res=null;
+        /*CreateReservation res=null;
         try {
             Date date = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
@@ -377,6 +375,7 @@ public class ViewReservationCreation extends AbstractView {
         }
         if (res!=null)
             res.execute();
+        */
     }//GEN-LAST:event_createButtonMouseClicked
 
     /**
@@ -442,4 +441,9 @@ public class ViewReservationCreation extends AbstractView {
     private javax.swing.JTextField nbPeople;
     private javax.swing.JTextField year;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setVisible(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
