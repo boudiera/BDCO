@@ -5,14 +5,14 @@ import java.util.ArrayList;
 /** Une reservation */
 public class Reservation {
     private int codeReservation;
-    private ListTables listCodeTables;
+    private ArrayList<Table> listCodeTables;
     private int nbPersonnes;
     private String nomClient;
     private ReservationDate date;
     private String phone;
     private Service service;
 
-    public Reservation(int codeReservation, ListTables listCodeTables, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
+    public Reservation(int codeReservation, ArrayList<Table> listCodeTables, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
         this.codeReservation = codeReservation;
         this.listCodeTables = listCodeTables;
         this.nbPersonnes = nbPersonnes;
@@ -22,7 +22,7 @@ public class Reservation {
         this.service = service;
     }
 
-    public ArrayList<Integer> getCodeTable() {
+    public ArrayList<Table> getCodeTable() {
         return listCodeTables;
     }
 
@@ -42,7 +42,7 @@ public class Reservation {
         return phone;
     }
 
-    public void setListCodeTables(ListTables listCodeTables) {
+    public void setListCodeTables(ArrayList<Table> listCodeTables) {
         this.listCodeTables = listCodeTables;
     }
 
