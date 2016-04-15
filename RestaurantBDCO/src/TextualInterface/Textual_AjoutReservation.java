@@ -7,6 +7,7 @@ package TextualInterface;
 
 
 import InterfaceMVC.AbstractView;
+import InterfaceMVC.Controller;
 import Modele.Service;
 import java.util.Date;
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ import java.util.Scanner;
  */
 public class Textual_AjoutReservation extends AbstractView {
 
-    public Textual_AjoutReservation () {
+    public Textual_AjoutReservation (Controller controller) {
+        this.setController(controller);
     }
 
     @Override
@@ -72,15 +74,16 @@ public class Textual_AjoutReservation extends AbstractView {
         
     }
     
-    
-    
+   
     private String lectureEntree() {
         
         Scanner sc = new Scanner(System.in);
         String choix = sc.nextLine();
                
-        if (choix.equalsIgnoreCase("q"))
+        if (choix.equalsIgnoreCase("q")){
                    this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());
+                   System.exit(0);
+        }           
         return choix;
     }
     

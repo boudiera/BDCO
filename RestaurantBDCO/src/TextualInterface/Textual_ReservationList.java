@@ -76,6 +76,7 @@ public class Textual_ReservationList extends AbstractView {
          }
           System.out.println("");
           System.out.println("");
+          gestionEvent();
     }
     
     public void afficheMenu(){
@@ -90,8 +91,7 @@ public class Textual_ReservationList extends AbstractView {
             Scanner sc = new Scanner(System.in);
             String choix = sc.nextLine();
              if (choix.equalsIgnoreCase("c")){
-                   this.getController().setView(new Textual_AjoutReservation());
-                      
+                   this.getController().setView(new Textual_AjoutReservation(this.getController()));          
              }       
              else if (choix.equalsIgnoreCase("q"))
                    System.exit(0);

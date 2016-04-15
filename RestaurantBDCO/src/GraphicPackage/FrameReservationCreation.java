@@ -352,7 +352,7 @@ public class FrameReservationCreation extends javax.swing.JFrame {
     }//GEN-LAST:event_createButtonKeyPressed
 
     private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
-        /*CreateReservation res=null;
+        CreateReservation res=null;
         try {
             Date date = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
@@ -369,7 +369,6 @@ public class FrameReservationCreation extends javax.swing.JFrame {
         }
         if (res!=null)
             res.execute();
-        */
     }//GEN-LAST:event_createButtonMouseClicked
 
     /**
