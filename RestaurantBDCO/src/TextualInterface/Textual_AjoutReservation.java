@@ -7,15 +7,15 @@ package TextualInterface;
 
 
 import InterfaceMVC.AbstractView;
-import InterfaceMVC.AddReservationException;
+import InterfaceMVC.Exceptions.ReservationException;
 import InterfaceMVC.Controller;
-import InterfaceMVC.HeureException;
-import InterfaceMVC.JourException;
-import InterfaceMVC.MauvaiseDateException;
-import InterfaceMVC.MinuteException;
-import InterfaceMVC.MoisException;
-import InterfaceMVC.NbPersonneException;
-import InterfaceMVC.TelephoneException;
+import InterfaceMVC.Exceptions.HeureException;
+import InterfaceMVC.Exceptions.JourException;
+import InterfaceMVC.Exceptions.WrongDateException;
+import InterfaceMVC.Exceptions.MinuteException;
+import InterfaceMVC.Exceptions.MonthException;
+import InterfaceMVC.Exceptions.NbPersonneException;
+import InterfaceMVC.Exceptions.TelephoneException;
 import Modele.Service;
 
 import java.util.Date;
@@ -76,8 +76,8 @@ public class Textual_AjoutReservation extends AbstractView {
         tel = lectureEntree();
        
         try {
-            this.getController().VerifyAddReservation(annee,mois,jour,heure,minute, nbPersonnes, tel);
-        } catch (AddReservationException e) {
+            this.getController().verifyAddReservation(annee,mois,jour,heure,minute, nbPersonnes, tel);
+        } catch (ReservationException e) {
             System.out.println(e.getMessage());
         }
        

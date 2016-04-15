@@ -5,6 +5,7 @@
  */
 package InterfaceMVC;
 
+import InterfaceMVC.Exceptions.*;
 import Modele.Factory;
 import Modele.Reservation;
 import java.util.ArrayList;
@@ -17,71 +18,71 @@ import java.util.Date;
  */
 public class Controller {
     
-    private AbstractView View;
+    protected AbstractView view;
     
     public AbstractView getView(){
-        return this.View;
+        return this.view;
     }
     
     public void setView(AbstractView v){
-        this.View = v;
-        this.View.showView(true);
+        this.view = v;
+        this.view.showView(true);
     }
     
     public ArrayList<Reservation> getReservationList(){
         return Factory.reservations.getReservationsList();
     }
 
-    public void VerifyAddReservation(String annee,String mois, String jour, String heure, String minute, String nbPersonnes, String tel) throws AddReservationException{
-        int anneeEnt=Integer.parseInt(annee);
-        int moisEnt=Integer.parseInt(mois);
-        int jourEnt=Integer.parseInt(jour);
-        int heureEnt=Integer.parseInt(heure);
-        int minuteEnt=Integer.parseInt(minute);
-        int nbPersonnesEnt= Integer.parseInt(nbPersonnes);
+    public void verifyAddReservation(String year,String month, String day, String hour, String minute, String nbPeople, String phone) throws ReservationException {
+        int yearIn=Integer.parseInt(year);
+        int monthIn=Integer.parseInt(month);
+        int dayIn=Integer.parseInt(day);
+        int hourIn=Integer.parseInt(hour);
+        int minuteIn=Integer.parseInt(minute);
+        int nbPeopleIn= Integer.parseInt(nbPeople);
        
         //gestion date antérieure à celle du jour
-        if (Calendar.getInstance().getTime().getYear()> (anneeEnt-1900))
-            throw new MauvaiseDateException();
-        else if((Calendar.getInstance().getTime().getYear()== (anneeEnt-1900)) && (Calendar.getInstance().getTime().getMonth()+1>moisEnt))
-            throw new MauvaiseDateException();
-        else if ((Calendar.getInstance().getTime().getYear()== (anneeEnt-1900)) && (Calendar.getInstance().getTime().getMonth()+1==moisEnt) && (Calendar.getInstance().getTime().getDate()>jourEnt))
-            throw new MauvaiseDateException();
+        if (Calendar.getInstance().getTime().getYear() > (yearIn-1900))
+            throw new WrongDateException();
+        else if((Calendar.getInstance().getTime().getYear()== (yearIn-1900)) && (Calendar.getInstance().getTime().getMonth()+1>monthIn))
+            throw new WrongDateException();
+        else if ((Calendar.getInstance().getTime().getYear()== (yearIn-1900)) && (Calendar.getInstance().getTime().getMonth()+1==monthIn) && (Calendar.getInstance().getTime().getDate()>dayIn))
+            throw new WrongDateException();
         
         //gestion format date 
         //pour les mois:
-        if (moisEnt>12)
-            throw new MoisException();
-        if (jourEnt>31)
+        if (monthIn>12)
+            throw new MonthException();
+        if (dayIn>31)
             throw  new JourException();
-        if (moisEnt==2){ // gestion du mois de février
-            if (anneeEnt%4==0){ //annee bissextile
-                if(jourEnt>29)
+        if (monthIn==2){ // gestion du mois de février
+            if (yearIn%4==0){ //annee bissextile
+                if(dayIn>29)
                     throw new JourException();
             }
-            else if(jourEnt>28)
+            else if(dayIn>28)
                 throw new JourException();
         }
-        if( (moisEnt== 4 || moisEnt== 6 || moisEnt==9 || moisEnt==11) && ( jourEnt>30)){
+        if( (monthIn== 4 || monthIn== 6 || monthIn==9 || monthIn==11) && ( dayIn>30)){
             throw new JourException();
         }
         
         //gestion nombre client négatif
         
-        if (nbPersonnesEnt<0)
+        if (nbPeopleIn<0)
             throw new NbPersonneException();
          
         //gestion d'heure:
         
-        if(heureEnt<0 || heureEnt>24)
-            throw new Exceptions().HeureException();
+        if(hourIn<0 || hourIn>24)
+            throw new HeureException();
         
         //gestion minutes
-        if(minuteEnt<0 || minuteEnt>59)
+        if(minuteIn<0 || minuteIn>59)
             throw new MinuteException();
         
         //gestion téléphone
-        if(tel.length()!=10)
+        if(phone.length()!=10)
             throw new TelephoneException();  
     }
 }

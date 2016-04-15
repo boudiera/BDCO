@@ -132,7 +132,6 @@ public class FrameReservationList extends javax.swing.JFrame {
     @Override
     public void setVisible(boolean b) {
         super.setVisible(b);
-        if(b) updateReservationTable();
     }
 
     /**
@@ -229,8 +228,7 @@ public class FrameReservationList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSelectedReservationActionPerformed
-        singletonGlobalGraphicView().setWindow(EnumWindow.ResevationDetails);
-        singletonGlobalGraphicView().showView(true);
+        singletonGlobalGraphicView().showView(EnumWindow.ResevationDetails);
     }//GEN-LAST:event_OpenSelectedReservationActionPerformed
 
     private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
@@ -238,8 +236,7 @@ public class FrameReservationList extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
-        singletonGlobalGraphicView().setWindow(EnumWindow.ReservationCreation);
-        singletonGlobalGraphicView().showView(true);
+        singletonGlobalGraphicView().showView(EnumWindow.ReservationCreation);
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed

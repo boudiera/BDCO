@@ -13,7 +13,7 @@ import InterfaceMVC.*;
  */
 public class GlobalGraphicView extends AbstractView {
 
-    final private static GlobalGraphicView globalGraphicView = new GlobalGraphicView();
+    final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
     private javax.swing.JFrame activeWindow;
     
@@ -21,10 +21,10 @@ public class GlobalGraphicView extends AbstractView {
     }
     
     public static GlobalGraphicView singletonGlobalGraphicView(){
-        return GlobalGraphicView.globalGraphicView;
+        return GlobalGraphicView.GLOBAL_GRAPHIC_VIEW;
     }
     
-    public void setWindow(EnumWindow window){
+    public void showView(EnumWindow window){
         
         if(this.activeWindow != null) this.activeWindow.setEnabled(false);
         
@@ -42,11 +42,13 @@ public class GlobalGraphicView extends AbstractView {
                 this.activeWindow = new FrameCommande();
                 break;
         }
+        
+        showView(true);
     }
     
     @Override
     public void showView(boolean b) {
-        this.activeWindow.setEnabled(true);
+        this.activeWindow.setEnabled(b);
         this.activeWindow.setVisible(b);
     }
 }
