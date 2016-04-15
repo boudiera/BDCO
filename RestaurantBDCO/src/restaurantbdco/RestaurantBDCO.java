@@ -5,6 +5,8 @@
  */
 package restaurantbdco;
 
+import InterfaceMVC.RunGraphicMVC;
+
 /**
  *
  * @author trentini
