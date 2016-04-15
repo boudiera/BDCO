@@ -7,10 +7,10 @@ public class ConnectionInfo {
     final String USER;
     final String PASSWD;
 
-    public ConnectionInfo(String CONN_URL, String USER, String PASSWD) {
+    public ConnectionInfo() {
         this.CONN_URL = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
-        this.USER = "morieuxf";
-        this.PASSWD = "morieuxf";
+        this.USER = "michecle";
+        this.PASSWD = "michecle";
     }
     
 }
