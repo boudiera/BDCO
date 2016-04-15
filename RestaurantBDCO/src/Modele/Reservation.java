@@ -24,19 +24,15 @@ public class Reservation {
 
     
         public String AfficheNombrePersonnes(){
-        int tailleNombre= 1;
+        int tailleNombre= String.valueOf(this.nbPersonnes).length(); 
         String affNbPersonne="";
         int nbpers= this.nbPersonnes;
-        
-            while (nbpers/10>0){
-                    nbpers=nbpers/10;
-                    tailleNombre++;
-            }
-            for (int j=1; j<=Math.floor(13-tailleNombre)/2;j++){
+
+            for (int j=1; j<=Math.floor(15-tailleNombre)/2;j++){
                 affNbPersonne=affNbPersonne.concat(" ");
             }
            affNbPersonne=affNbPersonne+nbpers;
-           for (int j=1; j<13-tailleNombre-Math.floor(13-tailleNombre)/2;j++){
+           for (int j=1; j<15-tailleNombre-Math.floor(15-tailleNombre)/2;j++){
                 affNbPersonne=affNbPersonne.concat(" ");
            }
            affNbPersonne=affNbPersonne.concat("|");
