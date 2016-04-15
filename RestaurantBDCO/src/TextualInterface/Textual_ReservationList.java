@@ -23,31 +23,35 @@ public class Textual_ReservationList {
     }
     
     public void PrintReservations(){
-         int i = 1;
-         System.out.println("------------- AFFICHAGE DES RESERVATIONS ---------- \n");
-         
+         int i = 0;
+         System.out.println("--------------------------------AFFICHAGE DES RESERVATIONS--------------------------------");
+            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.print("| Reservation |");
+            System.out.print("      Nom     |");
+            System.out.print("     Date     |"); 
+            System.out.print("    Telephone |");
+            System.out.print("     Heure    |"); 
+            System.out.println("  Code Table   ");
          for (Reservation reservation : this.listReservations.getList()){
             i++;
-            System.out.print("Reservation "+ i);
-            System.out.print(" Nom : " + reservation.getNomClient());
-            System.out.print(" Date : "+ reservation.getDate().getDay()+"/"+ reservation.getDate().getMonth()+"/"+reservation.getDate().getYear());
-            System.out.print(" Telephone : " + reservation.getPhone());
-            
-            System.out.print(" Heure : " + reservation.getDate().getHours()+"h"+reservation.getDate().getMinutes());
-           
-            System.out.print(" Code Table : ");
+            System.out.println("------------------------------------------------------------------------------------------");
+            System.out.print("|      "+i+"      |");
+            System.out.print(" "+reservation.AffichageNomClient()+"|");
+            System.out.print("    "+reservation.getDate().getDay()+"/"+ reservation.getDate().getMonth()+"/"+reservation.getDate().getYear()+"  |");
+            System.out.print("   "+reservation.getPhone()+" |");
+            System.out.print("     "+reservation.getDate().getHours()+"h"+reservation.getDate().getMinutes()+"    |");
+            System.out.print("       ");
             for (int codetable: reservation.getCodeTable()){
                  System.out.print(codetable+" ");
             }
-             System.out.println("");
+             System.out.println();
          }
           System.out.println("");
           System.out.println("");
     }
     
     public void afficheMenu(){
-        System.out.println("Tapez le numero de la reservation pour l'afficher \n"
-                + "Appuyez sur c pour entrer une nouvelle reservation \n"
+        System.out.println("Appuyez sur c pour entrer une nouvelle reservation \n"
                 + "Appuyez sur q pour quitter");
     }
     

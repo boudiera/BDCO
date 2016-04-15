@@ -32,9 +32,26 @@ public class Reservation {
         return date;
     }    
 
+    public String AffichageNomClient() {
+        String S="";
+        int taille=this.nomClient.length();
+        if (this.nomClient.length()<13){
+            for( int i=1; i<=Math.floor((13-taille)/2); i++){
+                S=S.concat(" ");
+            }
+            S=S+this.nomClient;
+            for( int i=1; i<=13-taille-Math.floor((13-taille)/2); i++){
+                S=S.concat(" ");
+            }
+            return S;
+        }
+        return nomClient;
+    }
+
     public String getNomClient() {
         return nomClient;
     }
+   
 
     public String getPhone() {
         return phone;
