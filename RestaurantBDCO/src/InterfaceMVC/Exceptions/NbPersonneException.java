@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
 
 /**
  *
  * @author mourinf
  */
-public class NbPersonneException extends AddReservationException {
+public class NbPersonneException extends ReservationException {
 
     /**
      * Creates a new instance of <code>NbPersonneException</code> without detail

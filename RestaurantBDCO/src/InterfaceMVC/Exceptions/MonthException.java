@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
 
 /**
  *
  * @author mourinf
  */
-public class MoisException extends AddReservationException {
+public class MonthException extends ReservationException {
 
     /**
      * Creates a new instance of <code>MoisException</code> without detail
      * message.
      */
-    public MoisException() {
-       message="La saisie du mois est incorrect";
+    public MonthException() {
+        message="La saisie du mois est incorrect";
     }
 
     /**
@@ -25,7 +25,7 @@ public class MoisException extends AddReservationException {
      *
      * @param msg the detail message.
      */
-    public MoisException(String msg) {
+    public MonthException(String msg) {
         super(msg);
     }
 }
