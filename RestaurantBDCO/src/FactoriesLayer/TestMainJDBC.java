@@ -23,7 +23,7 @@ public class TestMainJDBC {
         TheConnection connection = new TheConnection(info);
         ConcreteRequeteFactory fact = new ConcreteRequeteFactory(connection);
         
-        ArrayList<Reservation> reserv = fact.reservations();
+        ArrayList<Reservation> reserv = fact.getReservationsList();
         
         for (Reservation r : reserv) {
             System.out.println(r.getCodeReservation());
