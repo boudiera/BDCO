@@ -5,7 +5,25 @@
  */
 package GraphicPackage;
 
+import FactoriesLayer.ConcreteReservationFactory;
+import FactoriesLayer.ConnectionInfo;
+import FactoriesLayer.TheConnection;
+import Modele.Article;
+import Modele.Commande;
+import Modele.Factory;
 import Modele.Reservation;
+import Modele.SingletonListCommande;
+import Modele.Table;
+import Modele.TypeArticle;
+import Modele.UniqueArticle;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -13,6 +31,8 @@ import Modele.Reservation;
  */
 public class FrameReservationDetails extends javax.swing.JFrame {
 
+    ArrayList<Commande> listCommand;
+    
     /**
      * Creates new form FrameReservationDetails
      */
@@ -22,6 +42,25 @@ public class FrameReservationDetails extends javax.swing.JFrame {
         Reservation selectedReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservation();
         
         this.TextCodeReservation.setText("Code: " + selectedReservation.getCodeReservation());
+        
+        listCommand = SingletonListCommande.singletonListCommande().getListCommandByReservationCode(selectedReservation.getCodeReservation());
+        
+        //
+        ArrayList<Article> la = new ArrayList<>();
+        la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
+        
+        this.listCommand.add(new Commande(1234, "Kiki", la));
+        
+        la.add(UniqueArticle.createDrink("a", (float) 3.3, "mex"));
+        this.listCommand.add(new Commande(1234, "Jojo", la));
+        
+        la.add(UniqueArticle.createDrink("a", (float) 100.1, "mex"));
+        this.listCommand.add(new Commande(1234, "Jojo", la));
+        
+        this.listCommand.add(new Commande(15, "Arnaud Zizi", new ArrayList<Article>()));
+        //
+        
+        updateCommandeTable();
     }
     
     @Override
@@ -30,6 +69,36 @@ public class FrameReservationDetails extends javax.swing.JFrame {
         GlobalGraphicView.singletonGlobalGraphicView().showView(true);
 
         super.dispose();
+    }
+    
+    private void updateCommandeTable(){
+        
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;   //all cells false
+            }
+        };
+        
+        model.addColumn("Identifier");
+        model.addColumn("SubTotal");
+        
+        this.CommandeTable.setModel(model);
+        for (Commande c : this.listCommand) {
+            model.addRow(new Object[]{ c.getIdentifier(), new Float(c.getPrice()) });
+        }
+        
+        sertCommandeTable(model);
+    }
+    
+    private void sertCommandeTable(DefaultTableModel model){
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.CommandeTable.getModel());
+        this.CommandeTable.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        
+        sortKeys.add(new RowSorter.SortKey(model.findColumn("Identifier"), SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
     }
     
     /**
@@ -42,7 +111,7 @@ public class FrameReservationDetails extends javax.swing.JFrame {
     private void initComponents() {
 
         PaneCommandeList = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        CommandeTable = new javax.swing.JTable();
         WindowTitle = new javax.swing.JLabel();
         ButtonDeleteSelectedCommand = new javax.swing.JButton();
         ButtonNewCommand = new javax.swing.JButton();
@@ -56,53 +125,9 @@ public class FrameReservationDetails extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                { new Integer(1234), "Cheveux Bleu",  new Float(123.6)},
-                {null, "Mec avec black jacket",  new Float(1250.99)},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Table", "Identifier", "Sub-Total Price"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setRowHeight(60);
-        PaneCommandeList.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
-        }
+        CommandeTable.setModel(new DefaultTableModel());
+        CommandeTable.setRowHeight(60);
+        PaneCommandeList.setViewportView(CommandeTable);
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -309,6 +334,7 @@ public class FrameReservationDetails extends javax.swing.JFrame {
     private javax.swing.JButton ButonGetBill;
     private javax.swing.JButton ButtonDeleteSelectedCommand;
     private javax.swing.JButton ButtonNewCommand;
+    private javax.swing.JTable CommandeTable;
     private javax.swing.JScrollPane PaneCommandeItems;
     private javax.swing.JScrollPane PaneCommandeList;
     private javax.swing.JLabel TextCodeReservation;
@@ -316,7 +342,6 @@ public class FrameReservationDetails extends javax.swing.JFrame {
     private javax.swing.JLabel TextTotalBill;
     private javax.swing.JLabel TextTotalBillValue;
     private javax.swing.JLabel WindowTitle;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

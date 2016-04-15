@@ -5,8 +5,6 @@
  */
 package InterfaceMVC;
 
-import GraphicPackage.*;
-
 /**
  *
  * @author trentini
@@ -17,4 +15,8 @@ public class ControllerGraphic extends Controller{
         this.getView().showView(true);
     };
 
+    @Override
+    public void setView(AbstractView v){
+        
+    }
 }

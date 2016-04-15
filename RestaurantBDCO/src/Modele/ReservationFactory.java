@@ -1,6 +1,7 @@
 package Modele;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /** Une liste de reservations */
 public abstract class ReservationFactory {
@@ -9,5 +10,5 @@ public abstract class ReservationFactory {
     
     // Renvoie les tables libres pour un service donné
     public abstract ArrayList<Table> tablesLibres(int year, int month, int day, Service service);
-    
+  
 }

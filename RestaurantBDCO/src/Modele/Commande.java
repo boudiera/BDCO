@@ -7,8 +7,11 @@ public class Commande {
     private int codeReservation;
     private float price;
     private final List<Article> listArticles;
+    
+    private String identifier;
 
-    public Commande(int codeReservation, List<Article> list){
+    public Commande(int codeReservation, String identifier, List<Article> list){
+        this.identifier = identifier;
         this.codeReservation = codeReservation;
         this.price=0;
         this.listArticles=list;
@@ -17,6 +20,10 @@ public class Commande {
         }
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+    
     public float getPrice(){
         return this.price;
     }

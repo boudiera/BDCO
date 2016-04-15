@@ -102,111 +102,13 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="CommandeTable">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="25">
-                <Column editable="true" title="Table" type="java.lang.Integer">
-                  <Data value="1234"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Identifier" type="java.lang.String">
-                  <Data value="Cheveux Bleu"/>
-                  <Data value="Mec avec black jacket"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Sub-Total Price" type="java.lang.Float">
-                  <Data value="123.6"/>
-                  <Data value="1250.99"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultTableModel()" type="code"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
+              <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="rowHeight" type="int" value="60"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
