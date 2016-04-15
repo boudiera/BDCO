@@ -5,7 +5,7 @@
  */
 package InterfaceMVC;
 
-import InterfaceMVC.AbstractController;
+import InterfaceMVC.Controller;
 
 /**
  *
@@ -13,8 +13,16 @@ import InterfaceMVC.AbstractController;
  */
 public abstract class AbstractView {
     
-    public abstract void addController(AbstractController c);
+    Controller controller;
     
-    public abstract void setVisible(boolean b);
+    public void setController(Controller c){
+        this.controller = c;
+    }
+    
+    public Controller getController(){
+        return this.controller;
+    }
+    
+    public abstract void showView(boolean b);
     
 }

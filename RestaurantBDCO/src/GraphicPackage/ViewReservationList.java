@@ -1,7 +1,7 @@
 package GraphicPackage;
 
 import InterfaceMVC.AbstractView;
-import InterfaceMVC.AbstractController;
+import InterfaceMVC.Controller;
 import InterfaceMVC.ControllerGraphic;
 import Modele.*;
 import java.util.ArrayList;

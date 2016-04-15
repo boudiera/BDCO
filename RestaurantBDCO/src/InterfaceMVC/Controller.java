@@ -13,14 +13,17 @@ import java.util.ArrayList;
  *
  * @author Iago Felipe Trentin
  */
-public class AbstractController {
+public class Controller {
     
     private ReservationFactory reservFactory;
-    private AbstractView Principal;
+    private AbstractView View;
     
+    public AbstractView getView(){
+        return this.View;
+    }
     
-    public void setView(AbstractView mainView){
-        this.Principal = mainView;
+    public void setView(AbstractView v){
+        this.View = v;
     }
     
     public ArrayList<Reservation> getReservationList(){

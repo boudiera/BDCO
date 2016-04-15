@@ -24,7 +24,7 @@ public class RunGraphicMVC {
         AbstractView MainView = new GraphicViews();
         ControllerGraphic GC = new ControllerGraphic();
         
-        MainView.addController(GC);
+        MainView.setController(GC);
         GC.setView(MainView);
         GC.startView();
     }

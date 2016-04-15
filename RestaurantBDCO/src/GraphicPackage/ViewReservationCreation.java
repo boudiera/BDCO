@@ -5,7 +5,7 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.AbstractController;
+import InterfaceMVC.Controller;
 import InterfaceMVC.AbstractView;
 import InterfaceMVC.ControllerGraphic;
 import Modele.Service;

@@ -5,7 +5,7 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.AbstractController;
+import InterfaceMVC.Controller;
 import InterfaceMVC.AbstractView;
 
 /**
@@ -17,12 +17,7 @@ public class GraphicViews extends AbstractView {
     private ViewReservationList frameReservationList = ViewReservationList.singletonFrameReservationList();
     
     @Override
-    public void addController(AbstractController c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setVisible(boolean b) {
+    public void showView(boolean b) {
         this.frameReservationList.setVisible(b);
     }
 }
