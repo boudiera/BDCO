@@ -24,5 +24,5 @@ public abstract class AbstractView {
     }
     
     public abstract void showView(boolean b) throws Exception;
-    
+
 }

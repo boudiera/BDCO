@@ -5,9 +5,8 @@
  */
 package InterfaceMVC;
 
-import GraphicPackage.GraphicViews;
-import GraphicPackage.ViewReservationList;
-import InterfaceMVC.AbstractView;
+import GraphicPackage.*;
+import InterfaceMVC.*;
 
 /**
  *
