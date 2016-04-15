@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 /** Une reservation */
 public class Reservation {
-    private ListTables codeTable;
+    private int codeReservation;
+    private ListTables listCodeTables;
     private int nbPersonnes;
     private String nomClient;
     private ReservationDate date;
     private String phone;
     private Service service;
 
-    public Reservation(ListTables codeTable, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
-        this.codeTable = codeTable;
+    public Reservation(int codeReservation, ListTables listCodeTables, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
+        this.codeReservation = codeReservation;
+        this.listCodeTables = listCodeTables;
         this.nbPersonnes = nbPersonnes;
         this.nomClient = nomClient;
         this.date = date;
@@ -21,7 +23,7 @@ public class Reservation {
     }
 
     public ArrayList<Integer> getCodeTable() {
-        return codeTable;
+        return listCodeTables;
     }
 
     public int getNbPersonnes() {
@@ -40,8 +42,8 @@ public class Reservation {
         return phone;
     }
 
-    public void setCodeTable(ListTables codeTable) {
-        this.codeTable = codeTable;
+    public void setListCodeTables(ListTables listCodeTables) {
+        this.listCodeTables = listCodeTables;
     }
 
     public void setDate(ReservationDate jour) {

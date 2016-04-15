@@ -14,6 +14,12 @@ import java.util.Iterator;
  */
 public class ListTables extends ArrayList<Integer> {
     
+    private String Location;
+    
+    public String getLocation(){
+        return this.Location;
+    }
+    
     @Override
     public String toString(){
         Iterator<Integer> it = iterator();
