@@ -5,7 +5,9 @@
  */
 package restaurantbdco;
 
-import GraphicFrames.*;
+import GraphicViews.ViewReservationList;
+import GraphicViews.AbstractView;
+import GraphicViews.ControllerGraphic;
 
 /**
  *

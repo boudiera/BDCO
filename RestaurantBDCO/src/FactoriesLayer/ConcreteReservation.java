@@ -1,11 +1,12 @@
 package FactoriesLayer;
 
 import Modele.*;
+import java.util.ArrayList;
 
 public class ConcreteReservation extends Reservation {
 
-    public ConcreteReservation(ListTables codeTable, int nbPersonnes, String nomClient, String tel, ReservationDate jour, Service service) {
-        super(codeTable, nbPersonnes, nomClient, tel, jour, service);
+    public ConcreteReservation(int codeReservation, ArrayList<Table> listCodeTables, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
+        super(codeReservation, listCodeTables, nbPersonnes, nomClient, phone, date, service);
     }
  
 }

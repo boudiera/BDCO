@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicFrames;
+package GraphicViews;
 
 /**
  *
  * @author Iago Felipe Trentin
  */
-public interface AbstractControllerGraphic {
+public interface AbstractController {
     
     public void setMainView(AbstractView mainView);
     public void startMainView();

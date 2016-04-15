@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicFrames;
+package GraphicViews;
 
 /**
  *
@@ -11,6 +11,6 @@ package GraphicFrames;
  */
 public abstract class AbstractView extends javax.swing.JFrame{
     
-    public abstract void addController(AbstractControllerGraphic c);
+    public abstract void addController(AbstractController c);
     
 }

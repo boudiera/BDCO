@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicFrames;
+package GraphicViews;
 
 /**
  *
  * @author trentini
  */
-public class ControllerGraphic implements AbstractControllerGraphic{
+public class ControllerGraphic implements AbstractController{
     AbstractView Principal;
     
     ViewReservationDetails ReservationDetails;

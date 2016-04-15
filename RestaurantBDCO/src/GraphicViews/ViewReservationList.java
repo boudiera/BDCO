@@ -1,4 +1,4 @@
-package GraphicFrames;
+package GraphicViews;
 
 import Modele.*;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ViewReservationList extends AbstractView {
     }
         
     @Override
-    public void addController(AbstractControllerGraphic c) {
+    public void addController(AbstractController c) {
         this.GC = (ControllerGraphic) c;
     }
     
