@@ -7,8 +7,9 @@ package Modele;
 
 /**
  *
- * @author boudiera
+ * @author michecle
  */
-public class Factory {
-    public static RequeteFactory reservations;   
+public abstract class InsertionFactory {
+    // Insertion d'une commande
+    public abstract void createReservation();
 }
