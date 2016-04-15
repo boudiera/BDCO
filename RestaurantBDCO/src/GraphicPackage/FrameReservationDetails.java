@@ -18,8 +18,10 @@ import Modele.UniqueArticle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -40,7 +42,7 @@ public class FrameReservationDetails extends javax.swing.JFrame {
         
         Reservation selectedReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservation();
         
-        this.TextCodeReservation.setText("Code: " + selectedReservation.getCodeReservation());
+        this.TextCodeReservation.setText("Reservation #" + selectedReservation.getCodeReservation());
         
         listCommand = SingletonListCommande.singletonListCommande().getListCommandByReservationCode(selectedReservation.getCodeReservation());
         
@@ -64,30 +66,43 @@ public class FrameReservationDetails extends javax.swing.JFrame {
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().setWindow(EnumWindow.ReservationList);
-        GlobalGraphicView.singletonGlobalGraphicView().showView(true);
-
+        GlobalGraphicView.singletonGlobalGraphicView().showView(EnumWindow.ReservationList);
         super.dispose();
     }
     
     private void updateCommandeTable(){
         
-        DefaultTableModel model = new DefaultTableModel() {
+        DefaultTableModel model = new DefaultTableModel(new String[]{ "Identifier", "Sub-Total" }, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;   //all cells false
             }
+            
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if(columnIndex == 1){
+                    return Float.class;
+                }else{
+                    return Object.class;
+                }
+            }
         };
-        
-        model.addColumn("Identifier");
-        model.addColumn("SubTotal");
         
         this.CommandeTable.setModel(model);
         for (Commande c : this.listCommand) {
-            model.addRow(new Object[]{ c.getIdentifier(), new Float(c.getPrice()) });
+            model.addRow(new Object[]{ c.getIdentifier(), c.getPrice() });
         }
         
         sertCommandeTable(model);
+        
+        try{
+            this.CommandeTable.getColumnModel().getColumn(model.findColumn("Identifier")).setPreferredWidth(180);
+            this.CommandeTable.getColumnModel().getColumn(model.findColumn("Sub-Total")).setPreferredWidth(10);
+            
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            this.CommandeTable.getColumnModel().getColumn(model.findColumn("Sub-Total")).setCellRenderer(centerRenderer);
+        }catch(Exception e){}
     }
     
     private void sertCommandeTable(DefaultTableModel model){
@@ -126,6 +141,7 @@ public class FrameReservationDetails extends javax.swing.JFrame {
 
         CommandeTable.setModel(new DefaultTableModel());
         CommandeTable.setRowHeight(60);
+        CommandeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         PaneCommandeList.setViewportView(CommandeTable);
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
@@ -147,7 +163,7 @@ public class FrameReservationDetails extends javax.swing.JFrame {
             }
         });
 
-        TextCodeReservation.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        TextCodeReservation.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
 
@@ -214,9 +230,11 @@ public class FrameReservationDetails extends javax.swing.JFrame {
         TextTotalBill.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         TextTotalBill.setText("Total:");
 
-        TextTotalBillValue.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        TextTotalBillValue.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         TextTotalBillValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextTotalBillValue.setText("€ 1 250,00");
+        TextTotalBillValue.setToolTipText("");
+        TextTotalBillValue.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,10 +244,6 @@ public class FrameReservationDetails extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(ButtonNewCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(ButtonDeleteSelectedCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,16 +251,18 @@ public class FrameReservationDetails extends javax.swing.JFrame {
                         .addComponent(ButonGetBill, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                         .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PaneCommandeList, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PaneCommandeList, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(TextTotalBill, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(TextTotalBillValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PaneCommandeItems, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TextCodeReservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

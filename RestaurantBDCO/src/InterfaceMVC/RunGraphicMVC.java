@@ -21,12 +21,11 @@ public class RunGraphicMVC {
         // TODO code application logic here
 
         AbstractView MainView = singletonGlobalGraphicView();
-        ControllerGraphic GC = new ControllerGraphic();
+        Controller GC = new ControllerGraphic();
         
-        ((GlobalGraphicView) MainView).setWindow(EnumWindow.ReservationList);
+        ((GlobalGraphicView) MainView).showView(EnumWindow.ReservationList);
         MainView.setController(GC);
 
         GC.setView(MainView);
-        GC.startView();
     }
 }

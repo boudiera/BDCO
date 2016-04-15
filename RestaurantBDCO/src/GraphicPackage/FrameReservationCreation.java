@@ -29,9 +29,7 @@ public class FrameReservationCreation extends javax.swing.JFrame {
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().setWindow(EnumWindow.ReservationList);
-        GlobalGraphicView.singletonGlobalGraphicView().showView(true);
-
+        GlobalGraphicView.singletonGlobalGraphicView().showView(EnumWindow.ReservationList);
         super.dispose();
     }
     

@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
 
 /**
  *
  * @author mourinf
  */
-public class MauvaiseDateException extends AddReservationException {
+public class WrongDateException extends ReservationException {
 
     /**
      * Creates a new instance of <code>Exception</code> without detail message.
      */
-    public MauvaiseDateException() {
+    public WrongDateException() {
         message="La date saisie est passée";
     }
 
@@ -24,7 +24,7 @@ public class MauvaiseDateException extends AddReservationException {
      *
      * @param msg the detail message.
      */
-    public MauvaiseDateException(String msg) {
+    public WrongDateException(String msg) {
         super(msg);
     }
 }

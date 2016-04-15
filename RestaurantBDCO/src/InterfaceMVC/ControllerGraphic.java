@@ -10,13 +10,5 @@ package InterfaceMVC;
  * @author trentini
  */
 public class ControllerGraphic extends Controller{
-   
-    public void startView(){
-        this.getView().showView(true);
-    };
 
-    @Override
-    public void setView(AbstractView v){
-        
-    }
 }

@@ -3,29 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
 
 /**
  *
- * @author mourinf
+ * @author trentini
  */
-public class HeurekkkkException extends AddReservationException {
-
+public class HeureException extends ReservationException{
     /**
      * Creates a new instance of <code>HeureException</code> without detail
      * message.
      */
-    public HeurekkkkException() {
-        message="La saisie de l'heure est incorrecte";
+    public HeureException() {
+        message = "La saisie de l'heure est incorrecte";
     }
 
     /**
-     * Constructs an instance of <code>HeureException</code> with the specified
-     * detail message.
+     * Constructs an instance of <code>HeureException</code> with the
+     * specified detail message.
      *
      * @param msg the detail message.
      */
-    public HeurekkkkException(String msg) {
+    public HeureException(String msg) {
         super(msg);
     }
 }
