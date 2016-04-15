@@ -1,8 +1,7 @@
 package GraphicPackage;
 
-import InterfaceMVC.AbstractView;
-import InterfaceMVC.Controller;
-import InterfaceMVC.ControllerGraphic;
+import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
+import InterfaceMVC.*;
 import Modele.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +19,9 @@ import javax.swing.table.*;
  *
  * @author trentini
  */
-public class ViewReservationList extends javax.swing.JFrame {
+public class FrameReservationList extends javax.swing.JFrame {
 
-    final private static ViewReservationList Window = new ViewReservationList();
+    final private static FrameReservationList Window = new FrameReservationList();
     private ControllerGraphic GC = null;
     
     private ArrayList<Reservation> ListReservs;
@@ -31,7 +30,7 @@ public class ViewReservationList extends javax.swing.JFrame {
     /**
      * Creates new form FrameReservationList
      */
-    private ViewReservationList() {
+    private FrameReservationList() {
         initComponents();
         
         this.ListReservs = new ArrayList<>();
@@ -51,8 +50,8 @@ public class ViewReservationList extends javax.swing.JFrame {
         updateReservationTable();
     }
     
-    public static ViewReservationList singletonFrameReservationList(){
-        return ViewReservationList.Window;
+    public static FrameReservationList singletonFrameReservationList(){
+        return FrameReservationList.Window;
     }
         
     private void updateReservationTable(){
@@ -208,7 +207,8 @@ public class ViewReservationList extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
-        GC.buttonAddNewReservation();
+        singletonGlobalGraphicView().setWindow(EnumWindow.ReservationCreation);
+        singletonGlobalGraphicView().showView(true);
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed
@@ -239,21 +239,23 @@ public class ViewReservationList extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewReservationList().setVisible(true);
+                new FrameReservationList().setVisible(true);
             }
         });
     }

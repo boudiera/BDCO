@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
-
-import GraphicPackage.*;
+package GraphicPackage;
 
 /**
  *
  * @author trentini
  */
-public class ControllerGraphic extends Controller{
-   
-    public void startView(){
-        this.getView().showView(true);
-    };
-
+public enum EnumWindow {
+    ReservationList,
+    ReservationCreation,
+    ResevationDetails,
+    Commande
 }

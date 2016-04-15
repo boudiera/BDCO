@@ -22,9 +22,7 @@ public abstract class AbstractView {
     public Controller getController(){
         return this.controller;
     }
-    
 
     public abstract void showView(boolean b);
-    
 
 }

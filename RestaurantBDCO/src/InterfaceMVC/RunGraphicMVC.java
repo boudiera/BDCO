@@ -6,7 +6,7 @@
 package InterfaceMVC;
 
 import GraphicPackage.*;
-import InterfaceMVC.*;
+import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
 
 /**
  *
@@ -20,11 +20,12 @@ public class RunGraphicMVC {
     public static void run(String[] args) {
         // TODO code application logic here
 
-        AbstractView MainView = new GraphicViews();
+        AbstractView MainView = singletonGlobalGraphicView();
         ControllerGraphic GC = new ControllerGraphic();
         
+        ((GlobalGraphicView) MainView).setWindow(EnumWindow.ReservationList);
         MainView.setController(GC);
-        
+
         GC.setView(MainView);
         GC.startView();
     }
