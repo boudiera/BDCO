@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicViews;
+package GraphicPackage;
 
 /**
  *
@@ -28,9 +28,9 @@ public class ViewCommande extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        panelArticleByType2 = new GraphicViews.PanelArticleByType();
-        panelArticleByType3 = new GraphicViews.PanelArticleByType();
-        panelArticleByType4 = new GraphicViews.PanelArticleByType();
+        panelArticleByType2 = new GraphicPackage.PanelArticleByType();
+        panelArticleByType3 = new GraphicPackage.PanelArticleByType();
+        panelArticleByType4 = new GraphicPackage.PanelArticleByType();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -157,8 +157,8 @@ public class ViewCommande extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
-    private GraphicViews.PanelArticleByType panelArticleByType2;
-    private GraphicViews.PanelArticleByType panelArticleByType3;
-    private GraphicViews.PanelArticleByType panelArticleByType4;
+    private GraphicPackage.PanelArticleByType panelArticleByType2;
+    private GraphicPackage.PanelArticleByType panelArticleByType3;
+    private GraphicPackage.PanelArticleByType panelArticleByType4;
     // End of variables declaration//GEN-END:variables
 }

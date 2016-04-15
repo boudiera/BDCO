@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicViews;
+package InterfaceMVC;
+
+import GraphicPackage.ViewCommande;
+import GraphicPackage.ViewReservationCreation;
+import GraphicPackage.ViewReservationDetails;
 
 /**
  *
  * @author trentini
  */
-public class ControllerGraphic implements AbstractController{
+public class ControllerGraphic extends AbstractController{
     AbstractView Principal;
     
     ViewReservationDetails ReservationDetails;
     ViewCommande Commande;
-    
-    public void setMainView(AbstractView mainView){
-        this.Principal = mainView;
-    }
-    
-    public void startMainView(){
+
+    public void startView(){
         this.Principal.setVisible(true);
     };
     
@@ -30,7 +30,7 @@ public class ControllerGraphic implements AbstractController{
         ReservationCreation.setVisible(true);
     }
 
-    void closeFrameReservationCreation() {
+    public void closeFrameReservationCreation() {
         this.Principal.setVisible(true);
     }
 }
