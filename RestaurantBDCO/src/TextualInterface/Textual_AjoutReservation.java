@@ -18,11 +18,11 @@ import java.util.Scanner;
  */
 public class Textual_AjoutReservation extends AbstractView {
 
-    public Textual_AjoutReservation () throws Exception{
+    public Textual_AjoutReservation () {
     }
 
     @Override
-    public void showView(boolean b) throws Exception{
+    public void showView(boolean b){
         String jour,mois,annee,heure,minute;
         ArrayList<Integer> codeTable;
         String nbPersonnes;
@@ -69,19 +69,18 @@ public class Textual_AjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
        
-        System.out.println(" Veuillez entrer  numero de telephone ");
         
     }
     
     
     
-    private String lectureEntree() throws Exception {
+    private String lectureEntree() {
         
         Scanner sc = new Scanner(System.in);
         String choix = sc.nextLine();
                
         if (choix.equalsIgnoreCase("q"))
-                   throw  new Exception("Annulation de la reservation");
+                   this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());
         return choix;
     }
     

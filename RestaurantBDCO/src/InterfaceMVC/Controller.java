@@ -24,6 +24,7 @@ public class Controller {
     
     public void setView(AbstractView v){
         this.View = v;
+        this.View.showView(true);
     }
     
     public ArrayList<Reservation> getReservationList(){
