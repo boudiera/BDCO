@@ -3,16 +3,16 @@ package FactoriesLayer;
 import java.sql.*;
 import Modele.Reservation;
 import Modele.ReservationDate;
-import Modele.ReservationFactory;
+import Modele.RequeteFactory;
 import Modele.Service;
 import Modele.Table;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ConcreteReservationFactory extends ReservationFactory{
+public class ConcreteRequeteFactory extends RequeteFactory{
     private TheConnection connexion;
 
-    public ConcreteReservationFactory(TheConnection connexion) {
+    public ConcreteRequeteFactory(TheConnection connexion) {
         this.connexion = connexion;
     }
 
