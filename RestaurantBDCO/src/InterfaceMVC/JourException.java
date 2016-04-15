@@ -9,14 +9,14 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class JourException extends Exception {
+public class JourException extends AddReservationException {
 
     /**
      * Creates a new instance of <code>JourException</code> without detail
      * message.
      */
     public JourException() {
-        System.out.println("La saisie du jour est incorrecte");
+       message="La saisie du jour est incorrecte";
     }
 
     /**

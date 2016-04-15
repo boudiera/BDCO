@@ -6,7 +6,6 @@
 package TextualInterface;
 
 import FactoriesLayer.ConcreteRequeteFactory;
-import FactoriesLayer.ConcreteReservation;
 import FactoriesLayer.ConnectionInfo;
 import FactoriesLayer.TheConnection;
 import InterfaceMVC.Controller;

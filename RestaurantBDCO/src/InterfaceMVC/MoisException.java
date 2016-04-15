@@ -9,14 +9,14 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class MoisException extends Exception {
+public class MoisException extends AddReservationException {
 
     /**
      * Creates a new instance of <code>MoisException</code> without detail
      * message.
      */
     public MoisException() {
-        System.out.println("La saisie du mois est incorrect");
+       message="La saisie du mois est incorrect";
     }
 
     /**

@@ -9,14 +9,13 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class TelephoneException extends Exception {
-
+public class TelephoneException extends AddReservationException {
     /**
      * Creates a new instance of <code>TelephoneException</code> without detail
      * message.
      */
     public TelephoneException() {
-        System.out.println("La saisie du numéro de téléphone est incorrecte: veuillez saisir 10 chiffres");
+        message="La saisie du numéro de téléphone est incorrecte: veuillez saisir 10 chiffres";
     }
 
     /**

@@ -7,6 +7,7 @@ package TextualInterface;
 
 
 import InterfaceMVC.AbstractView;
+import InterfaceMVC.AddReservationException;
 import InterfaceMVC.Controller;
 import InterfaceMVC.HeureException;
 import InterfaceMVC.JourException;
@@ -76,7 +77,8 @@ public class Textual_AjoutReservation extends AbstractView {
        
         try {
             this.getController().VerifyAddReservation(annee,mois,jour,heure,minute, nbPersonnes, tel);
-        } catch (MauvaiseDateException | NbPersonneException | MoisException | JourException | HeureException | MinuteException | TelephoneException ex) {
+        } catch (AddReservationException e) {
+            System.out.println(e.getMessage());
         }
        
         

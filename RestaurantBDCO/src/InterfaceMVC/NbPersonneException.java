@@ -9,14 +9,14 @@ package InterfaceMVC;
  *
  * @author mourinf
  */
-public class NbPersonneException extends Exception {
+public class NbPersonneException extends AddReservationException {
 
     /**
      * Creates a new instance of <code>NbPersonneException</code> without detail
      * message.
      */
     public NbPersonneException() {
-        System.out.println("Vous devez rentrer un nombre de personnes positif");
+        message="Vous devez rentrer un nombre de personnes positif";
     }
 
     /**
