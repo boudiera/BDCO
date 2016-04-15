@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicFrames;
+package GraphicViews;
 
 import ControlModele.CreateReservation;
 import Modele.Service;
@@ -39,7 +39,7 @@ public class ViewReservationCreation extends AbstractView {
     }
     
     @Override
-    public void addController(AbstractControllerGraphic c) {
+    public void addController(AbstractController c) {
         this.GC = (ControllerGraphic) c;
     }
     
