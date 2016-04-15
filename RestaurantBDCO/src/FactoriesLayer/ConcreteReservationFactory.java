@@ -2,11 +2,15 @@ package FactoriesLayer;
 
 import java.sql.*;
 import Modele.Reservation;
+import Modele.ReservationDate;
 import Modele.ReservationFactory;
+import Modele.Service;
+import Modele.Table;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ConcreteReservationFactory extends ReservationFactory{
-    private TheConnection  connexion;
+    private TheConnection connexion;
 
     public ConcreteReservationFactory(TheConnection connexion) {
         this.connexion = connexion;
@@ -15,27 +19,64 @@ public class ConcreteReservationFactory extends ReservationFactory{
     @Override
     public ArrayList<Reservation> reservations() {
         try {
-            String  STMT_1 = "select * from pilots";
-            String STMT_2;
+            String STMT_1 = "select R.CodeReservation, R.NbPersonnes, R.Jour, "
+                    + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
+                    + "from Reservation R, Client C "
+                    + "where R.CodeClient = C.CodeClient";
+            
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
             //  Execution  de la  requete
             ResultSet  rsetReservation = stmt.executeQuery ();
-            ResultSet rsetTable;
-            //  Conversion  du  resultat  en ArrayList <Pilot >
-            ArrayList <Reservation> res = new ArrayList<Reservation> ();
+            
+            //  Conversion  du  resultat  en ArrayList <Reservation>
+            ArrayList <Reservation> resReservation = new ArrayList<Reservation> ();
             while (rsetReservation.next()) {
-                STMT_2="select CodeTable from Occupe where CodeReservation =";
-                STMT_2+=rsetReservation.getInt("CodeReservation");
-                stmt=connexion.getConnection().prepareStatement(STMT_2);
-                rsetTable = stmt.executeQuery();
+                // Requete de recherche des tables
+                String STMT_2 = "select T.CodeTable, T.NbPlace0, T.NbPlace1, "
+                        + "T.NbPlace2, T.Localisation "
+                        + "from Occupe O, TableRepas T "
+                        + "where CodeReservation = ? "
+                        + "and O.CodeTable = T.CodeTable";
+                stmt = connexion.getConnection().prepareStatement(STMT_2);
+                stmt.setInt(1, rsetReservation.getInt("CodeReservation")); 
+                ResultSet rsetTable = stmt.executeQuery();
+                // Conversion du résultat en Arraylist <codeTable>
+                ArrayList<Table> resTable = new ArrayList<Table>();
+                while (rsetTable.next()) {
+                    resTable.add(new Table(rsetTable.getInt("CodeTable"),
+                            rsetTable.getString("Location"),
+                            rsetTable.getInt("NbPlace0"),
+                            rsetTable.getInt("NbPlace1"),
+                            rsetTable.getInt("NbPlace2")));
+                }
                 
-                //res.add(new ConcreteReservation(rset.getInt(), rset.getString(2)));
+                // Conversion de date et heure en ReservationDate
+                ReservationDate date = new ReservationDate(
+                    rsetReservation.getDate("Jour").getYear(),
+                    rsetReservation.getDate("Jour").getMonth(),
+                    rsetReservation.getDate("Jour").getDay(),
+                    rsetReservation.getInt("Heure"),
+                    rsetReservation.getInt("Minutes"));
+                
+                
+                resReservation.add(new ConcreteReservation(
+                        rsetReservation.getInt("CodeReservation"),
+                        resTable,
+                        rsetReservation.getInt("NbPersonnes"),
+                        rsetReservation.getString("NomClient"),
+                        rsetReservation.getString("NumTel"),
+                        date,
+                        Service.valueOf(rsetReservation.getString("NomService"))));
+                
+                //Fermeture
+                rsetTable.close();
             }
+            
             //  Fermeture
-            //rset.close();
+            rsetReservation.close();
             stmt.close();
-            return res;
+            return resReservation;
         } catch (SQLException e) {
             System.err.println("failed");
             e.printStackTrace (System.err);
@@ -43,4 +84,47 @@ public class ConcreteReservationFactory extends ReservationFactory{
         } 
     }
     
+    @Override
+    public ArrayList<Table> tablesLibres(int year, int month, int day, Service service){
+        try {
+            String STMT = "select T.CodeTable, T.NbPlace0, T.NbPlace1, "
+                    + "T.NbPlace2, T.Localisation "
+                    + "from TableRepas T "
+                    + "minus"
+                    + "( select T2.CodeTable, T2.NbPlace0, T2.NbPlace1, "
+                    + "T2.NbPlace2, T2.Localisation"
+                    + "from TableRepas T2, Occupe O, CodeReservation C "
+                    + "where T2.CodeTable = O.CodeTable"
+                    + "and O.CodeReservation = C.CodeReservation"
+                    + "and C.Jour = ?"
+                    + "and C.Service = ?";
+            Calendar cal = new java.util.GregorianCalendar(year, month, day);
+            Date d = new Date(cal.getTime().getTime());
+            //  Creation de la requete
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT);
+            stmt.setDate(1, d);
+            //  Execution  de la  requete
+            ResultSet rsetTable = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            ArrayList <Table> resTable = new ArrayList<Table> ();
+            while (rsetTable.next()) {
+                resTable.add(new Table(
+                        rsetTable.getInt("CodeTable"),
+                        rsetTable.getString("Localisation"),
+                        rsetTable.getInt("NbPlace0"),
+                        rsetTable.getInt("NbPlace1"),
+                        rsetTable.getInt("NbPlace2")));
+            }
+            
+            //  Fermeture
+            rsetTable.close();
+            stmt.close();
+            return resTable;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }
+    }
 }

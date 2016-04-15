@@ -1,5 +1,5 @@
 CREATE TABLE PrixTotal (
-	Valeur INTEGER,
+    Valeur INTEGER,
     CONSTRAINT valeur_pk PRIMARY KEY (Valeur),
     CONSTRAINT valeur_c CHECK (Valeur >= 0)
 );
@@ -48,7 +48,8 @@ CREATE TABLE Service (
 CREATE TABLE Reservation (
     CodeReservation INTEGER,
     NbPersonnes INTEGER,
-    Heure FLOAT,
+    Heure INT,
+    Minutes INT,
     CodeClient INTEGER,
     Jour DATE,
     NomService VARCHAR(5),

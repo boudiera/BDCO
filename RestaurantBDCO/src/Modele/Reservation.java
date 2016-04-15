@@ -8,8 +8,8 @@ public class Reservation {
     private ArrayList<Table> listCodeTables;
     private int nbPersonnes;
     private String nomClient;
-    private ReservationDate date;
     private String phone;
+    private ReservationDate date;
     private Service service;
 
     public Reservation(int codeReservation, ArrayList<Table> listCodeTables, int nbPersonnes, String nomClient, String phone, ReservationDate date, Service service) {
