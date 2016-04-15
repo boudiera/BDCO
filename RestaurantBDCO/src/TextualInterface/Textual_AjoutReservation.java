@@ -7,13 +7,22 @@ package TextualInterface;
 
 
 import InterfaceMVC.AbstractView;
+import InterfaceMVC.AddReservationException;
 import InterfaceMVC.Controller;
+import InterfaceMVC.HeureException;
+import InterfaceMVC.JourException;
+import InterfaceMVC.MauvaiseDateException;
+import InterfaceMVC.MinuteException;
+import InterfaceMVC.MoisException;
+import InterfaceMVC.NbPersonneException;
+import InterfaceMVC.TelephoneException;
 import Modele.Service;
-import java.beans.Introspector;
-import java.io.Writer;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +48,6 @@ public class Textual_AjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer la date de la reservation : ");
         System.out.println(" Jour : ");
         jour = lectureEntree();
-       
         
         System.out.println(" Mois : ");
         mois = lectureEntree();
@@ -53,17 +61,12 @@ public class Textual_AjoutReservation extends AbstractView {
        
         System.out.println("Minute");
         minute = lectureEntree();
+ 
         
         //Service
         System.out.println(" Veuillez entrer le nombre de personne : ");
         nbPersonnes = lectureEntree();
-        
-        
-        
-        System.out.println(" Veuillez entrer le nom du client : ");
-        nomClient = lectureEntree();
-        
-       
+              
         date = new Date(Integer.parseInt(annee),Integer.parseInt(mois),Integer.parseInt(jour),Integer.parseInt(heure),Integer.parseInt(minute));
          
         System.out.println(" Veuillez entrer le nom du client : ");
@@ -72,6 +75,15 @@ public class Textual_AjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
        
+        try {
+            this.getController().VerifyAddReservation(annee,mois,jour,heure,minute, nbPersonnes, tel);
+        } catch (AddReservationException e) {
+            System.out.println(e.getMessage());
+        }
+       
+        
+        
+                
         
     }
     
@@ -82,7 +94,7 @@ public class Textual_AjoutReservation extends AbstractView {
         String choix = sc.nextLine();
        
         if (choix.equalsIgnoreCase("q")){
-                   System.out.println(" ---- ANNULATION DE LA RESERVATION ----");
+                   System.out.println(" ------------- ANNULATION DE LA RESERVATION ------------");
                    this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());           
         }           
         return choix;

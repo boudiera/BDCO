@@ -52,7 +52,7 @@ public class Textual_ReservationList extends AbstractView {
             System.out.print("| Reservation |");
             System.out.print("      Nom     |");
             System.out.print("     Date     |"); 
-            System.out.print("    Telephone |");
+            System.out.print("   Telephone  |");
             System.out.print("     Heure    |");
             System.out.print(" nbPersonnes  |");
             System.out.println("  Code Table   ");
@@ -62,9 +62,9 @@ public class Textual_ReservationList extends AbstractView {
             System.out.println("---------------------------------------------------------------------------------------------------------");
             System.out.print("|      "+reservation.getCodeReservation()+"      |");
             System.out.print(" "+reservation.AffichageNomClient()+"|");
-            System.out.print("    "+reservation.getDate().getDay()+"/"+ reservation.getDate().getMonth()+"/"+reservation.getDate().getYear()+"  |");
-            System.out.print("   "+reservation.getPhone()+" |");
-            System.out.print("     "+reservation.getDate().getHours()+"h"+reservation.getDate().getMinutes()+"    |");
+            System.out.print("  "+reservation.getDate().writeDay()+"/"+ reservation.getDate().writeMonth()+"/"+reservation.getDate().getYear()+"  |");
+            System.out.print("  "+reservation.getPhone()+"  |");
+            System.out.print("     "+reservation.getDate().writeHour()+"h"+reservation.getDate().writeMin()+"    |");
             
             
             System.out.print(reservation.AfficheNombrePersonnes());

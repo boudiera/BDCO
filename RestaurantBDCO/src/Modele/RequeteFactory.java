@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /** Une liste de reservations */
-public abstract class ReservationFactory {
+public abstract class RequeteFactory {
     // Renvoie TOUTES les réservations
     public abstract ArrayList<Reservation> getReservationsList();
     
