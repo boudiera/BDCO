@@ -9,8 +9,7 @@ package TextualInterface;
 import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
 import Modele.Service;
-import java.beans.Introspector;
-import java.io.Writer;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -82,7 +81,7 @@ public class Textual_AjoutReservation extends AbstractView {
         String choix = sc.nextLine();
        
         if (choix.equalsIgnoreCase("q")){
-                   System.out.println(" ---- ANNULATION DE LA RESERVATION ----");
+                   System.out.println(" ------------- ANNULATION DE LA RESERVATION ------------");
                    this.getController().setView(Textual_ReservationList.singletonViewTextualReservationList());           
         }           
         return choix;

@@ -6,6 +6,7 @@
 package restaurantbdco;
 
 import InterfaceMVC.RunGraphicMVC;
+import TextualInterface.TestTextuel;
 
 /**
  *
@@ -18,7 +19,7 @@ public class RestaurantBDCO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        TestTextuel.main(args);
         RunGraphicMVC.run(args);
         
     }
