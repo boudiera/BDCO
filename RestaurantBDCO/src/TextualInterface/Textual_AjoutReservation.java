@@ -36,7 +36,6 @@ public class Textual_AjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer la date de la reservation : ");
         System.out.println(" Jour : ");
         jour = lectureEntree();
-       
         
         System.out.println(" Mois : ");
         mois = lectureEntree();
