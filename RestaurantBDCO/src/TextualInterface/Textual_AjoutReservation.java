@@ -8,10 +8,19 @@ package TextualInterface;
 
 import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
+import InterfaceMVC.HeureException;
+import InterfaceMVC.JourException;
+import InterfaceMVC.MauvaiseDateException;
+import InterfaceMVC.MinuteException;
+import InterfaceMVC.MoisException;
+import InterfaceMVC.NbPersonneException;
+import InterfaceMVC.TelephoneException;
 import Modele.Service;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,13 +65,7 @@ public class Textual_AjoutReservation extends AbstractView {
         //Service
         System.out.println(" Veuillez entrer le nombre de personne : ");
         nbPersonnes = lectureEntree();
-        
-        
-        
-        System.out.println(" Veuillez entrer le nom du client : ");
-        nomClient = lectureEntree();
-        
-       
+              
         date = new Date(Integer.parseInt(annee),Integer.parseInt(mois),Integer.parseInt(jour),Integer.parseInt(heure),Integer.parseInt(minute));
          
         System.out.println(" Veuillez entrer le nom du client : ");
@@ -71,6 +74,15 @@ public class Textual_AjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
        
+        try {
+            this.getController().VerifyAddReservation(date, nbPersonnes, tel);
+        } catch (MauvaiseDateException | NbPersonneException | MoisException | JourException | HeureException | MinuteException | TelephoneException ex) {
+            Logger.getLogger(Textual_AjoutReservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        
+        
+                
         
     }
     

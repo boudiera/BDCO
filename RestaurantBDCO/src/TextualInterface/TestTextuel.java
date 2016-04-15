@@ -29,8 +29,8 @@ public class TestTextuel {
         ArrayList<Table> num2= new ArrayList<Table>();
         num2.add(new Table(1, null,5,4, 3));
         
-        LR.add(new Reservation(1,num, 55, "Patrick", "0476556969",date,Service.SOIR));
-        LR.add(new Reservation(2,num2, 1, "José","0476686969",date,Service.MIDI));
+        LR.add(new Reservation(1,num, 55, "Patrick", "04765569695",date,Service.SOIR));
+        LR.add(new Reservation(2,num2, 1, "José","04766869695",date,Service.MIDI));
 
 
        
