@@ -66,7 +66,7 @@ public class FrameReservationList extends javax.swing.JFrame {
         
         Factory.reservations = new ConcreteReservationFactory(new TheConnection(new ConnectionInfo()));
         this.ListReservs.clear();
-        this.ListReservs.addAll(Factory.reservations.reservations());
+        this.ListReservs.addAll(Factory.reservations.getReservationsList());
         
         DefaultTableModel model = new DefaultTableModel() {
             @Override

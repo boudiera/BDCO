@@ -7,7 +7,6 @@ package InterfaceMVC;
 
 import Modele.Factory;
 import Modele.Reservation;
-import Modele.ReservationFactory;
 import java.util.ArrayList;
 
 /**
@@ -28,12 +27,7 @@ public class Controller {
     }
     
     public ArrayList<Reservation> getReservationList(){
-<<<<<<< HEAD
-        //return this.reservFactory.reservations();
         return Factory.reservations.getReservationsList();
-=======
-        return Factory.reservations.reservations();
->>>>>>> db8b3bcdbb1b791f458af0efa5e47e014a239319
     }
 
 }
