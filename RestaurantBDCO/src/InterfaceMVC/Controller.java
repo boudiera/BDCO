@@ -32,33 +32,39 @@ public class Controller {
         return Factory.reservations.getReservationsList();
     }
 
-    public void VerifyAddReservation(Date date, String nbPersonnes, String tel) throws MauvaiseDateException,NbPersonneException, MoisException,JourException, HeureException, MinuteException, TelephoneException{
-
+    public void VerifyAddReservation(String annee,String mois, String jour, String heure, String minute, String nbPersonnes, String tel) throws MauvaiseDateException,NbPersonneException, MoisException,JourException, HeureException, MinuteException, TelephoneException{
+        int anneeEnt=Integer.parseInt(annee);
+        int moisEnt=Integer.parseInt(mois);
+        int jourEnt=Integer.parseInt(jour);
+        int heureEnt=Integer.parseInt(heure);
+        int minuteEnt=Integer.parseInt(minute);
         int nbPersonnesEnt= Integer.parseInt(nbPersonnes);
         
+        System.out.println(Calendar.getInstance().getTime().getDate()+"/"+Calendar.getInstance().getTime().getMonth()+ "/"+Calendar.getInstance().getTime().getYear() );
+        System.out.println((Calendar.getInstance().getTime().getYear()== (anneeEnt-1900))+"/"+(Calendar.getInstance().getTime().getMonth()+1==moisEnt)+"/"+(Calendar.getInstance().getTime().getDate()==jourEnt));
         //gestion date antérieure à celle du jour
-        if (Calendar.getInstance().getTime().getYear()> date.getYear())
+        if (Calendar.getInstance().getTime().getYear()> (anneeEnt-1900))
             throw new MauvaiseDateException();
-        else if((Calendar.getInstance().getTime().getYear()== date.getYear()) && (Calendar.getInstance().getTime().getMonth()>date.getMonth()))
+        else if((Calendar.getInstance().getTime().getYear()== (anneeEnt-1900)) && (Calendar.getInstance().getTime().getMonth()+1>moisEnt))
             throw new MauvaiseDateException();
-        else if ((Calendar.getInstance().getTime().getYear()== date.getYear()) && (Calendar.getInstance().getTime().getMonth()==date.getMonth()) && (Calendar.getInstance().getTime().getDay()==date.getDay()))
+        else if ((Calendar.getInstance().getTime().getYear()== (anneeEnt-1900)) && (Calendar.getInstance().getTime().getMonth()+1==moisEnt) && (Calendar.getInstance().getTime().getDate()>jourEnt))
             throw new MauvaiseDateException();
         
         //gestion format date 
         //pour les mois:
-        if (date.getMonth()>12)
+        if (moisEnt>12)
             throw new MoisException();
-        if (date.getDay()>31)
+        if (jourEnt>31)
             throw  new JourException();
-        if (date.getMonth()==2){ // gestion du mois de février
-            if (date.getYear()%4==0){ //annee bissextile
-                if(date.getDay()>29)
+        if (moisEnt==2){ // gestion du mois de février
+            if (anneeEnt%4==0){ //annee bissextile
+                if(jourEnt>29)
                     throw new JourException();
             }
-            else if(date.getDay()>28)
+            else if(jourEnt>28)
                 throw new JourException();
         }
-        if( (date.getMonth()== 4 || date.getMonth()== 6 || date.getMonth()==9 || date.getMonth()==11) && ( date.getDay()>30)){
+        if( (moisEnt== 4 || moisEnt== 6 || moisEnt==9 || moisEnt==11) && ( jourEnt>30)){
             throw new JourException();
         }
         
@@ -69,11 +75,11 @@ public class Controller {
          
         //gestion d'heure:
         
-        if(date.getHours()<0 || date.getHours()>24)
+        if(heureEnt<0 || heureEnt>24)
             throw new HeureException();
         
         //gestion minutes
-        if(date.getMinutes()<0 || date.getMinutes()>59)
+        if(minuteEnt<0 || minuteEnt>59)
             throw new MinuteException();
         
         //gestion téléphone

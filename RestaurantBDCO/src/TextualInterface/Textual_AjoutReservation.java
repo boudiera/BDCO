@@ -75,9 +75,8 @@ public class Textual_AjoutReservation extends AbstractView {
         tel = lectureEntree();
        
         try {
-            this.getController().VerifyAddReservation(date, nbPersonnes, tel);
+            this.getController().VerifyAddReservation(annee,mois,jour,heure,minute, nbPersonnes, tel);
         } catch (MauvaiseDateException | NbPersonneException | MoisException | JourException | HeureException | MinuteException | TelephoneException ex) {
-            Logger.getLogger(Textual_AjoutReservation.class.getName()).log(Level.SEVERE, null, ex);
         }
        
         
