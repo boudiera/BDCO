@@ -31,6 +31,11 @@ public class Commande {
         return listArticles;
     }
 
+    public int getCodeReservation() {
+        return codeReservation;
+    }
+
+    
     public void setPrice(float price) {
         this.price = price;
     }

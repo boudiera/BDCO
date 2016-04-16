@@ -8,6 +8,7 @@ package TextualInterface;
 import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
 import Modele.Article;
+import Modele.Commande;
 import Modele.TypeArticle;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +20,15 @@ import java.util.Scanner;
  */
 public class TextualPriseDeCommande extends AbstractView {
 
-    private float prix;
-    private int codeReservation;
+   // private float prix;
+    //private int codeReservation;
     private boolean commandeFinie = false;
-    private List<Article> listeArticle;
+    //private List<Article> listeArticle;
+    private Commande commande;
 
     public TextualPriseDeCommande(Controller controller, int codeReservation) {
         setController(controller);
-        this.listeArticle = new ArrayList<>();
-        this.codeReservation = codeReservation;
-        prix = 0;
+        this.commande = new Commande(codeReservation, "default", new ArrayList<Article>());
     }
 
     @Override
@@ -50,8 +50,8 @@ public class TextualPriseDeCommande extends AbstractView {
         // Appel d'une fonction du controller qui enregistre la commande dans l'application
         System.out.println(" ------------- Commande Enregistrée ------------");
         // Identifier est defaut car on ne l'utilise pas dans cet executable
-        this.getController().AjoutCommande(codeReservation, "default", listeArticle);
-        this.getController().setView(new TextualMenuCommande(codeReservation, this.getController()));
+        this.getController().AjoutCommande(this.commande.getCodeReservation(), this.commande.getIdentifier(), this.commande.getListArticles());
+        this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), this.getController()));
     }
 
     private void afficheChoixMenu() {
@@ -79,7 +79,7 @@ public class TextualPriseDeCommande extends AbstractView {
             this.commandeFinie = true;
         } else if (choix.equalsIgnoreCase("q")) {
             System.out.println(" ------------- Commande Annulée ------------");
-            this.getController().setView(new TextualMenuCommande(codeReservation, this.getController()));
+            this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), this.getController()));
             System.exit(0);
         }
 
@@ -145,7 +145,7 @@ public class TextualPriseDeCommande extends AbstractView {
 
         while (!quantiteSelectione) {
             try {
-                System.out.println("Selectionnez la quantité voulu pour cet article ou appuyer sur q pour revenir à la selection des articles");
+                System.out.println("Selectionnez la quantité voulue pour cet article ou appuyez sur q pour revenir à la selection des articles");
                 Scanner sc = new Scanner(System.in);
                 choix = sc.nextLine();
                 
@@ -163,8 +163,8 @@ public class TextualPriseDeCommande extends AbstractView {
         }
         // Ajout a la liste des articles + actualisation du prix
         for (int i = 0; i < quantite ;i++)
-            listeArticle.add(choixArticles.get(articleIndex-1));
-        prix = prix + choixArticles.get(articleIndex-1).getPrice();
+            this.commande.getListArticles().add(choixArticles.get(articleIndex-1));
+        this.commande.setPrice( this.commande.getPrice()+ choixArticles.get(articleIndex-1).getPrice());
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex-1).getName() + " selectionné en quantité " + quantite );
         return false;
     }
