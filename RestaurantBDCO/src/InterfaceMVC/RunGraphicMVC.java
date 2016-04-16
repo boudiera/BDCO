@@ -27,8 +27,6 @@ public class RunGraphicMVC {
         ((GlobalGraphicView) MainView).setActiveView(EnumWindow.ReservationList);
         MainView.setController(GC);
         
-        ConcreteRequeteFactory.singletonConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
-
         GC.setView(MainView);
     }
 }
