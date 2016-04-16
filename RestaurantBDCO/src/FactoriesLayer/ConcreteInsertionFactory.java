@@ -1,7 +1,6 @@
 package FactoriesLayer;
 
 import Modele.Article;
-import Modele.InsertionFactory;
 import Modele.Service;
 import java.sql.Date;
 
@@ -25,7 +24,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     }
     
    @Override
-   public void createClient(String nomClient, String numTel){
+   public void creerClient(String nomClient, String numTel){
        connexion.open();
        String STMT_1 = " insert into Client"
                + "values (seqClient.nextval,?,?)";
@@ -62,10 +61,10 @@ public class ConcreteInsertionFactory extends InsertionFactory {
    
     
    @Override
-   public void ajoutArticleCarte(String nomArticle, int codeCarte, int prix){
+   public void ajoutArticleCarte(String nomArticle, int codeCarte, float prix){
        connexion.open();
        String STMT_1 = " insert into EstElement"
-               + "values (?,?,?)";
+               + "values (?, ?, ?)";
        try{
            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
            stmt.setString(1,nomArticle);
@@ -87,13 +86,13 @@ public class ConcreteInsertionFactory extends InsertionFactory {
           connexion.open();
           int codeReservation;
         
-        String STMT_2 = "insert into Reservation"
-                + "values (seqReservation.nextval,?,?,?,?,?,?)";
-        String STMT_3 = "select seqReservation.currval from Dual";
+        String STMT_1 = "insert into Reservation"
+                + "values (seqReservation.nextval, ?, ?, ?, ?, ?, ?)";
+        String STMT_2 = "select seqReservation.currval from Dual";
         
         
         try {
-            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_2);
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
             stmt.setInt(1,nbPersonnes);
             stmt.setInt(2,heure);
             stmt.setInt(3,minutes);
@@ -101,10 +100,10 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             stmt.setDate(5, jour);
             stmt.setString(6,nomService.toString());
             stmt.executeQuery();
-            stmt = connexion.getConnection().prepareStatement(STMT_3);
+            stmt = connexion.getConnection().prepareStatement(STMT_2);
             ResultSet tab;
             tab = stmt.executeQuery();
-            codeReservation=tab.getInt(1);
+            codeReservation = tab.getInt(1);
             this.creerOccTable(tablesOcc, codeReservation);
             stmt.close();
             tab.close();
@@ -120,7 +119,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     public void creerOccTable(ArrayList<Table> tablesOcc, int codeReservation) {
         connexion.open();
         String STMT_1 = "insert into Occupe"
-                + "values (?,?)";
+                + "values (?, ?)";
         try{
             PreparedStatement stmt=null;
             for(Table t : tablesOcc) {

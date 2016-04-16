@@ -11,7 +11,9 @@ public abstract class RequeteFactory{
     // Renvoie les tables libres pour un service donné
     public abstract ArrayList<Table> tablesLibres(int year, int month, int day, Service service);
   
+    // Renvoie tous les articles d'une carte
     public abstract ArrayList<Article> getArticlesCarte(int codeCarte);
     
+    // Renvoie la liste des tables voisines
     public abstract ArrayList<Integer[]> tablesVoisines();
 }
