@@ -1,6 +1,6 @@
 package Modele;
 
-public abstract class Article {
+public  class Article {
         private TypeArticle type;
 	private final float price;
 	private final String name;
@@ -32,6 +32,14 @@ public abstract class Article {
     public void setType(TypeArticle type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        String res = "NomArticle : " + name + " Prix : " + price + " Spécialité : " + speciality;
+        return res;
+    }
+    
+    
         
        
 }

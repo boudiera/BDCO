@@ -25,31 +25,30 @@ public class TestTextuel {
         // TODO code application logic here
 
         ArrayList<Reservation> LR = new ArrayList<Reservation>();
-        ReservationDate date= new ReservationDate(1994,9,38,20,45);
-        ArrayList<Table> num= new ArrayList<Table>();
-        num.add(new Table(5, null,5,4, 3));
-        num.add(new Table(7, null,5,4, 3));
-        ArrayList<Table> num2= new ArrayList<Table>();
-        num2.add(new Table(1, null,5,4, 3));
-        
-        LR.add(new Reservation(1,num, 55, "Patrick", "04765569695",date,Service.SOIR));
-        LR.add(new Reservation(2,num2, 1, "José","04766869695",date,Service.MIDI));
+        ReservationDate date = new ReservationDate(1994, 9, 38, 20, 45);
+        ArrayList<Table> num = new ArrayList<Table>();
+        num.add(new Table(5, null, 5, 4, 3));
+        num.add(new Table(7, null, 5, 4, 3));
+        ArrayList<Table> num2 = new ArrayList<Table>();
+        num2.add(new Table(1, null, 5, 4, 3));
 
+        LR.add(new Reservation(1, num, 55, "Patrick", "04765569695", date, Service.SOIR));
+        LR.add(new Reservation(2, num2, 1, "José", "04766869695", date, Service.MIDI));
 
-       
-        
-        Textual_ReservationList IT_text= Textual_ReservationList.singletonViewTextualReservationList();
+        //Textual_ReservationList IT_text= Textual_ReservationList.singletonViewTextualReservationList();
         Controller controller = new Controller();
-        
+
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
         Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory(connection);
-       
-        IT_text.setController(controller);
-        IT_text.showView(true);
-       
 
+        // Decomenter pour lancer le test sur l'executable des reservations
+        //  TextualReservationList.singletonViewTextualReservationList().setController(controller);
+        //  controller.setView(TextualReservationList.singletonViewTextualReservationList());
+       
+        // Decomenter pour lancer le test sur l'executable des commandes
+        TextualMenuCommande menuCommande = new TextualMenuCommande(1,controller);
+        controller.setView(menuCommande);
     }
-    
-}
 
+}
