@@ -20,7 +20,6 @@ public class RunGraphicMVC {
      * @param args the command line arguments
      */
     public static void run(String[] args) {
-        // TODO code application logic here
 
         AbstractView MainView = GlobalGraphicView.singletonGlobalGraphicView();
         Controller GC = new Controller();

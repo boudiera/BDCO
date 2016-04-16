@@ -11,4 +11,7 @@ public abstract class RequeteFactory extends Observable{
     // Renvoie les tables libres pour un service donné
     public abstract ArrayList<Table> tablesLibres(int year, int month, int day, Service service);
   
+    public abstract ArrayList<Article> getArticlesCarte(int codeCarte);
+    
+    public abstract ArrayList<Integer[]> tablesVoisines();
 }

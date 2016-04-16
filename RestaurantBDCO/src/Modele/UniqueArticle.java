@@ -7,11 +7,11 @@ public class UniqueArticle extends Article {
 	}
         
         public static UniqueArticle createEntry(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Entry, price, speciality);
+            return new UniqueArticle(name, TypeArticle.Entrée, price, speciality);
         }
         
         public static UniqueArticle createPlate(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Plate, price, speciality);
+            return new UniqueArticle(name, TypeArticle.Plat, price, speciality);
         }
         
         public static UniqueArticle createDessert(String name, float price, String speciality){
@@ -19,6 +19,6 @@ public class UniqueArticle extends Article {
         }
         
         public static UniqueArticle createDrink(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Drink, price, speciality);
+            return new UniqueArticle(name, TypeArticle.Boisson, price, speciality);
         }
 }
