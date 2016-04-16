@@ -21,7 +21,7 @@ public class TestMainJDBC {
         // TODO code application logic here
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-        ConcreteRequeteFactory fact = ConcreteRequeteFactory.singletonConcreteRequeteFactory(connection);
+        ConcreteRequeteFactory fact = new ConcreteRequeteFactory(connection);
         
         ArrayList<Reservation> reserv = fact.getReservationsList();
         

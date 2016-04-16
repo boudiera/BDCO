@@ -42,7 +42,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
         this.enumWindow = window;
         switch(window){
             case ReservationList:
-                ConcreteRequeteFactory.singletonConcreteRequeteFactory().deleteObserver(this.activeWindow);
+                //ConcreteRequeteFactory.singletonConcreteRequeteFactory().deleteObserver(this.activeWindow);
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
                 break;
             case ReservationCreation:
@@ -56,7 +56,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
                 break;
         }
 
-        ConcreteRequeteFactory.singletonConcreteRequeteFactory().addObserver(this.activeWindow);
+        //ConcreteRequeteFactory.singletonConcreteRequeteFactory().addObserver(this.activeWindow);
         showView(true);
     }
     

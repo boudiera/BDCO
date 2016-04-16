@@ -33,8 +33,8 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
      */
     private FrameReservationList() {
         initComponents();
-        Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory();
-        updateReservationTable(Factory.reservations.getReservationsList());
+        Factory.singletonFactory().setReservations(new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo())));
+        updateReservationTable(Factory.singletonFactory().getReservations().getReservationsList());
 
         /*   TEST CODE
         ArrayList<Table> CodesTables = new ArrayList<>();

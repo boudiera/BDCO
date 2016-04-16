@@ -34,7 +34,7 @@ public class Controller {
     }
     
     public ArrayList<Reservation> getReservationList(){
-        return Factory.reservations.getReservationsList();
+        return Factory.singletonFactory().getReservations().getReservationsList();
     }
     
     public void AjoutCommande(int codeReservation, String identifier, List<Article> listArticle){

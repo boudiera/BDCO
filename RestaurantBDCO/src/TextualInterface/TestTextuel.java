@@ -40,7 +40,7 @@ public class TestTextuel {
 
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-        Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory(connection);
+        Factory.singletonFactory().setReservations(new ConcreteRequeteFactory(connection));
 
         // Decomenter pour lancer le test sur l'executable des reservations
          // TextualReservationList.singletonViewTextualReservationList().setController(controller);
