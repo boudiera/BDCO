@@ -112,7 +112,7 @@ public class TextualPriseDeCommande extends AbstractView {
                     break;
             }
             for (Article article : choixArticles){
-                System.out.println(article.toString());
+                System.out.println("Article n°"+ choixArticles.indexOf(article)+1 +" "+article.toString());
             }
             affichageListeArticleFini = lectureEntreeSousMenu(choixArticles);
         }
