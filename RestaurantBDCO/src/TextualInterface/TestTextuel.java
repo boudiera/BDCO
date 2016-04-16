@@ -43,12 +43,12 @@ public class TestTextuel {
         Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory(connection);
 
         // Decomenter pour lancer le test sur l'executable des reservations
-          TextualReservationList.singletonViewTextualReservationList().setController(controller);
-          controller.setView(TextualReservationList.singletonViewTextualReservationList());
+         // TextualReservationList.singletonViewTextualReservationList().setController(controller);
+          //controller.setView(TextualReservationList.singletonViewTextualReservationList());
        
         // Decomenter pour lancer le test sur l'executable des commandes
-        //TextualMenuCommande menuCommande = new TextualMenuCommande(1,controller);
-        //controller.setView(menuCommande);
+        TextualMenuCommande menuCommande = new TextualMenuCommande(1,controller);
+        controller.setView(menuCommande);
     }
 
 }
