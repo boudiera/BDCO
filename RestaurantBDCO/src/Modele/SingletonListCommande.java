@@ -7,6 +7,7 @@ package Modele;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -44,7 +45,8 @@ public class SingletonListCommande {
         if(hash == null){
             return new ArrayList<Commande>();
         }else{
-            return (ArrayList<Commande>) hash.values();
+            ArrayList<Commande> listCommande = new ArrayList<Commande>(hash.values());
+            return  listCommande;
         }
     }
 }

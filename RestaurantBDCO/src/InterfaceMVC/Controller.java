@@ -6,11 +6,15 @@
 package InterfaceMVC;
 
 import InterfaceMVC.Exceptions.*;
+import Modele.Article;
+import Modele.Commande;
 import Modele.Factory;
 import Modele.Reservation;
 import Modele.Service;
+import Modele.SingletonListCommande;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -33,10 +37,20 @@ public class Controller {
         return Factory.reservations.getReservationsList();
     }
     
+    public void AjoutCommande(int codeReservation, String identifier, List<Article> listArticle){
+        // Creation de l'objet commande
+    Commande commande = new Commande(codeReservation, identifier, listArticle);
+        
+        // Ajout dans la mémoire de l'application
+        SingletonListCommande.singletonListCommande().addCommand(codeReservation, commande);
+    }
+    
+    public ArrayList<Commande> getCommande (int codeReservation){
+        return SingletonListCommande.singletonListCommande().getListCommandByReservationCode(codeReservation);
+    }
+    
     
     public boolean ContientAuMoinUnEntier(String chaine) {
-            
-                
                 int index =0;
                 while(index < chaine.length()) {
                     try { 
