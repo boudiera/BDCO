@@ -87,7 +87,7 @@ public class TextualPriseDeCommande extends AbstractView {
 
     private void afficheListeArticle(int choix) {
         ArrayList<Article> choixArticles = new ArrayList<>();
-        choixArticles.add(new Article("Salade", TypeArticle.Entry,12, "caca"));
+        choixArticles.add(new Article("Salade", TypeArticle.Entrée,12, "caca"));
         boolean affichageListeArticleFini = false;
         while (!affichageListeArticleFini) {
             switch (choix) {

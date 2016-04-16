@@ -35,20 +35,20 @@ public class TestTextuel {
         LR.add(new Reservation(1, num, 55, "Patrick", "04765569695", date, Service.SOIR));
         LR.add(new Reservation(2, num2, 1, "José", "04766869695", date, Service.MIDI));
 
-        //Textual_ReservationList IT_text= Textual_ReservationList.singletonViewTextualReservationList();
+        //TextualReservationList IT_text= TextualReservationList.singletonViewTextualReservationList();
         Controller controller = new Controller();
 
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-        Factory.reservations = ConcreteRequeteFactory.singletonConcreteRequeteFactory(connection);
+        Factory.singletonFactory().setReservations(new ConcreteRequeteFactory(connection));
 
         // Decomenter pour lancer le test sur l'executable des reservations
-        //  TextualReservationList.singletonViewTextualReservationList().setController(controller);
-        //  controller.setView(TextualReservationList.singletonViewTextualReservationList());
+          TextualReservationList.singletonViewTextualReservationList().setController(controller);
+          controller.setView(TextualReservationList.singletonViewTextualReservationList());
        
         // Decomenter pour lancer le test sur l'executable des commandes
-        TextualMenuCommande menuCommande = new TextualMenuCommande(1,controller);
-        controller.setView(menuCommande);
+        //TextualMenuCommande menuCommande = new TextualMenuCommande(1,controller);
+        //controller.setView(menuCommande);
     }
 
 }
