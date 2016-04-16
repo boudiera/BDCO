@@ -125,9 +125,13 @@ public class TextualAjoutReservation extends AbstractView {
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
                 System.out.println(">>>>>>>>>>>>>>>> Reservation validée ! <<<<<<<<<<<<<<<<<<<");
-                // APPEL DE LA FONCTION DU CONTROLLER QUI ENVOIT LA RESERVATION DANS LA BASE DE DONNEE
+                // APPEL DE LA FONCTION DU CONTROLLER QUI ENVOIT LA RESERVATION DANS LA BASE DE DONNEE 
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
                 return;
+            }
+            else if (choix.equalsIgnoreCase("q")) {
+            System.out.println(" ------------- ANNULATION DE LA RESERVATION ------------");
+            this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
             }
         } while (true);
 
