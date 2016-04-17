@@ -13,6 +13,7 @@ import Modele.Menu;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;
+import Modele.TypeArticle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -61,8 +62,8 @@ public class Controller {
         return m.contientPlat();
     }
     
-    public ArrayList<Article> getArticles (int codeCarte){
-        return Factory.singletonFactory().getReservations().getArticlesCarte(codeCarte);
+    public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
+        return Factory.singletonFactory().getReservations().getArticlesCarte(codeCarte, typeArticle);
     }
     
     
