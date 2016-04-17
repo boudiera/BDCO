@@ -35,11 +35,11 @@ public class Commande {
             } else {
                 regroupeArticle.put(a.getName(), regroupeArticle.get(a.getName()) + 1);
             }
+
         }
-
     }
-
     // Ajoute l'article a à la liste d'article et met à jour le regroupe
+
     public void ajoutArticle(Article a) {
         listArticles.add(a);
         regroupeArticle.clear();

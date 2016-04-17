@@ -17,10 +17,10 @@ import java.util.Scanner;
  */
 public class TextualMenuCommande extends AbstractView {
 
-    int codeReservation;
-    int nbcommandes;
+    private int codeReservation;
+    private int nbcommandes;
     ArrayList<Commande> commandes;
-
+    
     public TextualMenuCommande(int codeReservation, int nbcommandes, Controller controller) {
         this.codeReservation = codeReservation;
         this.nbcommandes = nbcommandes;
@@ -54,7 +54,7 @@ public class TextualMenuCommande extends AbstractView {
         System.out.println("Appuyez sur 'c' pour prendre une nouvelle commande \n"
                 +"Entrez 'delete' puis selectionnez un numero de commande pour la supprimer \n"
                 + "Appuyez sur 'f' pour produire la facture \n"
-                + "Appyer sur 'q' pour quitter");
+                + "Appuyez sur 'q' pour quitter");
     }
 
     private void gestionChoix() {

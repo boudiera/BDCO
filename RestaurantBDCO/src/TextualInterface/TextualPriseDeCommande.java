@@ -9,7 +9,9 @@ import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
 import Modele.Article;
 import Modele.Commande;
+import Modele.Menu;
 import Modele.TypeArticle;
+import static Modele.TypeArticle.Menu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,16 +24,16 @@ import java.util.Set;
  */
 public class TextualPriseDeCommande extends AbstractView {
 
-   // private float prix;
-    //private int codeReservation;
     private boolean commandeFinie = false;
-    //private List<Article> listeArticle;
+
     private Commande commande;
     private int numCommande;
+    private int codeReservation;
 
-    public TextualPriseDeCommande(Controller controller, int codeReservation,int numCommande) {
+    public TextualPriseDeCommande(Controller controller, int codeReservation, int numCommande) {
         this.numCommande = numCommande;
-        this.commande = new Commande(codeReservation,String.valueOf(this.numCommande+1), new ArrayList<Article>());
+        this.codeReservation = codeReservation;
+        this.commande = new Commande(codeReservation, String.valueOf(this.numCommande + 1), new ArrayList<Article>());
         setController(controller);
     }
 
@@ -45,30 +47,32 @@ public class TextualPriseDeCommande extends AbstractView {
             System.out.println("2.Plats ");
             System.out.println("3.Desserts ");
             System.out.println("4.Boissons ");
-            System.out.println("5.Menu \n");
-
+            System.out.println("5.Menu ");
+            System.out.println("");
             System.out.println("Commande Actuelle : ");
-            if (this.commande.getListArticles().size() == 0)
+            if (this.commande.getListArticles().size() == 0) {
                 System.out.println("Vide ");
-            else 
+            } else {
                 this.commande.printArticle();
+            }
 
             lectureEntreeMenu();
 
         }
-        // La commande est finie, on crée un objet commande et on l'envoi au controller
-        // Appel d'une fonction du controller qui enregistre la commande dans l'application
-        System.out.println("------------- Commande numéro "+ this.commande.getIdentifier()+ " Enregistrée ------------");
-        // Identifier est defaut car on ne l'utilise pas dans cet executable
-        this.getController().AjoutCommande(this.commande.getCodeReservation(), this.commande.getIdentifier(), this.commande.getListArticles());
-        this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(),numCommande+1, this.getController()));
+        
+       
+        System.out.println("------------- Commande numéro " + this.commande.getIdentifier() + " Enregistrée ------------");
+         // Appel d'une fonction du controller qui enregistre la commande dans l'application
+        this.getController().ajoutCommande(this.commande.getCodeReservation(), this.commande.getIdentifier(), this.commande.getListArticles());
+        this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), numCommande + 1, this.getController()));
     }
 
     private void afficheChoixMenu() {
         System.out.println("\nEntrez un chiffre entre 1 et 5 pour afficher une liste d'articles du type souhaité\n"
-                + "Appuyer sur q pour annuler la commande\n"
-                + "Appuyer sur v pour valider la commande");
+                + "Appuyez sur q pour annuler la commande\n"
+                + "Appuyez sur v pour valider la commande");
     }
+
 
     private void lectureEntreeMenu() {
 
@@ -89,7 +93,7 @@ public class TextualPriseDeCommande extends AbstractView {
             this.commandeFinie = true;
         } else if (choix.equalsIgnoreCase("q")) {
             System.out.println(" ------------- Commande Annulée ------------");
-            this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(),numCommande,this.getController()));
+            this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), numCommande, this.getController()));
             System.exit(0);
         }
 
@@ -97,58 +101,66 @@ public class TextualPriseDeCommande extends AbstractView {
 
     private void afficheListeArticle(int choix) {
         ArrayList<Article> choixArticles = new ArrayList<>();
-        choixArticles.add(new Article("Salade", TypeArticle.Entrée,12, "caca"));
-        choixArticles.add(new Article("Saucisse", TypeArticle.Entrée,10, "ppp"));
-        choixArticles.add(new Article("Carotte", TypeArticle.Entrée,5, "lol"));
-        
+        boolean estVueMenu = false;
         boolean affichageListeArticleFini = false;
+        String titreSousMenu = "";
+
+        switch (choix) {
+            case 1:
+                // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées
+                titreSousMenu ="--------------------- Affichage des entrées disponibles -------------------------\n";
+                choixArticles.add(new Article("Salade", TypeArticle.Entrée, 12, "caca"));
+                choixArticles.add(new Article("Saucisse", TypeArticle.Entrée, 10, "ppp"));
+                choixArticles.add(new Article("Carotte", TypeArticle.Entrée, 5, "lol"));
+                break;
+            case 2:
+                // Appel d'une fonction du controller qui nous renvois une liste d'article de plats
+                titreSousMenu ="--------------------- Affichage des plats disponibles -------------------------\n";
+                break;
+            case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts
+                titreSousMenu ="--------------------- Affichage des desserts disponibles -------------------------\n";
+                break;
+            case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons
+                titreSousMenu ="--------------------- Affichage des boissons disponibles -------------------------\n";
+                break;
+            case 5:// Appel d'une fonction du controller qui nous renvois une liste d'article de menu
+                titreSousMenu ="--------------------- Affichage des menu disponibles -------------------------\n";
+                choixArticles.add(new Menu("Menu gros", "viande", 20));
+                choixArticles.add(new Menu("Menu faible", "salade", 5));
+                estVueMenu = true;
+                break;
+            default:
+                break;
+        }
+
         while (!affichageListeArticleFini) {
-            switch (choix) {
-                case 1:
-                    // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées
-                    System.out.println("--------------------- Affichage des entrées disponibles -------------------------\n");
-                    break;
-                case 2:
-                    // Appel d'une fonction du controller qui nous renvois une liste d'article de plats
-                    System.out.println("--------------------- Affichage des plats disponibles -------------------------\n");
-                    break;
-                case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts
-                    System.out.println("--------------------- Affichage des desserts disponibles -------------------------\n");
-                    break;
-                case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons
-                    System.out.println("--------------------- Affichage des boissons disponibles -------------------------\n");
-                    break;
-                case 5:// Appel d'une fonction du controller qui nous renvois une liste d'article de menu
-                    System.out.println("--------------------- Affichage des menu disponibles -------------------------\n");
-                    break;
-                default:
-                    break;
+            System.out.println(titreSousMenu);
+            for (Article article : choixArticles) {
+                
+                System.out.println("Article n°" + (choixArticles.indexOf(article) + 1) + " " + article.toString());
             }
-            for (Article article : choixArticles){
-                System.out.println("Article n°"+ (choixArticles.indexOf(article)+1) +" "+article.toString());
-            }
-            
-            affichageListeArticleFini = lectureEntreeSousMenu(choixArticles);
+
+            affichageListeArticleFini = lectureEntreeSousMenu(choixArticles, estVueMenu);
         }
     }
 
-    private boolean lectureEntreeSousMenu(ArrayList<Article> choixArticles) {
+    private boolean lectureEntreeSousMenu(ArrayList<Article> choixArticles, boolean estVueMenu) {
 
         boolean articleSelectione = false;
         boolean quantiteSelectione = false;
         int articleIndex = 0;
-        int quantite = 0;
-        String choix ="";
+        int quantite = 1;
+        String choix = "";
         while (!articleSelectione) {
             try {
                 System.out.println("\nSelectionnez l'article voulu ou appuyer sur q pour revenir au menu");
                 Scanner sc = new Scanner(System.in);
                 choix = sc.nextLine();
                 if (choix.equalsIgnoreCase("q")) {
-                        return true;
+                    return true;
                 }
                 articleIndex = Integer.parseInt(choix);
-                if (articleIndex > choixArticles.size() ||  articleIndex < 0) {
+                if (articleIndex > choixArticles.size() || articleIndex < 0) {
                     throw new Exception();
                 }
                 articleSelectione = true;
@@ -156,30 +168,36 @@ public class TextualPriseDeCommande extends AbstractView {
                 System.out.println("la valeur entrée est un entier positif et doit etre affiché dans la liste des articles ");
             }
         }
+        // Si on a choisi un menu comme article la quantité est 1 // Si on est dans une vue de menu la quantité d'article est forcément 1
+        if (!estVueMenu) {
+            while (!quantiteSelectione) {
+                try {
+                    System.out.println("Selectionnez la quantité voulue de " + choixArticles.get(articleIndex - 1).getName());
+                    Scanner sc = new Scanner(System.in);
+                    choix = sc.nextLine();
 
-        while (!quantiteSelectione) {
-            try {
-                System.out.println("Selectionnez la quantité voulue de " + choixArticles.get(articleIndex-1).getName() );
-                Scanner sc = new Scanner(System.in);
-                choix = sc.nextLine();
-                
-                if (choix.equalsIgnoreCase("q")) {
+                    if (choix.equalsIgnoreCase("q")) {
                         return false;
+                    }
+                    quantite = Integer.parseInt(choix);
+                    quantiteSelectione = true;
+                    if (quantite <= 0) {
+                        throw new Exception();
+                    }
+                } catch (Exception E) {
+                    System.out.println("la valeur entrée est un entier positif ");
                 }
-                quantite = Integer.parseInt(choix);
-                quantiteSelectione = true;
-                if (quantite <= 0) {
-                    throw new Exception();
-                }
-            } catch (Exception E) {
-                System.out.println("la valeur entrée est un entier positif ");
             }
+        } // Si on a choisi un menu -> ouverture d'une vue de menu
+        else {
+            this.getController().setView(new TextualPriseDeMenu(this.getController(), (Menu) choixArticles.get(articleIndex - 1), this, commande));
         }
         // Ajout a la liste des articles + actualisation du prix
-        for (int i = 0; i < quantite ;i++)
-            this.commande.ajoutArticle(choixArticles.get(articleIndex-1));
-        this.commande.setPrice( this.commande.getPrice()+ choixArticles.get(articleIndex-1).getPrice());
-        System.out.println(" ------ >> Article " + choixArticles.get(articleIndex-1).getName() + " selectionné en quantité " + quantite );
+        for (int i = 0; i < quantite; i++) {
+            this.getController().ajoutArticleCommande(choixArticles.get(articleIndex - 1), commande);
+        }
+        this.commande.setPrice(this.commande.getPrice() + choixArticles.get(articleIndex - 1).getPrice());
+        System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite);
         return false;
     }
 

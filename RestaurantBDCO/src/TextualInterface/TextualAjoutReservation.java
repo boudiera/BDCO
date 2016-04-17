@@ -69,10 +69,16 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
 
-        /// FAIRE LA FONCTION QUI TROUVES LES TABLES LIBRES + AFFICHER
+        
         while (!verificationFini) {
             try {
                 this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
+                
+                /// FAIRE LA FONCTION QUI TROUVES LES TABLES LIBRES + AFFICHER les nom -> plus possibilité de modif la dates si aucune places libres // Ajout d'une nouvelle exception ?
+                
+                
+                
+                
                 verificationFini = true;
             } catch (ReservationException e) {
                 System.out.println(e.getMessage());
@@ -111,6 +117,8 @@ public class TextualAjoutReservation extends AbstractView {
             }
 
         }
+        
+        
         date = new ReservationDate(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Integer.parseInt(heure), Integer.parseInt(minutes));
         System.out.println("----------------------- RECAPITULATIF DE LA RESERVATION ------------------------ ");
         System.out.println("1.Date : " + date.writeDayMonth());
