@@ -89,16 +89,18 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     }
     
     @Override
-    public ArrayList<Article> getArticlesCarte(int codeCarte){
+    public ArrayList<Article> getArticlesCarte(int codeCarte, TypeArticle typeArticle){
         connexion.open();
         ArrayList<Article> articles= new ArrayList<Article>();
         String STMT_1 = "select E.NomArticle, A.TypeArticle, E.PrixActuel, A.NomSpecialite "
                 + " from Article A, EstElement E "
                 + " where A.NomArticle = E.NomArticle"
-                + " and E.CodeCarte = ?";
+                + " and E.CodeCarte = ?"
+                + " and A.TypeArticle = ?";
         try{
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
             stmt.setInt(1,codeCarte);
+            stmt.setString(2, typeArticle.toString());
             ResultSet resCarte = stmt.executeQuery();
             while(resCarte.next()){
                 articles.add(new ConcreteArticle(resCarte.getString(1), TypeArticle.valueOf(resCarte.getString(2)), resCarte.getFloat(3),resCarte.getString(4)));
