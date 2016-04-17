@@ -12,6 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -142,12 +145,50 @@ public class ConcreteInsertionFactory extends InsertionFactory {
 
     @Override
     public void creeCommande(Commande commande) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connexion.open();
+        String STMT_1 = "insert into Commande"
+                + "values (?,?,?)";
+        PreparedStatement stmt = null;
+        try{
+            for(String nomArt : commande.getRegroupeArticle().keySet()){
+                
+                stmt = connexion.getConnection().prepareStatement(STMT_1);
+                stmt.setInt(1, commande.getCodeReservation());
+                stmt.setString(2,nomArt);
+                stmt.setInt(3, commande.getRegroupeArticle().get(nomArt));
+                stmt.executeQuery();
+                
+            }
+            stmt.close();
+            connexion.close();
+        
+
+
+        }
+        catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+        }    
+        
     }
 
     @Override
     public void supprimeCommande(Commande commande) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connexion.open();
+        String STMT_1 = "delete from Commande"
+                + " where CodeReservation = ?";
+        PreparedStatement stmt;
+        try{   
+            stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1, commande.getCodeReservation());
+            stmt.executeQuery();
+            stmt.close();
+            connexion.close();
+        }
+        catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+        }
     }
     
 }

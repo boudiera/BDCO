@@ -13,6 +13,10 @@ public class Commande {
     // Hasmap qui fait le lien entre un nom d'article et sa quantité
     private final HashMap<String, Integer> regroupeArticle = new HashMap<>();
 
+    public HashMap<String, Integer> getRegroupeArticle() {
+        return regroupeArticle;
+    }
+
     private String identifier;
 
     public Commande(int codeReservation, String identifier, List<Article> list,int prix) {
