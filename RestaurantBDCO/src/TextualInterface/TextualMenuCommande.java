@@ -16,9 +16,10 @@ import java.util.Scanner;
 public class TextualMenuCommande extends AbstractView {
 
     int codeReservation;
-
-    public TextualMenuCommande(int codeReservation,Controller controller) {
+    int nbcommandes;
+    public TextualMenuCommande(int codeReservation,int nbcommandes ,Controller controller) {
         this.codeReservation = codeReservation;
+        this.nbcommandes = nbcommandes;
         this.setController(controller);
     }
 
@@ -41,7 +42,7 @@ public class TextualMenuCommande extends AbstractView {
             Scanner sc = new Scanner(System.in);
             String choix = sc.nextLine();
             if (choix.equalsIgnoreCase("c")) {
-                this.getController().setView(new TextualPriseDeCommande(this.getController(), codeReservation));          
+                this.getController().setView(new TextualPriseDeCommande(this.getController(),codeReservation,nbcommandes));          
             } else if (choix.equalsIgnoreCase("f")) {
                 this.getController().setView(new TextualFacture(this.getController(), codeReservation));          
             } else if (choix.equalsIgnoreCase("q")) {

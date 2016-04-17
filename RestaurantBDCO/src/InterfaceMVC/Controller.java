@@ -39,7 +39,7 @@ public class Controller {
     
     public void AjoutCommande(int codeReservation, String identifier, List<Article> listArticle){
         // Creation de l'objet commande
-    Commande commande = new Commande(codeReservation, identifier, listArticle);
+        Commande commande = new Commande(codeReservation, identifier, listArticle);
         
         // Ajout dans la mémoire de l'application
         SingletonListCommande.singletonListCommande().addCommand(codeReservation, commande);

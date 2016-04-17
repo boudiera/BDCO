@@ -11,8 +11,10 @@ import Modele.Article;
 import Modele.Commande;
 import Modele.TypeArticle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -25,10 +27,12 @@ public class TextualPriseDeCommande extends AbstractView {
     private boolean commandeFinie = false;
     //private List<Article> listeArticle;
     private Commande commande;
+    private int numCommande;
 
-    public TextualPriseDeCommande(Controller controller, int codeReservation) {
+    public TextualPriseDeCommande(Controller controller, int codeReservation,int numCommande) {
+        this.numCommande = numCommande;
+        this.commande = new Commande(codeReservation,String.valueOf(this.numCommande+1), new ArrayList<Article>());
         setController(controller);
-        this.commande = new Commande(codeReservation, "default", new ArrayList<Article>());
     }
 
     @Override
@@ -41,21 +45,27 @@ public class TextualPriseDeCommande extends AbstractView {
             System.out.println("2.Plats ");
             System.out.println("3.Desserts ");
             System.out.println("4.Boissons ");
-            System.out.println("5.Menu ");
+            System.out.println("5.Menu \n");
+
+            System.out.println("Commande Actuelle : ");
+            if (this.commande.getListArticles().size() == 0)
+                System.out.println("Vide ");
+            else 
+                this.commande.printArticle();
 
             lectureEntreeMenu();
 
         }
         // La commande est finie, on crée un objet commande et on l'envoi au controller
         // Appel d'une fonction du controller qui enregistre la commande dans l'application
-        System.out.println(" ------------- Commande Enregistrée ------------");
+        System.out.println(" ------------- Commande numéro "+ this.commande.getIdentifier()+ " Enregistrée ------------");
         // Identifier est defaut car on ne l'utilise pas dans cet executable
         this.getController().AjoutCommande(this.commande.getCodeReservation(), this.commande.getIdentifier(), this.commande.getListArticles());
-        this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), this.getController()));
+        this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(),numCommande+1, this.getController()));
     }
 
     private void afficheChoixMenu() {
-        System.out.println("\nEntrez un chiffre entre 1 et 5 pour afficher une liste d'articles du type souhaité\n"
+        System.out.println("\n Entrez un chiffre entre 1 et 5 pour afficher une liste d'articles du type souhaité\n"
                 + "Appuyer sur q pour annuler la commande\n"
                 + "Appuyer sur v pour valider la commande");
     }
@@ -79,7 +89,7 @@ public class TextualPriseDeCommande extends AbstractView {
             this.commandeFinie = true;
         } else if (choix.equalsIgnoreCase("q")) {
             System.out.println(" ------------- Commande Annulée ------------");
-            this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), this.getController()));
+            this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(),numCommande,this.getController()));
             System.exit(0);
         }
 
@@ -88,6 +98,9 @@ public class TextualPriseDeCommande extends AbstractView {
     private void afficheListeArticle(int choix) {
         ArrayList<Article> choixArticles = new ArrayList<>();
         choixArticles.add(new Article("Salade", TypeArticle.Entrée,12, "caca"));
+        choixArticles.add(new Article("Saucisse", TypeArticle.Entrée,10, "ppp"));
+        choixArticles.add(new Article("Carotte", TypeArticle.Entrée,5, "lol"));
+        
         boolean affichageListeArticleFini = false;
         while (!affichageListeArticleFini) {
             switch (choix) {
@@ -112,8 +125,9 @@ public class TextualPriseDeCommande extends AbstractView {
                     break;
             }
             for (Article article : choixArticles){
-                System.out.println("Article n°"+ choixArticles.indexOf(article)+1 +" "+article.toString());
+                System.out.println("Article n°"+ (choixArticles.indexOf(article)+1) +" "+article.toString());
             }
+            
             affichageListeArticleFini = lectureEntreeSousMenu(choixArticles);
         }
     }
@@ -127,7 +141,7 @@ public class TextualPriseDeCommande extends AbstractView {
         String choix;
         while (!articleSelectione) {
             try {
-                System.out.println("Selectionnez l'article voulu ou appuyer sur q pour revenir au menu");
+                System.out.println("\nSelectionnez l'article voulu ou appuyer sur q pour revenir au menu");
                 Scanner sc = new Scanner(System.in);
                 choix = sc.nextLine();
                 if (choix.equalsIgnoreCase("q")) {

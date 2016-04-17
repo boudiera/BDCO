@@ -24,16 +24,25 @@ public class Factory extends Observable {
     //SINGLETON: End Code
     //////////////////////////////////////////////////////
     
-    private RequeteFactory reservations;
-    
+    private RequeteFactory requeteFactory;
+    private InsertionFactory insertionFactory;
     public RequeteFactory getReservations(){
-        return FACTORY.reservations;
+        return FACTORY.requeteFactory;
     }
-    
-    public void setReservations(RequeteFactory requeteFactory){
-        FACTORY.reservations = requeteFactory;
+
+    public InsertionFactory getInsertionFactory() {
+        return insertionFactory;
+    }
+
+    public void setInsertionFactory(InsertionFactory insertionFactory) {
+        this.insertionFactory = insertionFactory;
+        
+    }
+   
+    public void setRequeteFactory(RequeteFactory requeteFactory){
+        FACTORY.requeteFactory = requeteFactory;
         
         FACTORY.setChanged();
-        FACTORY.notifyObservers(reservations);
+        FACTORY.notifyObservers(this.requeteFactory);
     }
 }

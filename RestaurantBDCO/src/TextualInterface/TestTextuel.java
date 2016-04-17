@@ -5,6 +5,7 @@
  */
 package TextualInterface;
 
+import FactoriesLayer.ConcreteInsertionFactory;
 import FactoriesLayer.ConcreteRequeteFactory;
 import FactoriesLayer.ConnectionInfo;
 import FactoriesLayer.TheConnection;
@@ -40,14 +41,14 @@ public class TestTextuel {
 
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-        Factory.singletonFactory().setReservations(new ConcreteRequeteFactory(connection));
-
+        Factory.singletonFactory().setRequeteFactory(new ConcreteRequeteFactory(connection));
+        Factory.singletonFactory().setInsertionFactory(new ConcreteInsertionFactory(connection));
         // Decomenter pour lancer le test sur l'executable des reservations
-         // TextualReservationList.singletonViewTextualReservationList().setController(controller);
-          //controller.setView(TextualReservationList.singletonViewTextualReservationList());
+        //  TextualReservationList.singletonViewTextualReservationList().setController(controller);
+        //  controller.setView(TextualReservationList.singletonViewTextualReservationList());
        
         // Decomenter pour lancer le test sur l'executable des commandes
-        TextualMenuCommande menuCommande = new TextualMenuCommande(1,controller);
+        TextualMenuCommande menuCommande = new TextualMenuCommande(1,0,controller);
         controller.setView(menuCommande);
     }
 
