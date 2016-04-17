@@ -46,8 +46,7 @@ public class TestTextuel {
         Factory.reservations = new ConcreteRequeteFactory(connection);
        
         IT_text.setController(controller);
-        IT_text.showView(true);
-       
+        controller.setView(IT_text);
 
     }
     
