@@ -39,12 +39,10 @@ public class Controller {
         return Factory.singletonFactory().getReservations().getReservationsList();
     }
     
-    public void ajoutCommande(int codeReservation, String identifier, List<Article> listArticle){
-        // Creation de l'objet commande
-        Commande commande = new Commande(codeReservation, identifier, listArticle);
+    public void ajoutCommande(int codeReservation, Commande commande){
         
         // Ajout dans la mémoire de l'application
-        SingletonListCommande.singletonListCommande().addCommand(codeReservation, commande);
+        SingletonListCommande.singletonListCommande().addCommand(codeReservation,commande);
     }
     
     // Ajoute un article dans une commande

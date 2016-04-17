@@ -15,15 +15,13 @@ public class Commande {
 
     private String identifier;
 
-    public Commande(int codeReservation, String identifier, List<Article> list) {
+    public Commande(int codeReservation, String identifier, List<Article> list,int prix) {
         this.identifier = identifier;
         this.codeReservation = codeReservation;
-        this.price = 0;
+        this.price = prix;
         this.listArticles = list;
         regroupe();
-        for (Article art : this.listArticles) {
-            this.price += art.getPrice();
-        }
+        
     }
 
     // Fonction qui permet de regrouper tous les articles de meme types d'une commande en vue de les afficher

@@ -33,7 +33,7 @@ public class TextualPriseDeCommande extends AbstractView {
     public TextualPriseDeCommande(Controller controller, int codeReservation, int numCommande) {
         this.numCommande = numCommande;
         this.codeReservation = codeReservation;
-        this.commande = new Commande(codeReservation, String.valueOf(this.numCommande + 1), new ArrayList<Article>());
+        this.commande = new Commande(codeReservation, String.valueOf(this.numCommande + 1), new ArrayList<Article>(),0);
         setController(controller);
     }
 
@@ -63,7 +63,7 @@ public class TextualPriseDeCommande extends AbstractView {
        
         System.out.println("------------- Commande numéro " + this.commande.getIdentifier() + " Enregistrée ------------");
          // Appel d'une fonction du controller qui enregistre la commande dans l'application
-        this.getController().ajoutCommande(this.commande.getCodeReservation(), this.commande.getIdentifier(), this.commande.getListArticles());
+        this.getController().ajoutCommande(codeReservation,commande);
         this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), numCommande + 1, this.getController()));
     }
 
@@ -196,8 +196,8 @@ public class TextualPriseDeCommande extends AbstractView {
         for (int i = 0; i < quantite; i++) {
             this.getController().ajoutArticleCommande(choixArticles.get(articleIndex - 1), commande);
         }
-        this.commande.setPrice(this.commande.getPrice() + choixArticles.get(articleIndex - 1).getPrice());
-        System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite);
+        this.commande.setPrice(this.commande.getPrice() + choixArticles.get(articleIndex - 1).getPrice()*quantite);
+        System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite );
         return false;
     }
 
