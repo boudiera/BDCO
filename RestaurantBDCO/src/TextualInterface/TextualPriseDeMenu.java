@@ -101,22 +101,22 @@ public class TextualPriseDeMenu extends AbstractView {
         switch (choix) {
             case 1:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées pour un menu donné
-                choixArticles.add(new Article("Salade", TypeArticle.Entrée, 12, "caca"));
-                choixArticles.add(new Article("Saucisse", TypeArticle.Entrée, 10, "ppp"));
-                choixArticles.add(new Article("Carotte", TypeArticle.Entrée, 5, "lol"));
+                choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
+                choixArticles.add(new Article("Saucisse", TypeArticle.ENTREE, 10, "ppp"));
+                choixArticles.add(new Article("Carotte", TypeArticle.ENTREE, 5, "lol"));
                 titreSousMenu = "--------------------- Affichage des entrées disponibles -------------------------\n";
 
                 break;
             case 2:
-                choixArticles.add(new Article("Steak", TypeArticle.Plat, 12, "viande"));
-                choixArticles.add(new Article("Poulet", TypeArticle.Plat, 10, "viande"));
-                choixArticles.add(new Article("Poisson panné", TypeArticle.Plat, 5, "poisson"));
+                choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
+                choixArticles.add(new Article("Poulet", TypeArticle.PLAT, 10, "viande"));
+                choixArticles.add(new Article("Poisson panné", TypeArticle.PLAT, 5, "poisson"));
                 // Appel d'une fonction du controller qui nous renvois une liste d'article de plats  pour un menu donné
                 titreSousMenu = "--------------------- Affichage des plats disponibles -------------------------\n";
                 break;
             case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
-                choixArticles.add(new Article("creme", TypeArticle.Dessert, 12, "viande"));
-                choixArticles.add(new Article("chocolat", TypeArticle.Dessert, 10, "viande"));
+                choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
+                choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
                 titreSousMenu = "--------------------- Affichage des desserts disponibles -------------------------\n";
                 break;
             case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
@@ -160,11 +160,9 @@ public class TextualPriseDeMenu extends AbstractView {
             }
         }
 
-        // Si on a choisi un menu -> ouverture d'une vue de menu
-        // if (articleIndex == 5)
-        // Ajout a la liste des articles + actualisation du prix
+       
         this.getController().ajoutArticleMenu(choixArticles.get(articleIndex - 1), menu);
-        //this.commande.setPrice(this.commande.getPrice() + choixArticles.get(articleIndex - 1).getPrice());
+      
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite);
        return 0;
     }

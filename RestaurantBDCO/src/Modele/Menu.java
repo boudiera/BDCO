@@ -10,7 +10,7 @@ public class Menu extends Article {
     private HashMap<TypeArticle, Article> contientType;
 
     public Menu(String name, String speciality, float price) {
-        super(name, TypeArticle.Menu, price, speciality);
+        super(name, TypeArticle.MENU, price, speciality);
         list = new ArrayList<Article>();
         contientType = new HashMap<>();
 
@@ -36,7 +36,7 @@ public class Menu extends Article {
 
     
     public boolean contientPlat(){
-        return contientType.containsKey(TypeArticle.Plat);
+        return contientType.containsKey(TypeArticle.PLAT);
     }
             
     

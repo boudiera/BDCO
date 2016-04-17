@@ -13,10 +13,10 @@ import Modele.Menu;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;
-import static Modele.TypeArticle.Menu;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import static Modele.TypeArticle.MENU;
 
 /**
  *
@@ -59,6 +59,10 @@ public class Controller {
     // Permet de verifier si un menu est valide ( ici qu'il contient au moin un plat )
     public boolean menuValid(Menu m){
         return m.contientPlat();
+    }
+    
+    public ArrayList<Article> getArticles (int codeCarte){
+        return Factory.singletonFactory().getReservations().getArticlesCarte(codeCarte);
     }
     
     

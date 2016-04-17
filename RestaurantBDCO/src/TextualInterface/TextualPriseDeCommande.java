@@ -11,12 +11,12 @@ import Modele.Article;
 import Modele.Commande;
 import Modele.Menu;
 import Modele.TypeArticle;
-import static Modele.TypeArticle.Menu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import static Modele.TypeArticle.MENU;
 
 /**
  *
@@ -100,7 +100,7 @@ public class TextualPriseDeCommande extends AbstractView {
     }
 
     private void afficheListeArticle(int choix) {
-        ArrayList<Article> choixArticles = new ArrayList<>();
+        ArrayList<Article> choixArticles =  this.getController().getArticles(1);
         boolean estVueMenu = false;
         boolean affichageListeArticleFini = false;
         String titreSousMenu = "";
@@ -109,9 +109,9 @@ public class TextualPriseDeCommande extends AbstractView {
             case 1:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées
                 titreSousMenu ="--------------------- Affichage des entrées disponibles -------------------------\n";
-                choixArticles.add(new Article("Salade", TypeArticle.Entrée, 12, "caca"));
-                choixArticles.add(new Article("Saucisse", TypeArticle.Entrée, 10, "ppp"));
-                choixArticles.add(new Article("Carotte", TypeArticle.Entrée, 5, "lol"));
+               // choixArticles.add(new Article("Salade", TypeArticle.Entrée, 12, "caca"));
+               // choixArticles.add(new Article("Saucisse", TypeArticle.Entrée, 10, "ppp"));
+               // choixArticles.add(new Article("Carotte", TypeArticle.Entrée, 5, "lol"));
                 break;
             case 2:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article de plats
@@ -125,8 +125,8 @@ public class TextualPriseDeCommande extends AbstractView {
                 break;
             case 5:// Appel d'une fonction du controller qui nous renvois une liste d'article de menu
                 titreSousMenu ="--------------------- Affichage des menu disponibles -------------------------\n";
-                choixArticles.add(new Menu("Menu gros", "viande", 20));
-                choixArticles.add(new Menu("Menu faible", "salade", 5));
+             //   choixArticles.add(new Menu("Menu gros", "viande", 20));
+             //   choixArticles.add(new Menu("Menu faible", "salade", 5));
                 estVueMenu = true;
                 break;
             default:

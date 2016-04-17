@@ -7,18 +7,18 @@ public class UniqueArticle extends Article {
 	}
         
         public static UniqueArticle createEntry(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Entrée, price, speciality);
+            return new UniqueArticle(name, TypeArticle.ENTREE, price, speciality);
         }
         
         public static UniqueArticle createPlate(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Plat, price, speciality);
+            return new UniqueArticle(name, TypeArticle.PLAT, price, speciality);
         }
         
         public static UniqueArticle createDessert(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Dessert, price, speciality);
+            return new UniqueArticle(name, TypeArticle.DESSERT, price, speciality);
         }
         
         public static UniqueArticle createDrink(String name, float price, String speciality){
-            return new UniqueArticle(name, TypeArticle.Boisson, price, speciality);
+            return new UniqueArticle(name, TypeArticle.BOISSON, price, speciality);
         }
 }
