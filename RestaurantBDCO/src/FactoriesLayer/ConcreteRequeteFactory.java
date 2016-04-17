@@ -1,6 +1,7 @@
 package FactoriesLayer;
 
 import Modele.Article;
+import Modele.Menu;
 import java.sql.*;
 import Modele.Reservation;
 import Modele.ReservationDate;
@@ -192,6 +193,11 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             e.printStackTrace (System.err);
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<Article> getArticlesCarteMenu(int codeCarte, TypeArticle typeArticle, Menu menu) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

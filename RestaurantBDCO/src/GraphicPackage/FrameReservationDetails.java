@@ -46,15 +46,15 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         ArrayList<Article> la = new ArrayList<>();
         la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
         
-        this.listCommand.add(new Commande(1234, "Kiki", la));
+        this.listCommand.add(new Commande(1234, "Kiki", la,0));
         
         la.add(UniqueArticle.createDrink("a", (float) 3.3, "mex"));
-        this.listCommand.add(new Commande(1234, "Jojo", la));
+        this.listCommand.add(new Commande(1234, "Jojo", la,0));
         
         la.add(UniqueArticle.createDrink("a", (float) 100.1, "mex"));
-        this.listCommand.add(new Commande(1234, "Jojo", la));
+        this.listCommand.add(new Commande(1234, "Jojo", la,0));
         
-        this.listCommand.add(new Commande(15, "Arnaud Zizi", new ArrayList<Article>()));
+        this.listCommand.add(new Commande(15, "Arnaud Zizi", new ArrayList<Article>(),0));
         ////////////////////////////////
         
         updateCommandeTable();

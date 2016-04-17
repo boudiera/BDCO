@@ -14,6 +14,11 @@ public abstract class RequeteFactory{
     // Renvoie tous les articles d'une carte en fonction d'un type
     public abstract ArrayList<Article> getArticlesCarte(int codeCarte, TypeArticle typeArticle);
     
+    // Permet d'avoir tous les articles, d'un menu pour une carte donnée
+    public abstract ArrayList<Article> getArticlesCarteMenu(int codeCarte, TypeArticle typeArticle,Menu menu);
+    
+    
+    
     // Renvoie la liste des tables voisines
     public abstract ArrayList<Integer[]> tablesVoisines();
 }

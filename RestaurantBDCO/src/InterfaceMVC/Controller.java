@@ -40,10 +40,10 @@ public class Controller {
         return Factory.singletonFactory().getReservations().getReservationsList();
     }
     
-    public void ajoutCommande(int codeReservation, Commande commande){
+    public void ajoutCommande(Commande commande){
         
         // Ajout dans la mémoire de l'application
-        SingletonListCommande.singletonListCommande().addCommand(codeReservation,commande);
+        SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(),commande);
     }
     
     // Ajoute un article dans une commande

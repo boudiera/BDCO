@@ -1,6 +1,7 @@
 package FactoriesLayer;
 
 import Modele.Article;
+import Modele.Commande;
 import Modele.Service;
 import java.sql.Date;
 
@@ -137,6 +138,16 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             System.err.println("failed");
             e.printStackTrace (System.err);
         }
+    }
+
+    @Override
+    public void creeCommande(Commande commande) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void supprimeCommande(Commande commande) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
