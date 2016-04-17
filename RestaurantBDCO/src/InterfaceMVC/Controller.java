@@ -44,11 +44,16 @@ public class Controller {
         // Ajout dans la mémoire de l'application
         SingletonListCommande.singletonListCommande().addCommand(codeReservation, commande);
     }
-    
+    // Permet d'obtenir toutes les commandes d'une reservation
     public ArrayList<Commande> getCommande (int codeReservation){
         return SingletonListCommande.singletonListCommande().getListCommandByReservationCode(codeReservation);
     }
-    
+    // Permet de supprimer une commande d'une reservation
+    public void supprimeCommande( int codeReservation,Commande commande){
+        SingletonListCommande.singletonListCommande().removeCommand(codeReservation,commande.getIdentifier());
+        // Actualisation de la vue
+        this.setView(this.getView());
+    }
     
     public boolean ContientAuMoinUnEntier(String chaine) {
                 int index =0;

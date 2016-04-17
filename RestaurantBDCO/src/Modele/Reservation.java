@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Une reservation
  */
-public class Reservation {
+public abstract class Reservation {
 
     private final int codeReservation;
     private ArrayList<Table> listCodeTables;
