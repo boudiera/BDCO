@@ -5,33 +5,80 @@
  */
 package Modele;
 
-import java.util.Date;
-
 /**
  *
  * @author Iago Felipe Trentin
  */
-public class ReservationDate extends Date{
+public class ReservationDate {
+
+    private int year = 0;
+    private int month = 0;
+    private int day = 0;
+    
+    private int hour = 0;
+    private int min = 0;
+    
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMin() {
+        return min;
+    }
+    
+    /*public boolean isAfter(ReservationDate rd){
+        if(this.year < rd.getYear()){
+            return true;
+        }
+    }
+    
+    public boolean isBefore(ReservationDate rd){
+        if(this.year )
+    }*/
+    
+    public boolean isEquals(ReservationDate rd){
+        if(     this.year  == rd.getYear() &&
+                this.month == rd.getMonth() &&
+                this.day   == rd.getDay() &&
+                this.hour  == rd.getHour() &&
+                this.min   == rd.getMin() ){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
     public ReservationDate(int year, int month, int day){
-        this.setYear(year);
-        this.setMonth(month);
-        this.setDate(day);
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
     
     public ReservationDate(int year, int month, int day, int hour, int min){
-        this.setYear(year);
-        this.setMonth(month);
-        this.setDate(day);
+        this.year = year;
+        this.month = month;
+        this.day = day;
         
-        this.setHours(hour);
-        this.setMinutes(min);
+        this.hour = hour;
+        this.min = min;
     }
     
     public String writeDateSortable(){
         String s = "";
         
-        s += this.getYear();
+        s += this.writeYear();
         s += " / ";
         s += this.writeMonth();
         s += " / ";
@@ -51,7 +98,7 @@ public class ReservationDate extends Date{
         
         s += this.writeDayMonthName();
         s += " / ";
-        s += this.getYear();
+        s += this.writeYear();
         s += ", ";
         s += this.writeHourMin();
         
@@ -81,10 +128,10 @@ public class ReservationDate extends Date{
     public String writeMin(){
         String s = "";
         
-        if(this.getMinutes()>= 10){
-            s = Integer.toString(this.getMinutes());
+        if(this.getMin()>= 10){
+            s = Integer.toString(this.getMin());
         }else{
-            s = "0" + Integer.toString(this.getMinutes());
+            s = "0" + Integer.toString(this.getMin());
         }
 
         return s;
@@ -93,10 +140,10 @@ public class ReservationDate extends Date{
     public String writeHour(){
         String s = "";
         
-        if(this.getHours() >= 10){
-            s = Integer.toString(this.getHours());
+        if(this.getHour() >= 10){
+            s = Integer.toString(this.getHour());
         }else{
-            s = "0" + Integer.toString(this.getHours());
+            s = "0" + Integer.toString(this.getHour());
         }
 
         return s;
@@ -125,10 +172,10 @@ public class ReservationDate extends Date{
     public String writeDay(){
         String s = "";
         
-        if(this.getDate() >= 10){
-            s = Integer.toString(this.getDate());
+        if(this.getDay() >= 10){
+            s = Integer.toString(this.getDay());
         }else{
-            s = "0" + Integer.toString(this.getDate());
+            s = "0" + Integer.toString(this.getDay());
         }
 
         return s;
@@ -137,10 +184,10 @@ public class ReservationDate extends Date{
     public String writeMonth(){
         String s = "";
         
-        if((this.getMonth()+1) >= 10){
-            s = Integer.toString(this.getMonth()+1);
+        if((this.getMonth()) >= 10){
+            s = Integer.toString(this.getMonth());
         }else{
-            s = "0" + Integer.toString(this.getMonth()+1);
+            s = "0" + Integer.toString(this.getMonth());
         }
         
         return s;
@@ -166,6 +213,10 @@ public class ReservationDate extends Date{
         }
         
         return s;
+    }
+    
+    public String writeYear(){
+        return Integer.toString(this.getYear());
     }
     
     @Override

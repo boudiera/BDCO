@@ -17,7 +17,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
 
     final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
-    private WindowView activeWindow;
+    private WindowView activeWindow = FrameReservationList.singletonFrameReservationList();
     private EnumWindow enumWindow;
     
     private GlobalGraphicView(){

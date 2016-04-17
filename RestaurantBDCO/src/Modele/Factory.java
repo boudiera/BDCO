@@ -30,6 +30,7 @@ public class Factory extends Observable {
     
     private RequeteFactory requeteFactory = new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
     private InsertionFactory insertionFactory = new ConcreteInsertionFactory(new TheConnection(new ConnectionInfo()));
+    
     public RequeteFactory getReservations(){
         return FACTORY.requeteFactory;
     }
@@ -40,10 +41,9 @@ public class Factory extends Observable {
 
     public void setInsertionFactory(InsertionFactory insertionFactory) {
         this.insertionFactory = insertionFactory;
-        
     }
    
-    public void setRequeteFactory(RequeteFactory requeteFactory){
+    public void setRequeteFactory(RequeteFactory requeteFactory) {
         FACTORY.requeteFactory = requeteFactory;
         
         FACTORY.setChanged();
