@@ -1,4 +1,9 @@
 -- Suppression de toutes les tables
+DROP SEQUENCE SeqClient;
+DROP SEQUENCE SeqReservation;
+DROP SEQUENCE SeqTable;
+DROP SEQUENCE SeqCarte;
+
 
 DROP TABLE Coute;
 
