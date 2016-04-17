@@ -84,7 +84,7 @@ public class TextualPriseDeMenu extends AbstractView {
             if (this.getController().menuValid(menu)) {
                 this.commandeFinie = true;
             } else {
-                System.out.println("Le menu doit contenir un plat ");
+                System.out.println("Le menu doit contenir un plat et un autre article");
             }
         } else if (choix.equalsIgnoreCase("q")) {
             System.out.println(" ------------- Prise de Menu annulée ------------");
@@ -144,7 +144,7 @@ public class TextualPriseDeMenu extends AbstractView {
         String choix = "";
         while (!articleSelectione) {
             try {
-                System.out.println("\nSelectionnez l'article voulu ou appuyer sur q pour revenir au menu");
+                System.out.println("\nSelectionnez l'article voulu ou appuyez sur q pour revenir au menu");
                 Scanner sc = new Scanner(System.in);
                 choix = sc.nextLine();
                 if (choix.equalsIgnoreCase("q")) {
@@ -156,7 +156,7 @@ public class TextualPriseDeMenu extends AbstractView {
                 }
                 articleSelectione = true;
             } catch (Exception E) {
-                System.out.println("la valeur entrée est un entier positif et doit etre affiché dans la liste des articles ");
+                System.out.println("la valeur entrée est un entier positif et doit etre affichée dans la liste des articles ");
             }
         }
 

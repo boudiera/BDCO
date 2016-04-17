@@ -55,9 +55,9 @@ public class Controller {
     public void ajoutArticleMenu( Article a, Menu m){
         m.ajoutArticle(a);
     }
-    // Permet de verifier si un menu est valide ( ici qu'il contient au moin un plat )
+    // Permet de verifier si un menu est valide ( ici qu'il contient au moin un plat et au moins un autre type d'article)
     public boolean menuValid(Menu m){
-        return m.contientPlat();
+        return m.contientPlat()&& (m.contientAutreQuePlat());
     }
     
     public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
