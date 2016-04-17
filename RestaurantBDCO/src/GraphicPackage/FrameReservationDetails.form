@@ -132,12 +132,12 @@
           <Font name="DejaVu Sans" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Commandes List"/>
+        <Property name="text" type="java.lang.String" value="Liste Commandes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonDeleteSelectedCommand">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete Selected Command"/>
+        <Property name="text" type="java.lang.String" value="Effacer Commande"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -146,7 +146,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonNewCommand">
       <Properties>
-        <Property name="text" type="java.lang.String" value="New Command"/>
+        <Property name="text" type="java.lang.String" value="Nouvelle Commande"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonNewCommandActionPerformed"/>
@@ -163,7 +163,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButonGetBill">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Get Bill"/>
+        <Property name="text" type="java.lang.String" value="Addition"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
@@ -181,7 +181,7 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="2" rowCount="25">
-                <Column editable="true" title="Item" type="java.lang.String">
+                <Column editable="true" title="Objet" type="java.lang.String">
                   <Data value="Spaghetti"/>
                   <Data value="Boisson"/>
                   <Data value="null"/>
@@ -208,7 +208,7 @@
                   <Data value="null"/>
                   <Data value="null"/>
                 </Column>
-                <Column editable="true" title="Price" type="java.lang.Float">
+                <Column editable="true" title="Prix" type="java.lang.Float">
                   <Data value="123.6"/>
                   <Data value="1250.99"/>
                   <Data value="null"/>
@@ -265,7 +265,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Items for the Selected Commande"/>
+        <Property name="text" type="java.lang.String" value="D&#xe9;tail Commande"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="TextTotalBill">
@@ -296,7 +296,7 @@
           <Font name="DejaVu Sans" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Reservation Details"/>
+        <Property name="text" type="java.lang.String" value="D&#xe9;tails Reservation"/>
       </Properties>
     </Component>
   </SubComponents>

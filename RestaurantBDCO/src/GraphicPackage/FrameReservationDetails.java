@@ -152,9 +152,9 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WindowTitle.setText("Commandes List");
+        WindowTitle.setText("Liste Commandes");
 
-        ButtonDeleteSelectedCommand.setText("Delete Selected Command");
+        ButtonDeleteSelectedCommand.setText("Effacer Commande");
         ButtonDeleteSelectedCommand.setEnabled(false);
         ButtonDeleteSelectedCommand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,7 +162,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             }
         });
 
-        ButtonNewCommand.setText("New Command");
+        ButtonNewCommand.setText("Nouvelle Commande");
         ButtonNewCommand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonNewCommandActionPerformed(evt);
@@ -173,7 +173,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
 
-        ButonGetBill.setText("Get Bill");
+        ButonGetBill.setText("Addition");
         ButonGetBill.setToolTipText("");
         ButonGetBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,7 +210,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 {null, null}
             },
             new String [] {
-                "Item", "Price"
+                "Objet", "Prix"
             }
         ) {
             Class[] types = new Class [] {
@@ -230,7 +230,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
         TextTitleCommandeItems.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextTitleCommandeItems.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TextTitleCommandeItems.setText("Items for the Selected Commande");
+        TextTitleCommandeItems.setText("Détail Commande");
 
         TextTotalBill.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         TextTotalBill.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -244,7 +244,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
         WindowTitle1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WindowTitle1.setText("Reservation Details");
+        WindowTitle1.setText("Détails Reservation");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

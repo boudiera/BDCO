@@ -80,7 +80,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Reservation List");
+        jLabel1.setText("Réservation");
 
         nbPeople.setText("1");
         nbPeople.addActionListener(new java.awt.event.ActionListener() {
@@ -91,11 +91,11 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Client Name:");
+        jLabel2.setText("Nom Client");
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Client Phone:");
+        jLabel3.setText("Téléphone");
 
         clientName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +105,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Number of People:");
+        jLabel4.setText("Nombre de personnes");
 
         clientPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +115,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Day:");
+        jLabel5.setText("Jour");
 
         day.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,7 +150,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         buttonGroup1.add(midday);
         midday.setSelected(true);
-        midday.setText("Midday");
+        midday.setText("Midi");
         midday.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 middayActionPerformed(evt);
@@ -158,7 +158,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         });
 
         buttonGroup1.add(evening);
-        evening.setText("Evening");
+        evening.setText("Soir");
         evening.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eveningActionPerformed(evt);
@@ -167,7 +167,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel9.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Hour:");
+        jLabel9.setText("Heure");
 
         hour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,19 +187,19 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel11.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Possible Locations:");
+        jLabel11.setText("Emplacements disponibles");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setEnabled(false);
 
-        buttonCalculate.setText("Calculate");
+        buttonCalculate.setText("Trouver");
         buttonCalculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonCalculateActionPerformed(evt);
             }
         });
 
-        createButton.setText("Create Reservation");
+        createButton.setText("Créer Réservation");
         createButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createButtonMouseClicked(evt);

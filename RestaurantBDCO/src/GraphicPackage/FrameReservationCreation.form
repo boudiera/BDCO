@@ -156,7 +156,7 @@
           <Font name="DejaVu Sans" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Reservation List"/>
+        <Property name="text" type="java.lang.String" value="R&#xe9;servation"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="nbPeople">
@@ -173,7 +173,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Client Name:"/>
+        <Property name="text" type="java.lang.String" value="Nom Client"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -182,7 +182,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Client Phone:"/>
+        <Property name="text" type="java.lang.String" value="T&#xe9;l&#xe9;phone"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="clientName">
@@ -196,7 +196,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Number of People:"/>
+        <Property name="text" type="java.lang.String" value="Nombre de personnes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="clientPhone">
@@ -210,7 +210,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Day:"/>
+        <Property name="text" type="java.lang.String" value="Jour"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="day">
@@ -264,7 +264,7 @@
           <ComponentRef name="buttonGroup1"/>
         </Property>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Midday"/>
+        <Property name="text" type="java.lang.String" value="Midi"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="middayActionPerformed"/>
@@ -275,7 +275,7 @@
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="buttonGroup1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Evening"/>
+        <Property name="text" type="java.lang.String" value="Soir"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eveningActionPerformed"/>
@@ -287,7 +287,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Hour:"/>
+        <Property name="text" type="java.lang.String" value="Heure"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="hour">
@@ -315,7 +315,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Possible Locations:"/>
+        <Property name="text" type="java.lang.String" value="Emplacements disponibles"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
@@ -333,7 +333,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonCalculate">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Calculate"/>
+        <Property name="text" type="java.lang.String" value="Trouver"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCalculateActionPerformed"/>
@@ -341,7 +341,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="createButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Create Reservation"/>
+        <Property name="text" type="java.lang.String" value="Cr&#xe9;er R&#xe9;servation"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="createButtonMouseClicked"/>
