@@ -129,9 +129,9 @@ public class TextualPriseDeCommande extends AbstractView {
                 break;
             case 5:// Appel d'une fonction du controller qui nous renvois une liste d'article de menu
                 titreSousMenu ="--------------------- Affichage des menu disponibles -------------------------\n";
-               // choixArticles  =  this.getController().getArticles(1,TypeArticle.MENU);
-               choixArticles.add(new Menu("Menu gros", "viande", 20));
-                choixArticles.add(new Menu("Menu faible", "salade", 5));
+                choixArticles  =  this.getController().getArticles(1,TypeArticle.MENU);
+              // choixArticles.add(new Menu("Menu gros", "viande", 20));
+               // choixArticles.add(new Menu("Menu faible", "salade", 5));
                 estVueMenu = true;
                 break;
             default:
