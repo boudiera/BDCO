@@ -14,6 +14,7 @@ import Modele.Service;
 import Modele.Table;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -373,7 +374,6 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
             ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()),
                     Integer.parseInt(day.getText()), service);
-            
             if (tablesLibres.isEmpty()){
                 throw new RestaurantCompletException();
             }
@@ -396,6 +396,9 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             minute.setEnabled(false);
             midday.setEnabled(false);
             evening.setEnabled(false);
+            
+            HashMap<Integer, ArrayList<Integer>> h = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
+            System.out.println(h);
             
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);

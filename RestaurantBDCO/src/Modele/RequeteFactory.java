@@ -25,5 +25,5 @@ public abstract class RequeteFactory{
     public abstract int clientConnu(String nomClient, String numTel);
 
     // Renvoie la liste des tables voisines
-    public abstract ArrayList<Integer[]> tablesVoisines();
+    public abstract HashMap<Integer, ArrayList<Integer>> tablesVoisines();
 }

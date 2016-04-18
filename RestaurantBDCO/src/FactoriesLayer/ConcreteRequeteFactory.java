@@ -201,9 +201,9 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     }
     
     @Override
-    public ArrayList<Integer[]> tablesVoisines(){
+    public HashMap<Integer, ArrayList<Integer>> tablesVoisines(){
         connexion.open();
-        ArrayList<Integer[]> tablesVoisines = new ArrayList<>();
+        HashMap<Integer, ArrayList<Integer>> tablesVoisines = new HashMap<>();
         
         String STMT_1 = "select *"
                 + " from EstVoisine ";
@@ -212,10 +212,22 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             ResultSet resVoisines = stmt.executeQuery();
             
             while(resVoisines.next()){
-                Integer[] t = new Integer[2];
-                t[0] = resVoisines.getInt(1);
-                t[1] = resVoisines.getInt(2);
-                tablesVoisines.add(t);
+                if (tablesVoisines.containsKey(resVoisines.getInt(1))){
+                    if (!tablesVoisines.get(resVoisines.getInt(1)).contains(resVoisines.getInt(2)))
+                        tablesVoisines.get(resVoisines.getInt(1)).add(resVoisines.getInt(2));
+                }
+                else{
+                    tablesVoisines.put(resVoisines.getInt(1), new ArrayList<Integer>());
+                    tablesVoisines.get(resVoisines.getInt(1)).add(resVoisines.getInt(2));
+                }
+                if (tablesVoisines.containsKey(resVoisines.getInt(2))){
+                    if (!tablesVoisines.get(resVoisines.getInt(2)).contains(resVoisines.getInt(1)))
+                        tablesVoisines.get(resVoisines.getInt(2)).add(resVoisines.getInt(1));
+                }
+                else{
+                    tablesVoisines.put(resVoisines.getInt(2), new ArrayList<Integer>());
+                    tablesVoisines.get(resVoisines.getInt(2)).add(resVoisines.getInt(1));
+                }
             }
             resVoisines.close();
             stmt.close();

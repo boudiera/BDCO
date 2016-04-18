@@ -10,6 +10,7 @@ import Modele.Article;
 import Modele.Commande;
 import Modele.Factory;
 import Modele.Menu;
+import Modele.Permutation.SepaPnkIterator;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;
@@ -20,6 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 import static Modele.TypeArticle.MENU;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -50,6 +52,33 @@ public class Controller {
     
     public ArrayList<Reservation> getReservationList(){
         return Factory.singletonFactory().getRequeteFactory().getReservationsList();
+    }
+    
+    
+    public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlace){
+        Iterator<int[]> i = null;
+        HashMap<Integer, ArrayList<Integer>> hash = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
+        for(int j=1; j<liste.size(); j++)
+        i = new SepaPnkIterator(liste.size(), j);
+            while(i.hasNext()){
+                verifycombi(i.next(), hash);
+            }
+            return new ArrayList<>(); //Non Implémenté TO DO
+    }
+    
+    private boolean verifycombi(int[] tab, HashMap<Integer, ArrayList<Integer>> hash){
+        if (tab.length==1)
+            return true;
+        if (!hash.get(tab[0]).contains(tab[1]))
+            return false;
+        for(int i=1; i<tab.length-1; i++){
+            if(!hash.get(tab[i]).contains(tab[i-1]) && 
+                    !hash.get(tab[i]).contains(tab[i+1]))
+                return false;
+        }
+        if ((!hash.get(tab[tab.length]).contains(tab[tab.length-2])))
+            return false;
+        return true;
     }
     
     public void addCommande(Commande commande){

@@ -282,7 +282,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 for(int col=0; col < this.SelectedArticlesTable.getColumnCount(); col++){
                     value[col] = (String) this.SelectedArticlesTable.getValueAt(row, col);
                 }
-                
+              
                 list.add(GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(1, TypeArticle.valueOf(value[1])).get(value[0]));
             }
 
