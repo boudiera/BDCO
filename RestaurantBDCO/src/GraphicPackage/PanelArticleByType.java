@@ -5,6 +5,10 @@
  */
 package GraphicPackage;
 
+import Modele.Article;
+import Modele.TypeArticle;
+import javax.swing.JTabbedPane;
+
 /**
  *
  * @author trentini
@@ -27,8 +31,9 @@ public class PanelArticleByType extends javax.swing.JPanel {
             this.jButton1.setEnabled(false);
         } else {
             //this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
-
-            this.jButton1.setEnabled(true);
+            FrameCommande.setSelectedArticle(this.jTable1.getSelectedRow());
+            FrameCommande.setActivePanel(TypeArticle.valueOf("Entree"));
+            this.jButton1.setEnabled(true); 
         }
     }
 
@@ -72,6 +77,11 @@ public class PanelArticleByType extends javax.swing.JPanel {
         jButton1.setText("Add Selected Article");
         jButton1.setToolTipText("");
         jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -102,6 +112,10 @@ public class PanelArticleByType extends javax.swing.JPanel {
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         this.updateSelectedArticle();
     }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

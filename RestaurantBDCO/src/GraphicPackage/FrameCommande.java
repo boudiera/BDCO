@@ -11,6 +11,7 @@ import Modele.TypeArticle;
 import java.util.ArrayList;
 import java.util.Observable;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,25 +20,43 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
-    private Article selectedArticle;
-    
+    private static int selectedArticle;
+    private static TypeArticle activePanel;
+            
     /**
      * Creates new form FrameCommande
      */
     public FrameCommande() {
         initComponents();
-        DefaultTableModel model[] = new DefaultTableModel[5];
+        DefaultTableModel model[] = new DefaultTableModel[6];
         for(int i=0; i<5; i++){
-            model[i] = new DefaultTableModel(new String[] {"Nom", "Prix", "Spécialité"}, 0);
+            model[i] = new DefaultTableModel(new String[] {"TypeArticle", "Nom", "Prix", "Spécialité"}, 0);
         }
-        Entrees.getTable().setModel(model[0]);
-        Plats.getTable().setModel(model[1]);
-        Desserts.getTable().setModel(model[2]);
-        Boissons.getTable().setModel(model[3]);
-        Menus.getTable().setModel(model[4]);
+        Entrees.setModel(model[0]);
+        Plats.setModel(model[1]);
+        Desserts.setModel(model[2]);
+        Boissons.setModel(model[3]);
+        Menus.setModel(model[4]);
+        jTable1.setModel(model[5]);
         updateCarte(1, model);
     }
 
+    public static void setActivePanel(TypeArticle type){
+        activePanel=type;
+    }
+    
+    public static TypeArticle getActivePanel(){
+        return activePanel;
+    }
+    
+    public static void setSelectedArticle(int i){
+        selectedArticle=i;
+    }
+    
+    public static int getSelectedArticle(){
+        return selectedArticle;
+    }
+    
      private void updateCarte(int codeCarte, DefaultTableModel model[]) {
         int i=-1;
         for(TypeArticle type : TypeArticle.values()){
@@ -74,27 +93,25 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        Entrees = new GraphicPackage.PanelArticleByType();
-        Plats = new GraphicPackage.PanelArticleByType();
-        Desserts = new GraphicPackage.PanelArticleByType();
-        Boissons = new GraphicPackage.PanelArticleByType();
-        Menus = new GraphicPackage.PanelArticleByType();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Entrees = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Plats = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        Desserts = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        Boissons = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        Menus = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jTabbedPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTabbedPane2.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        jTabbedPane2.addTab("Entrées", Entrees);
-        jTabbedPane2.addTab("Plats", Plats);
-        jTabbedPane2.addTab("Desserts", Desserts);
-        jTabbedPane2.addTab("Boissons", Boissons);
-        jTabbedPane2.addTab("Menus", Menus);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,36 +142,117 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
             }
         });
 
+        jButton3.setText("jButton3");
+
+        Entrees.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(Entrees);
+
+        jTabbedPane1.addTab("Entrées", jScrollPane2);
+
+        Plats.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(Plats);
+
+        jTabbedPane1.addTab("PLats", jScrollPane3);
+
+        Desserts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(Desserts);
+
+        jTabbedPane1.addTab("Desserts", jScrollPane4);
+
+        Boissons.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(Boissons);
+
+        jTabbedPane1.addTab("Boissons", jScrollPane5);
+
+        Menus.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(Menus);
+
+        jTabbedPane1.addTab("Menus", jScrollPane6);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -204,16 +302,22 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GraphicPackage.PanelArticleByType Boissons;
-    private GraphicPackage.PanelArticleByType Desserts;
-    private GraphicPackage.PanelArticleByType Entrees;
-    private GraphicPackage.PanelArticleByType Menus;
-    private GraphicPackage.PanelArticleByType Plats;
+    private javax.swing.JTable Boissons;
+    private javax.swing.JTable Desserts;
+    private javax.swing.JTable Entrees;
+    private javax.swing.JTable Menus;
+    private javax.swing.JTable Plats;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
