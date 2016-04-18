@@ -1,5 +1,6 @@
 package GraphicPackage;
 
+import InterfaceMVC.ViewType;
 import FactoriesLayer.*;
 import Modele.*;
 import java.util.*;
@@ -33,8 +34,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
      */
     private FrameReservationList() {
         initComponents();
-        Factory.singletonFactory().setRequeteFactory(new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo())));
-        updateReservationTable(Factory.singletonFactory().getReservations().getReservationsList());
+        updateReservationTable(Factory.singletonFactory().getRequeteFactory().getReservationsList());
 
         /*   TEST CODE
         ArrayList<Table> CodesTables = new ArrayList<>();
@@ -59,15 +59,20 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         if(arg instanceof ArrayList<?>){
             updateReservationTable((ArrayList<Reservation>) arg);
         }else{
-            updateReservationTable(Factory.singletonFactory().getReservations().getReservationsList());
+            updateReservationTable(Factory.singletonFactory().getRequeteFactory().getReservationsList());
         }
+    }
+    
+    @Override
+    public boolean isSingleton(){
+        return true;
     }
     
     private void updateReservationTable(ArrayList<Reservation> resReservation){
         this.listReservations.clear();
         this.listReservations.addAll(resReservation);
         
-        DefaultTableModel model = new DefaultTableModel(new String[]{ "Code", "Date", "Name", "Phone", "# People", "Table(s)" }, 0){
+        DefaultTableModel model = new DefaultTableModel(new String[]{ "Code", "Date", "Nom", "Téléphone", "No Personnes", "Table(s)" }, 0){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;   //all cells false
@@ -107,12 +112,12 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         
         try{
-            sortKeys.add(new RowSorter.SortKey(model.findColumn("Name"), SortOrder.ASCENDING));
+            sortKeys.add(new RowSorter.SortKey(model.findColumn("Nom"), SortOrder.ASCENDING));
             sorter.setSortKeys(sortKeys);
 
             int unsortableColumn;
 
-            unsortableColumn = model.findColumn("# People");
+            unsortableColumn = model.findColumn("No Personnes");
             if(unsortableColumn != -1){
                 sorter.setSortable(unsortableColumn, false);
             }
@@ -148,10 +153,11 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         AddNewReservation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Restaurant BDCO - Liste de Reservations");
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WindowTitle.setText("Reservations List");
+        WindowTitle.setText("Liste de Reservations");
 
         ReservationsTable.setModel(new DefaultTableModel());
         ReservationsTable.setRowHeight(30);
@@ -165,7 +171,8 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         PaneOfReservationTable.setViewportView(ReservationsTable);
         ReservationsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        OpenSelectedReservation.setText("Open Selected Reservation");
+        OpenSelectedReservation.setText("Ouvrir Reservation Selectioné");
+        OpenSelectedReservation.setToolTipText("");
         OpenSelectedReservation.setActionCommand("Open Reservation #??");
         OpenSelectedReservation.setEnabled(false);
         OpenSelectedReservation.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +181,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         });
 
-        DeleteSelectedReservation.setText("Delete Selected Reservation");
+        DeleteSelectedReservation.setText("Supprimer Reservation");
         DeleteSelectedReservation.setEnabled(false);
         DeleteSelectedReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +189,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         });
 
-        AddNewReservation.setText("Add New Reservation");
+        AddNewReservation.setText("Ajouter Reservation");
         AddNewReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddNewReservationActionPerformed(evt);
@@ -202,7 +209,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
                         .addComponent(AddNewReservation)
                         .addGap(18, 18, 18)
                         .addComponent(DeleteSelectedReservation)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                         .addComponent(OpenSelectedReservation)))
                 .addContainerGap())
         );
@@ -225,7 +232,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSelectedReservationActionPerformed
-        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ResevationDetails);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ResevationDetails);
     }//GEN-LAST:event_OpenSelectedReservationActionPerformed
 
     private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
@@ -233,7 +240,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
-        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ReservationCreation);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ReservationCreation);
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed

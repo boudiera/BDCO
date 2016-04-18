@@ -31,12 +31,12 @@ public class Factory extends Observable {
     private RequeteFactory requeteFactory = new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
     private InsertionFactory insertionFactory = new ConcreteInsertionFactory(new TheConnection(new ConnectionInfo()));
     
-    public RequeteFactory getReservations(){
-        return FACTORY.requeteFactory;
+    public RequeteFactory getRequeteFactory(){
+        return this.requeteFactory;
     }
 
     public InsertionFactory getInsertionFactory() {
-        return insertionFactory;
+        return this.insertionFactory;
     }
 
     public void setInsertionFactory(InsertionFactory insertionFactory) {
@@ -44,9 +44,6 @@ public class Factory extends Observable {
     }
    
     public void setRequeteFactory(RequeteFactory requeteFactory) {
-        FACTORY.requeteFactory = requeteFactory;
-        
-        FACTORY.setChanged();
-        FACTORY.notifyObservers(this.requeteFactory);
+        this.requeteFactory = requeteFactory;
     }
 }

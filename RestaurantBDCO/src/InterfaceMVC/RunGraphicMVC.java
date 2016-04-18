@@ -22,11 +22,9 @@ public class RunGraphicMVC {
     public static void run(String[] args) {
 
         AbstractView MainView = GlobalGraphicView.singletonGlobalGraphicView();
-        Controller GC = new Controller();
+        Controller Ctrl = new Controller();
         
-        ((GlobalGraphicView) MainView).setActiveView(EnumWindow.ReservationList);
-        MainView.setController(GC);
-        
-        GC.setView(MainView);
+        MainView.setController(Ctrl);
+        Ctrl.setView(MainView);
     }
 }

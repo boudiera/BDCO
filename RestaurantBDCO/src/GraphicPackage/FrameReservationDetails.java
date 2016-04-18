@@ -5,6 +5,7 @@
  */
 package GraphicPackage;
 
+import InterfaceMVC.ViewType;
 import FactoriesLayer.ConcreteRequeteFactory;
 import Modele.Article;
 import Modele.Commande;
@@ -62,13 +63,18 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ReservationList);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ReservationList);
         super.dispose();
     }
     
     @Override
     public void update(Observable o, Object arg) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public boolean isSingleton(){
+        return false;
     }
     
     private void updateCommandeTable(){

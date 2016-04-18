@@ -3,6 +3,7 @@
 <Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Restaurant BDCO - Liste de Reservations"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -32,7 +33,7 @@
                       <Component id="AddNewReservation" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="DeleteSelectedReservation" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="103" max="32767" attributes="0"/>
+                      <EmptySpace pref="127" max="32767" attributes="0"/>
                       <Component id="OpenSelectedReservation" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -65,7 +66,7 @@
           <Font name="DejaVu Sans" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Reservations List"/>
+        <Property name="text" type="java.lang.String" value="Liste de Reservations"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="PaneOfReservationTable">
@@ -99,7 +100,8 @@
     </Container>
     <Component class="javax.swing.JButton" name="OpenSelectedReservation">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Open Selected Reservation"/>
+        <Property name="text" type="java.lang.String" value="Ouvrir Reservation Selection&#xe9;"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="actionCommand" type="java.lang.String" value="Open Reservation #??"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -109,7 +111,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="DeleteSelectedReservation">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete Selected Reservation"/>
+        <Property name="text" type="java.lang.String" value="Supprimer Reservation"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -118,7 +120,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="AddNewReservation">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Add New Reservation"/>
+        <Property name="text" type="java.lang.String" value="Ajouter Reservation"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddNewReservationActionPerformed"/>

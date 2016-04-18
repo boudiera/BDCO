@@ -5,6 +5,7 @@
  */
 package GraphicPackage;
 
+import InterfaceMVC.ViewType;
 import InterfaceMVC.Exceptions.HeureException;
 import InterfaceMVC.Exceptions.ReservationException;
 import Modele.Factory;
@@ -32,13 +33,18 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ReservationList);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ReservationList);
         super.dispose();
     }
     
     @Override
     public void update(Observable o, Object arg) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public boolean isSingleton(){
+        return false;
     }
     
     /**
@@ -200,19 +206,9 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         });
 
         createButton.setText("Create Reservation");
-        createButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                createButtonMouseClicked(evt);
-            }
-        });
         createButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createButtonActionPerformed(evt);
-            }
-        });
-        createButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                createButtonKeyPressed(evt);
             }
         });
 
@@ -363,32 +359,6 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         // TODO add your handling code here:
     }//GEN-LAST:event_minuteActionPerformed
 
-    private void createButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createButtonKeyPressed
-
-    }//GEN-LAST:event_createButtonKeyPressed
-
-    private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
-        /*
-        CreateReservation res=null;
-        try {
-            Date date = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()),
-                    Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
-            Service ser;
-            if (midday.isSelected()) {
-                ser = Service.MIDI;
-            } else {
-                ser = Service.SOIR;
-            }
-            res = new CreateReservation(clientName.getText(), clientPhone.getText(),
-                    Integer.parseInt(nbPeople.getText()), date, ser);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this.getParent(), "All fields must be filled correctly");
-        }
-        if (res!=null)
-            res.execute();
-        */
-    }//GEN-LAST:event_createButtonMouseClicked
-
     private void buttonCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCalculateActionPerformed
         Service service;
         if (midday.isEnabled())
@@ -398,9 +368,9 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         try {
             GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
-            ArrayList<Table> tablesLibres = Factory.singletonFactory().getReservations().tablesLibres(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()),
+            ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()),
                     Integer.parseInt(day.getText()), service);
-            System.out.println(Factory.singletonFactory().getReservations());
+            System.out.println(Factory.singletonFactory().getRequeteFactory());
             
             //TO DO --Déterminer les locations dispo
             

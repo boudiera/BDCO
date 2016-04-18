@@ -15,5 +15,7 @@ public interface WindowView extends Observer{
 
     public void setEnabled(boolean b);
     public void setVisible(boolean b);
+    
+    public boolean isSingleton();
 
 }

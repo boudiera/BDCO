@@ -5,8 +5,10 @@
  */
 package GraphicPackage;
 
+import InterfaceMVC.ViewType;
 import FactoriesLayer.*;
 import InterfaceMVC.*;
+import Modele.Factory;
 import java.util.*;
 
 /**
@@ -17,13 +19,16 @@ public class GlobalGraphicView extends AbstractView implements Observer{
 
     final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
-    private WindowView activeWindow = FrameReservationList.singletonFrameReservationList();
-    private EnumWindow enumWindow;
+    private WindowView activeWindow;
+    private ViewType enumWindow;
     
     private GlobalGraphicView(){
     }
     
     public static GlobalGraphicView singletonGlobalGraphicView(){
+        if(GLOBAL_GRAPHIC_VIEW.activeWindow == null){
+            GLOBAL_GRAPHIC_VIEW.setActiveGraphicView(ViewType.ReservationList);
+        }
         return GlobalGraphicView.GLOBAL_GRAPHIC_VIEW;
     }
     
@@ -31,18 +36,23 @@ public class GlobalGraphicView extends AbstractView implements Observer{
         return this.activeWindow;
     }
     
-    public EnumWindow getEnumWindowOfActiveView(){
+    public ViewType getEnumWindowOfActiveView(){
         return this.enumWindow;
     }
     
-    public void setActiveView(EnumWindow window){
+    public void setActiveGraphicView(ViewType window){
         
-        if(this.activeWindow != null) this.activeWindow.setEnabled(false);
+       if(GLOBAL_GRAPHIC_VIEW.activeWindow != null){
+            if(this.activeWindow.isSingleton()){
+                this.activeWindow.setEnabled(false);    //the old window is set to disabled (if singleton, it means we can reactivate the window the next time it is set)
+            }else{
+                Factory.singletonFactory().deleteObserver(this.activeWindow);   //if not singleton, the observer is deleted after it changes the view (it means it is no longer shown)
+            }
+        }
         
         this.enumWindow = window;
         switch(window){
             case ReservationList:
-                //ConcreteRequeteFactory.singletonConcreteRequeteFactory().deleteObserver(this.activeWindow);
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
                 break;
             case ReservationCreation:
@@ -54,14 +64,22 @@ public class GlobalGraphicView extends AbstractView implements Observer{
             case Commande:
                 this.activeWindow = (WindowView) new FrameCommande(); //TO-DO: make cast not needed!
                 break;
+            default:
+                this.activeWindow = FrameReservationList.singletonFrameReservationList();
+                break;
         }
 
-        //ConcreteRequeteFactory.singletonConcreteRequeteFactory().addObserver(this.activeWindow);
-        showView(true);
+        Factory.singletonFactory().addObserver(this.activeWindow);
     }
     
     @Override
     public void showView(boolean b) {
+        if(this.getController().getViewType() == null){
+            this.setActiveGraphicView(ViewType.ReservationList);
+        }else{
+            this.setActiveGraphicView(this.getController().getViewType());
+        }
+        
         this.activeWindow.setEnabled(b);
         this.activeWindow.setVisible(b);
     }

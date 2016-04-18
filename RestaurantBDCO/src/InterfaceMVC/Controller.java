@@ -26,9 +26,19 @@ import static Modele.TypeArticle.MENU;
 public class Controller {
     
     protected AbstractView view;
+    private   ViewType viewType;
     
     public AbstractView getView(){
         return this.view;
+    }
+    
+    public ViewType getViewType() {
+        return viewType;
+    }
+    
+    public void setView(ViewType vt){
+        this.viewType = vt;
+        this.view.showView(true);
     }
     
     public void setView(AbstractView v){
@@ -37,7 +47,7 @@ public class Controller {
     }
     
     public ArrayList<Reservation> getReservationList(){
-        return Factory.singletonFactory().getReservations().getReservationsList();
+        return Factory.singletonFactory().getRequeteFactory().getReservationsList();
     }
     
     public void ajoutCommande(Commande commande){
@@ -61,7 +71,7 @@ public class Controller {
     }
     
     public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
-        return Factory.singletonFactory().getReservations().getArticlesCarte(codeCarte, typeArticle);
+        return Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle);
     }
     
     
