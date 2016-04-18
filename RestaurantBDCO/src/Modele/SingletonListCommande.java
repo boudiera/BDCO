@@ -15,7 +15,7 @@ import java.util.Observable;
  * @author trentini
  */
 public class SingletonListCommande extends Observable{
-    final private static SingletonListCommande singleton = new SingletonListCommande();
+    final private static SingletonListCommande SINGLETON_LIST_COMMANDE = new SingletonListCommande();
     
     private HashMap<Integer, HashMap<String, Commande>> listCommande = new HashMap<>();
     
@@ -23,7 +23,7 @@ public class SingletonListCommande extends Observable{
     }
     
     public static SingletonListCommande singletonListCommande(){
-        return SingletonListCommande.singleton;
+        return SingletonListCommande.SINGLETON_LIST_COMMANDE;
     }
     
     public void addCommand(int codeReservation, Commande commande){
@@ -33,13 +33,16 @@ public class SingletonListCommande extends Observable{
             this.listCommande.put(codeReservation, new HashMap<String, Commande>());
             this.listCommande.get(codeReservation).put(commande.getIdentifier(), commande);
         }
-        
-        this.notifyObservers(this.listCommande);
+
+        this.setChanged();
+        this.notifyObservers();
     }
     
     public void removeCommand(int codeReservation, String identifier){
         this.listCommande.get(codeReservation).remove(identifier);
-        this.notifyObservers(this.listCommande);
+        
+        this.setChanged();
+        this.notifyObservers();
     }
     
     public ArrayList<Commande> getListCommandByReservationCode(int codeReservation){

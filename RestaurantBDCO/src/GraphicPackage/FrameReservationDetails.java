@@ -38,10 +38,8 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
      */
     private FrameReservationDetails() {
         initComponents();
-        
-        this.TextCodeReservation.setText("Reservation #" + FrameReservationList.singletonFrameReservationList().getSelectedReservationCode());
-        
-        
+
+        ///*
         ArrayList<Article> la = new ArrayList<>();
         la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
         la.add(UniqueArticle.createDrink("a", (float) 3.3, "mex"));
@@ -56,12 +54,16 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "hhh", new ArrayList<Article>(), 50));
         SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "momomo", la, 500));
         SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "yuiyui", la, 88));
+        //*/
         
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
         updateArticleTable(new ArrayList<Article>());
     }
     
     public static FrameReservationDetails singletonFrameReservationDetails(){
+        FRAME_RESERVATION_DETAILS.TextCodeReservation.setText("Reservation #" + FrameReservationList.singletonFrameReservationList().getSelectedReservationCode());
+        FRAME_RESERVATION_DETAILS.updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
+        
         return FrameReservationDetails.FRAME_RESERVATION_DETAILS;
     }
     
@@ -74,6 +76,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     @Override
     public void update(Observable o, Object arg) {
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
+        this.updateSelectedCommande();
     }
     
     @Override
@@ -161,6 +164,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     public void updateSelectedCommande(){
         if (this.CommandeTable.getSelectedRow() == -1) {
             this.ButtonDeleteSelectedCommand.setEnabled(false);
+            this.updateArticleTable(new ArrayList<Article>());
         } else {
             int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
             String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
@@ -278,8 +282,8 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                         .addComponent(ButtonNewCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(ButtonDeleteSelectedCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
-                        .addComponent(ButonGetBill, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(ButonGetBill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -291,7 +295,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PaneCommandeItems, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(WindowTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -330,10 +334,12 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonDeleteSelectedCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedCommandActionPerformed
-        int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
-        String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
-        SingletonListCommande.singletonListCommande().removeCommand(codeReservation, identifier);
-        this.updateArticleTable(SingletonListCommande.singletonListCommande().getListArticlesByReservationCodeAndCommandeIdentifier(codeReservation, identifier));
+        if(this.CommandeTable.getSelectedRow() >= 0) {
+            int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
+            String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
+            
+            SingletonListCommande.singletonListCommande().removeCommand(codeReservation, identifier);
+        }
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed

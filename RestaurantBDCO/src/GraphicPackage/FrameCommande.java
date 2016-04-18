@@ -12,6 +12,7 @@ import Modele.Article;
 import Modele.Commande;
 import Modele.TypeArticle;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Observable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -208,7 +209,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
         FieldClientName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         FieldClientName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        FieldClientName.setText("Identifiant");
+        FieldClientName.setText(Calendar.getInstance().getTime().toString());
         FieldClientName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FieldClientNameActionPerformed(evt);
@@ -260,10 +261,11 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                     .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(ButtonDeleteSelectedArticle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(FieldClientName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(FieldClientName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addContainerGap())
         );
 

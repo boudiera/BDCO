@@ -9,6 +9,7 @@ import InterfaceMVC.EnumView;
 import FactoriesLayer.*;
 import InterfaceMVC.*;
 import Modele.Factory;
+import Modele.SingletonListCommande;
 import java.util.*;
 
 /**
@@ -56,7 +57,8 @@ public class GlobalGraphicView extends AbstractView implements Observer{
                 this.activeWindow = new FrameReservationCreation();
                 break;
             case ResevationDetails:
-                this.activeWindow =  FrameReservationDetails.singletonFrameReservationDetails(); //TO-DO: add observer to CommandeList! (where? factory or singletoncommandelist?)
+                this.activeWindow =  FrameReservationDetails.singletonFrameReservationDetails();
+                SingletonListCommande.singletonListCommande().addObserver(this.activeWindow);
                 break;
             case Commande:
                 this.activeWindow = new FrameCommande();
