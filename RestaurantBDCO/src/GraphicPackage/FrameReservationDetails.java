@@ -31,10 +31,12 @@ import javax.swing.table.TableRowSorter;
  */
 public class FrameReservationDetails extends javax.swing.JFrame implements WindowView {
 
+    final private static FrameReservationDetails FRAME_RESERVATION_DETAILS = new FrameReservationDetails();
+    
     /**
      * Creates new form FrameReservationDetails
      */
-    public FrameReservationDetails() {
+    private FrameReservationDetails() {
         initComponents();
         
         this.TextCodeReservation.setText("Reservation #" + FrameReservationList.singletonFrameReservationList().getSelectedReservationCode());
@@ -59,6 +61,10 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         updateArticleTable(new ArrayList<Article>());
     }
     
+    public static FrameReservationDetails singletonFrameReservationDetails(){
+        return FrameReservationDetails.FRAME_RESERVATION_DETAILS;
+    }
+    
     @Override
     public void dispose() {
         GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationList);
@@ -72,7 +78,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public boolean isSingleton(){
-        return false;
+        return true;
     }
     
     private void updateArticleTable(ArrayList<Article> listArticle){

@@ -33,10 +33,13 @@ public class SingletonListCommande extends Observable{
             this.listCommande.put(codeReservation, new HashMap<String, Commande>());
             this.listCommande.get(codeReservation).put(commande.getIdentifier(), commande);
         }
+        
+        this.notifyObservers(this.listCommande);
     }
     
     public void removeCommand(int codeReservation, String identifier){
         this.listCommande.get(codeReservation).remove(identifier);
+        this.notifyObservers(this.listCommande);
     }
     
     public ArrayList<Commande> getListCommandByReservationCode(int codeReservation){
