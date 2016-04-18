@@ -136,8 +136,8 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                     + "and O.CodeReservation = R.CodeReservation "
                     + "and R.Jour = ? "
                     + "and R.NomService = ? )";
-            Calendar cal = new java.util.GregorianCalendar(year, month, day);
-            Date d = new Date(cal.getTime().getTime());
+            java.sql.Date d = new java.sql.Date(year-1900, month-1, day);
+            
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT);
             stmt.setDate(1, d);
