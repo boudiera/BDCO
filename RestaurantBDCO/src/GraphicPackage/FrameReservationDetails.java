@@ -31,15 +31,21 @@ import javax.swing.table.TableRowSorter;
  */
 public class FrameReservationDetails extends javax.swing.JFrame implements WindowView {
 
-    final private static FrameReservationDetails FRAME_RESERVATION_DETAILS = new FrameReservationDetails();
+    private final int reservationCode;
+
+    public int getReservationCode() {
+        return reservationCode;
+    }
     
     /**
      * Creates new form FrameReservationDetails
      */
-    private FrameReservationDetails() {
+    public FrameReservationDetails() {
+        this.reservationCode = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
+        
         initComponents();
-
-        ///*
+        
+        /*
         ArrayList<Article> la = new ArrayList<>();
         la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
         la.add(UniqueArticle.createDrink("a", (float) 3.3, "mex"));
@@ -56,32 +62,28 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "yuiyui", la, 88));
         //*/
         
-        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
-        updateArticleTable(new ArrayList<Article>());
-    }
-    
-    public static FrameReservationDetails singletonFrameReservationDetails(){
-        FRAME_RESERVATION_DETAILS.TextCodeReservation.setText("Reservation #" + FrameReservationList.singletonFrameReservationList().getSelectedReservationCode());
-        FRAME_RESERVATION_DETAILS.updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
+        this.TextCodeReservation.setText("Reservation #" + this.reservationCode);
         
-        return FrameReservationDetails.FRAME_RESERVATION_DETAILS;
+        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
+        updateArticleTable(new ArrayList<Article>());
     }
     
     @Override
     public void dispose() {
         GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationList);
+        SingletonListCommande.singletonListCommande().deleteObserver(this);
         super.dispose();
     }
     
     @Override
     public void update(Observable o, Object arg) {
-        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
+        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         this.updateSelectedCommande();
     }
     
     @Override
     public boolean isSingleton(){
-        return true;
+        return false;
     }
     
     private void updateArticleTable(ArrayList<Article> listArticle){
@@ -166,10 +168,9 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             this.ButtonDeleteSelectedCommand.setEnabled(false);
             this.updateArticleTable(new ArrayList<Article>());
         } else {
-            int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
             String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
             
-            this.updateArticleTable(SingletonListCommande.singletonListCommande().getListArticlesByReservationCodeAndCommandeIdentifier(codeReservation, identifier));
+            this.updateArticleTable(SingletonListCommande.singletonListCommande().getListArticlesByReservationCodeAndCommandeIdentifier(this.reservationCode, identifier));
             this.ButtonDeleteSelectedCommand.setEnabled(true);
         }
     }
@@ -335,11 +336,11 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
     private void ButtonDeleteSelectedCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedCommandActionPerformed
         if(this.CommandeTable.getSelectedRow() >= 0) {
-            int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
             String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
             
-            SingletonListCommande.singletonListCommande().removeCommand(codeReservation, identifier);
+            SingletonListCommande.singletonListCommande().removeCommand(this.reservationCode, identifier);
         }
+        // TO-DO: voir si ça marche bien...
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed

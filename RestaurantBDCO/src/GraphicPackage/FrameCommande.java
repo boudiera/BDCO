@@ -27,14 +27,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
-    private static int selectedArticle;
-    private static TypeArticle activePanel;
-            
+    private FrameReservationDetails windowReservationDetails;
+    
     /**
      * Creates new form FrameCommande
      */
-    public FrameCommande() {
+    public FrameCommande(FrameReservationDetails windowReservationDetails) {
+        
+        this.windowReservationDetails = windowReservationDetails;
+        this.windowReservationDetails.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
+        
         initComponents();
+        
         DefaultTableModel model[] = new DefaultTableModel[6];
         for(int i=0; i<6; i++){
             model[i] = new DefaultTableModel(new String[] {"Nom", "Type", "Prix", "Spécialité"}, 0) {
@@ -52,22 +56,6 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         SelectedArticlesTable.setModel(model[5]);
         updateCarte(1, model);
     }
-
-    public static void setActivePanel(TypeArticle type){
-        activePanel=type;
-    }
-    
-    public static TypeArticle getActivePanel(){
-        return activePanel;
-    }
-    
-    public static void setSelectedArticle(int i){
-        selectedArticle=i;
-    }
-    
-    public static int getSelectedArticle(){
-        return selectedArticle;
-    }
     
     private void updateCarte(int codeCarte, DefaultTableModel model[]) {
         int i=0;
@@ -82,7 +70,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
      
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ResevationDetails);
+        ((GlobalGraphicView) GlobalGraphicView.singletonGlobalGraphicView().getController().getView()).showView(windowReservationDetails);
         super.dispose();
     }
      
@@ -286,7 +274,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 list.add(new Article(value[0], TypeArticle.valueOf(value[1]), Float.valueOf(value[2]), value[3]));
             }
 
-            Commande commande = new Commande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode(), this.FieldClientName.getText(), list, 0);
+            Commande commande = new Commande(this.windowReservationDetails.getReservationCode(), this.FieldClientName.getText(), list, 0);
             Modele.SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(), commande);
             this.dispose();
         }else{
@@ -374,7 +362,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameCommande().setVisible(true);
+                //new FrameCommande().setVisible(true);
             }
         });
     }
