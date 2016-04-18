@@ -17,7 +17,7 @@ public abstract class RequeteFactory{
     // Permet d'avoir tous les articles, d'un menu pour une carte donnée
     public abstract ArrayList<Article> getArticlesCarteMenu(int codeCarte, TypeArticle typeArticle,Menu menu);
     
-    
+    public abstract boolean clientConnu()
     
     // Renvoie la liste des tables voisines
     public abstract ArrayList<Integer[]> tablesVoisines();
