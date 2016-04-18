@@ -62,7 +62,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
                 this.activeWindow = new FrameReservationDetails();
                 break;
             case Commande:
-                this.activeWindow = (WindowView) new FrameCommande(); //TO-DO: make cast not needed!
+                this.activeWindow = new FrameCommande(); //TO-DO: make cast not needed!
                 break;
             default:
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();

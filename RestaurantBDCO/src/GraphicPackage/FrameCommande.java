@@ -5,19 +5,41 @@
  */
 package GraphicPackage;
 
+import Modele.Article;
+import Modele.TypeArticle;
+import java.util.ArrayList;
+import java.util.Observable;
+import javax.swing.JSpinner;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author trentini
  */
-public class FrameCommande extends javax.swing.JFrame {
+public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
     /**
      * Creates new form FrameCommande
      */
     public FrameCommande() {
         initComponents();
+        DefaultTableModel model = new DefaultTableModel(new String[] {"Nom", "Prix", "Spécialité", "Nb"}, 0);
+        Entrees.getTable().setModel(model);
+        Plats.getTable().setModel(model);
+        Desserts.getTable().setModel(model);
+        Boissons.getTable().setModel(model);
+        updateCarte(1, model);
     }
 
+     private void updateCarte(int codeCarte, DefaultTableModel model) {
+        for(TypeArticle type : TypeArticle.values()){
+            ArrayList<Article> list = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(codeCarte, type);
+            for(Article article : list){
+                model.addRow(new Object[] {article.getName(), article.getPrice(), article.getSpeciality(), new JSpinner()});
+            }
+        }
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,9 +50,11 @@ public class FrameCommande extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        Entrees = new GraphicPackage.PanelArticleByType();
+        Plats = new GraphicPackage.PanelArticleByType();
+        Desserts = new GraphicPackage.PanelArticleByType();
+        Boissons = new GraphicPackage.PanelArticleByType();
         panelArticleByType2 = new GraphicPackage.PanelArticleByType();
-        panelArticleByType3 = new GraphicPackage.PanelArticleByType();
-        panelArticleByType4 = new GraphicPackage.PanelArticleByType();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -41,9 +65,11 @@ public class FrameCommande extends javax.swing.JFrame {
 
         jTabbedPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTabbedPane2.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        jTabbedPane2.addTab("tab1", panelArticleByType2);
-        jTabbedPane2.addTab("tab2", panelArticleByType3);
-        jTabbedPane2.addTab("tab3", panelArticleByType4);
+        jTabbedPane2.addTab("Entrées", Entrees);
+        jTabbedPane2.addTab("Plats", Plats);
+        jTabbedPane2.addTab("Desserts", Desserts);
+        jTabbedPane2.addTab("Boissons", Boissons);
+        jTabbedPane2.addTab("Menus", panelArticleByType2);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,10 +108,10 @@ public class FrameCommande extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -153,6 +179,10 @@ public class FrameCommande extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private GraphicPackage.PanelArticleByType Boissons;
+    private GraphicPackage.PanelArticleByType Desserts;
+    private GraphicPackage.PanelArticleByType Entrees;
+    private GraphicPackage.PanelArticleByType Plats;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -160,7 +190,11 @@ public class FrameCommande extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private GraphicPackage.PanelArticleByType panelArticleByType2;
-    private GraphicPackage.PanelArticleByType panelArticleByType3;
-    private GraphicPackage.PanelArticleByType panelArticleByType4;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object o1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
