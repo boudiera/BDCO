@@ -60,7 +60,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                 ReservationDate date = new ReservationDate(
                     rsetReservation.getDate("Jour").getYear()+1900,
                     rsetReservation.getDate("Jour").getMonth()+1,
-                    rsetReservation.getDate("Jour").getDay(),
+                    rsetReservation.getDate("Jour").getDate(),
                     rsetReservation.getInt("Heure"),
                     rsetReservation.getInt("Minutes"));
                 
