@@ -5,8 +5,11 @@
  */
 package GraphicPackage;
 
+import InterfaceMVC.EnumView;
 import FactoriesLayer.*;
 import InterfaceMVC.*;
+import Modele.Factory;
+import Modele.SingletonListCommande;
 import java.util.*;
 
 /**
@@ -18,7 +21,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
     private WindowView activeWindow;
-    private EnumWindow enumWindow;
+    private EnumView enumWindow = EnumView.ReservationList;
     
     private GlobalGraphicView(){
     }
@@ -31,37 +34,51 @@ public class GlobalGraphicView extends AbstractView implements Observer{
         return this.activeWindow;
     }
     
-    public EnumWindow getEnumWindowOfActiveView(){
+    public EnumView getEnumView(){
         return this.enumWindow;
     }
     
-    public void setActiveView(EnumWindow window){
+    public void setActiveGraphicView(EnumView window){
         
-        if(this.activeWindow != null) this.activeWindow.setEnabled(false);
+       if(GLOBAL_GRAPHIC_VIEW.activeWindow != null){
+            this.activeWindow.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
+
+            if(!this.activeWindow.isSingleton()){
+                Factory.singletonFactory().deleteObserver(this.activeWindow);   //if not singleton, the observer is deleted after it changes the view (it means it is no longer shown)
+            }
+        }
         
         this.enumWindow = window;
         switch(window){
             case ReservationList:
-                //ConcreteRequeteFactory.singletonConcreteRequeteFactory().deleteObserver(this.activeWindow);
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
                 break;
             case ReservationCreation:
                 this.activeWindow = new FrameReservationCreation();
                 break;
             case ResevationDetails:
-                this.activeWindow = new FrameReservationDetails();
+                this.activeWindow =  FrameReservationDetails.singletonFrameReservationDetails();
+                SingletonListCommande.singletonListCommande().addObserver(this.activeWindow);
                 break;
             case Commande:
-                this.activeWindow = (WindowView) new FrameCommande(); //TO-DO: make cast not needed!
+                this.activeWindow = new FrameCommande();
+                break;
+            default:
+                this.activeWindow = FrameReservationList.singletonFrameReservationList();
                 break;
         }
 
-        //ConcreteRequeteFactory.singletonConcreteRequeteFactory().addObserver(this.activeWindow);
-        showView(true);
+        Factory.singletonFactory().addObserver(this.activeWindow);
     }
     
     @Override
     public void showView(boolean b) {
+        if(this.getController().getViewType() == null){
+            this.getController().setView(EnumView.ReservationList);
+        }else{
+            this.setActiveGraphicView(this.getController().getViewType());
+        }
+        
         this.activeWindow.setEnabled(b);
         this.activeWindow.setVisible(b);
     }

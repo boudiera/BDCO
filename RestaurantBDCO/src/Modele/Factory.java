@@ -5,6 +5,10 @@
  */
 package Modele;
 
+import FactoriesLayer.ConcreteInsertionFactory;
+import FactoriesLayer.ConcreteRequeteFactory;
+import FactoriesLayer.ConnectionInfo;
+import FactoriesLayer.TheConnection;
 import java.util.Observable;
 
 /**
@@ -24,25 +28,22 @@ public class Factory extends Observable {
     //SINGLETON: End Code
     //////////////////////////////////////////////////////
     
-    private RequeteFactory requeteFactory;
-    private InsertionFactory insertionFactory;
-    public RequeteFactory getReservations(){
-        return FACTORY.requeteFactory;
+    private RequeteFactory requeteFactory = new ConcreteRequeteFactory(new TheConnection(new ConnectionInfo()));
+    private InsertionFactory insertionFactory = new ConcreteInsertionFactory(new TheConnection(new ConnectionInfo()));
+    
+    public RequeteFactory getRequeteFactory(){
+        return this.requeteFactory;
     }
 
     public InsertionFactory getInsertionFactory() {
-        return insertionFactory;
+        return this.insertionFactory;
     }
 
     public void setInsertionFactory(InsertionFactory insertionFactory) {
         this.insertionFactory = insertionFactory;
-        
     }
    
-    public void setRequeteFactory(RequeteFactory requeteFactory){
-        FACTORY.requeteFactory = requeteFactory;
-        
-        FACTORY.setChanged();
-        FACTORY.notifyObservers(this.requeteFactory);
+    public void setRequeteFactory(RequeteFactory requeteFactory) {
+        this.requeteFactory = requeteFactory;
     }
 }

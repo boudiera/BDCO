@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicPackage;
+package InterfaceMVC;
 
 /**
  *
  * @author trentini
  */
-public enum EnumWindow {
+public enum EnumView {
     ReservationList,
     ReservationCreation,
     ResevationDetails,

@@ -8,22 +8,22 @@ package Modele;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author trentini
  */
-public class SingletonListCommande {
-    final private static SingletonListCommande singleton = new SingletonListCommande();
+public class SingletonListCommande extends Observable{
+    final private static SingletonListCommande SINGLETON_LIST_COMMANDE = new SingletonListCommande();
     
     private HashMap<Integer, HashMap<String, Commande>> listCommande = new HashMap<>();
     
     private SingletonListCommande(){
-        
     }
     
     public static SingletonListCommande singletonListCommande(){
-        return SingletonListCommande.singleton;
+        return SingletonListCommande.SINGLETON_LIST_COMMANDE;
     }
     
     public void addCommand(int codeReservation, Commande commande){
@@ -33,10 +33,16 @@ public class SingletonListCommande {
             this.listCommande.put(codeReservation, new HashMap<String, Commande>());
             this.listCommande.get(codeReservation).put(commande.getIdentifier(), commande);
         }
+
+        this.setChanged();
+        this.notifyObservers();
     }
     
     public void removeCommand(int codeReservation, String identifier){
         this.listCommande.get(codeReservation).remove(identifier);
+        
+        this.setChanged();
+        this.notifyObservers();
     }
     
     public ArrayList<Commande> getListCommandByReservationCode(int codeReservation){
@@ -48,5 +54,17 @@ public class SingletonListCommande {
             ArrayList<Commande> listCommande = new ArrayList<Commande>(hash.values());
             return  listCommande;
         }
+    }
+    
+    public ArrayList<Article> getListArticlesByReservationCodeAndCommandeIdentifier(int codeReservation, String identifierCommande){
+        
+        ArrayList<Commande> array = this.getListCommandByReservationCode(codeReservation);
+        
+        for (Commande c : array) {
+            if (c.getIdentifier().equals(identifierCommande)) {
+                return c.getListArticles();
+            }
+        }
+        return new ArrayList<Article>();
     }
 }

@@ -5,7 +5,18 @@
  */
 package GraphicPackage;
 
+import InterfaceMVC.EnumView;
+import InterfaceMVC.Exceptions.HeureException;
+import InterfaceMVC.Exceptions.ReservationException;
+import Modele.Factory;
+import Modele.Service;
+import Modele.Table;
+import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,13 +33,18 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ReservationList);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationList);
         super.dispose();
     }
     
     @Override
     public void update(Observable o, Object arg) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public boolean isSingleton(){
+        return false;
     }
     
     /**
@@ -63,14 +79,15 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         minute = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        buttonCalculate = new javax.swing.JButton();
         createButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Restaurant BDCO - Création de Réservation");
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Reservation List");
+        jLabel1.setText("Création de Réservation");
 
         nbPeople.setText("1");
         nbPeople.addActionListener(new java.awt.event.ActionListener() {
@@ -81,11 +98,11 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Client Name:");
+        jLabel2.setText("Nom Client");
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Client Phone:");
+        jLabel3.setText("Téléphone");
 
         clientName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +112,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Number of People:");
+        jLabel4.setText("Nombre de personnes");
 
         clientPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +122,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel5.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Day:");
+        jLabel5.setText("Jour");
 
         day.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +157,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         buttonGroup1.add(midday);
         midday.setSelected(true);
-        midday.setText("Midday");
+        midday.setText("Midi");
         midday.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 middayActionPerformed(evt);
@@ -148,7 +165,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         });
 
         buttonGroup1.add(evening);
-        evening.setText("Evening");
+        evening.setText("Soir");
         evening.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eveningActionPerformed(evt);
@@ -157,7 +174,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel9.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Hour:");
+        jLabel9.setText("Heure");
 
         hour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,22 +194,22 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jLabel11.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Possible Locations:");
+        jLabel11.setText("Emplacements disponibles");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setEnabled(false);
 
-        jButton1.setText("Calculate");
-
-        createButton.setText("Create Reservation");
-        createButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                createButtonMouseClicked(evt);
+        buttonCalculate.setText("Trouver");
+        buttonCalculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCalculateActionPerformed(evt);
             }
         });
-        createButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                createButtonKeyPressed(evt);
+
+        createButton.setText("Créer Réservation");
+        createButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createButtonActionPerformed(evt);
             }
         });
 
@@ -224,7 +241,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(buttonCalculate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -293,7 +310,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(jButton1)
+                    .addComponent(buttonCalculate)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,31 +360,51 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         // TODO add your handling code here:
     }//GEN-LAST:event_minuteActionPerformed
 
-    private void createButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createButtonKeyPressed
-
-    }//GEN-LAST:event_createButtonKeyPressed
-
-    private void createButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createButtonMouseClicked
-        /*
-        CreateReservation res=null;
+    private void buttonCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCalculateActionPerformed
+        Service service;
+        if (midday.isEnabled())
+            service=Service.MIDI;
+        else
+            service=Service.SOIR;
         try {
-            Date date = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()),
-                    Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()));
-            Service ser;
-            if (midday.isSelected()) {
-                ser = Service.MIDI;
-            } else {
-                ser = Service.SOIR;
-            }
-            res = new CreateReservation(clientName.getText(), clientPhone.getText(),
-                    Integer.parseInt(nbPeople.getText()), date, ser);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this.getParent(), "All fields must be filled correctly");
+            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
+                    day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
+            ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()),
+                    Integer.parseInt(day.getText()), service);
+            System.out.println(Factory.singletonFactory().getRequeteFactory());
+            
+            //TO DO --Déterminer les locations dispo
+            
+        } catch (ReservationException ex) {
+            //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
         }
-        if (res!=null)
-            res.execute();
-        */
-    }//GEN-LAST:event_createButtonMouseClicked
+    }//GEN-LAST:event_buttonCalculateActionPerformed
+
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        Service service;
+        if (midday.isEnabled())
+            service=Service.MIDI;
+        else
+            service=Service.SOIR;
+        try {
+            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
+                    day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
+            Date jour = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()));
+            
+            int codeClient = 42; // TROLL !!!
+            //Test
+            ArrayList<Table> tables = new ArrayList<>();
+            tables.add(new Table(1, "Kiki", 10, 10, 10));
+            System.out.println(Factory.singletonFactory().getInsertionFactory());
+            Factory.singletonFactory().getInsertionFactory().creerReservation(tables, Integer.parseInt(nbPeople.getText()),
+                    Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()), codeClient, jour, service); // Problème code client, pas d'info dessus 
+            Factory.singletonFactory().notify();
+        } catch (ReservationException ex) {
+            //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
+        }
+    }//GEN-LAST:event_createButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,6 +445,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonCalculate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField clientName;
     private javax.swing.JTextField clientPhone;
@@ -415,7 +453,6 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
     private javax.swing.JTextField day;
     private javax.swing.JRadioButton evening;
     private javax.swing.JTextField hour;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

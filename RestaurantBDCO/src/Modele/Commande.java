@@ -1,15 +1,12 @@
 package Modele;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Commande {
 
     private int codeReservation;
     private float price;
-    private final List<Article> listArticles;
+    private final ArrayList<Article> listArticles;
     // Hasmap qui fait le lien entre un nom d'article et sa quantité
     private final HashMap<String, Integer> regroupeArticle = new HashMap<>();
 
@@ -19,7 +16,7 @@ public class Commande {
 
     private String identifier;
 
-    public Commande(int codeReservation, String identifier, List<Article> list,int prix) {
+    public Commande(int codeReservation, String identifier, ArrayList<Article> list,int prix) {
         this.identifier = identifier;
         this.codeReservation = codeReservation;
         this.price = prix;
@@ -68,7 +65,7 @@ public class Commande {
         return this.price;
     }
 
-    public List<Article> getListArticles() {
+    public ArrayList<Article> getListArticles() {
         return listArticles;
     }
 

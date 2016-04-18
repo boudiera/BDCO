@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GraphicPackage;
-
-import java.util.Observer;
+package InterfaceMVC.Exceptions;
 
 /**
  *
  * @author Iago Felipe Trentin
  */
-public interface WindowView extends Observer{
-
-    public void setEnabled(boolean b);
-    public void setVisible(boolean b);
-    
-    public boolean isSingleton();
-
+public class NewCommandeException extends ReservationException {
+    public NewCommandeException() {
+        message = "La commande doit avoir au moins un article ";
+    }
 }

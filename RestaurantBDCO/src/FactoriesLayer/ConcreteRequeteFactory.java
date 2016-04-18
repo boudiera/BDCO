@@ -130,17 +130,18 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                     + "from TableRepas T "
                     + "minus"
                     + "( select T2.CodeTable, T2.NbPlace0, T2.NbPlace1, "
-                    + "T2.NbPlace2, T2.Localisation"
-                    + "from TableRepas T2, Occupe O, CodeReservation C "
-                    + "where T2.CodeTable = O.CodeTable"
-                    + "and O.CodeReservation = C.CodeReservation"
-                    + "and C.Jour = ?"
-                    + "and C.Service = ?";
+                    + "T2.NbPlace2, T2.Localisation "
+                    + "from TableRepas T2, Occupe O, Reservation R "
+                    + "where T2.CodeTable = O.CodeTable "
+                    + "and O.CodeReservation = R.CodeReservation "
+                    + "and R.Jour = ? "
+                    + "and R.NomService = ? )";
             Calendar cal = new java.util.GregorianCalendar(year, month, day);
             Date d = new Date(cal.getTime().getTime());
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT);
             stmt.setDate(1, d);
+            stmt.setString(2, service.toString());
             //  Execution  de la  requete
             ResultSet rsetTable = stmt.executeQuery ();
             

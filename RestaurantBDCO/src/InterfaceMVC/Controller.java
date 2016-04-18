@@ -13,6 +13,7 @@ import Modele.Menu;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;
+import Modele.Table;
 import Modele.TypeArticle;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,10 +26,20 @@ import static Modele.TypeArticle.MENU;
  */
 public class Controller {
     
-    protected AbstractView view;
+    private AbstractView view;
+    private EnumView viewType;
     
     public AbstractView getView(){
         return this.view;
+    }
+    
+    public EnumView getViewType() {
+        return viewType;
+    }
+    
+    public void setView(EnumView vt){
+        this.viewType = vt;
+        this.view.showView(true);
     }
     
     public void setView(AbstractView v){
@@ -37,7 +48,7 @@ public class Controller {
     }
     
     public ArrayList<Reservation> getReservationList(){
-        return Factory.singletonFactory().getReservations().getReservationsList();
+        return Factory.singletonFactory().getRequeteFactory().getReservationsList();
     }
     
     public void ajoutCommande(Commande commande){
@@ -61,7 +72,7 @@ public class Controller {
     }
     
     public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
-        return Factory.singletonFactory().getReservations().getArticlesCarte(codeCarte, typeArticle);
+        return Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle);
     }
     
     
@@ -92,7 +103,18 @@ public class Controller {
 		return false;
 	}
     
-
+    // Recupère les tables libres, renvoit une exception si il n'y en pas pas
+    public ArrayList<Table> getTablesLibres (int year, int month, int day, Service service) throws RestaurantCompletException{
+        
+        ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(year, month, day, service);
+        if (tablesLibres == null)
+            throw new RestaurantCompletException();
+        return tablesLibres;
+    }
+    
+    
+    
+    // Verification du bon forma d'entré des données
     public void verifyAddReservation(String year, String month, String day, String hour, String minute, String nbPeople, String phone, String service, String nomClient) throws ReservationException {
        
         int yearIn;

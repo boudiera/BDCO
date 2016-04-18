@@ -11,6 +11,7 @@ import InterfaceMVC.Controller;
 import InterfaceMVC.Exceptions.*;
 import Modele.ReservationDate;
 import Modele.Service;
+import Modele.Table;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -69,20 +70,22 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
 
-        
         while (!verificationFini) {
             try {
                 this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
-                
+
                 /// FAIRE LA FONCTION QUI TROUVES LES TABLES LIBRES + AFFICHER les nom -> plus possibilité de modif la dates si aucune places libres // Ajout d'une nouvelle exception ?
-                
-                
-                
+                ArrayList<Table> tablesLibres = this.getController().getTablesLibres(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Service.valueOf(service));
+                for(Table a : tablesLibres){
+                    System.out.println(a.getCodeTable() + " Location " + a.getLocation());
+                }
+                System.err.println("Choississez la location voulue ");
+                choix = lectureEntree();
                 
                 verificationFini = true;
             } catch (ReservationException e) {
                 System.out.println(e.getMessage());
-                if (e instanceof WrongDateException || e instanceof MonthException || e instanceof JourException || e instanceof ParseDateException) {
+                if (e instanceof WrongDateException || e instanceof MonthException || e instanceof JourException || e instanceof ParseDateException || e instanceof RestaurantCompletException) {
                     System.out.println(" Veuillez entrer la date de la reservation : (xx/xx/xxxx) ");
                     System.out.println(" Jour ( Entier ): ");
                     jour = lectureEntree();
@@ -92,6 +95,16 @@ public class TextualAjoutReservation extends AbstractView {
 
                     System.out.println(" Année ( Entier ) :  ");
                     annee = lectureEntree();
+
+                    if (e instanceof RestaurantCompletException) {
+                        System.out.println(" Veuillez entrer l'horaire de la reservation au format 24h");
+                        System.out.println("Heure ( Entier ) : ");
+                        heure = lectureEntree();
+
+                        System.out.println("Minutes (Entier)  :");
+                        minutes = lectureEntree();
+
+                    }
 
                 } else if (e instanceof HeureException || e instanceof MinuteException || e instanceof ParseHeureException) {
                     System.out.println(" Veuillez entrer l'horaire de la reservation au format 24h");
@@ -117,8 +130,7 @@ public class TextualAjoutReservation extends AbstractView {
             }
 
         }
-        
-        
+
         date = new ReservationDate(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Integer.parseInt(heure), Integer.parseInt(minutes));
         System.out.println("----------------------- RECAPITULATIF DE LA RESERVATION ------------------------ ");
         System.out.println("1.Date : " + date.writeDayMonth());
@@ -136,10 +148,9 @@ public class TextualAjoutReservation extends AbstractView {
                 // APPEL DE LA FONCTION DU CONTROLLER QUI ENVOIT LA RESERVATION DANS LA BASE DE DONNEE 
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
                 return;
-            }
-            else if (choix.equalsIgnoreCase("q")) {
-            System.out.println(" ------------- ANNULATION DE LA RESERVATION ------------");
-            this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
+            } else if (choix.equalsIgnoreCase("q")) {
+                System.out.println(" ------------- ANNULATION DE LA RESERVATION ------------");
+                this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
             }
         } while (true);
 
