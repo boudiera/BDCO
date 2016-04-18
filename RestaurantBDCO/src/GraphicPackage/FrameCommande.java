@@ -112,6 +112,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         Menus = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Restaurant BDCO - Nouvelle Commande");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

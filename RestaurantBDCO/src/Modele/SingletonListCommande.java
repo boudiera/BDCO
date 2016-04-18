@@ -8,18 +8,18 @@ package Modele;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author trentini
  */
-public class SingletonListCommande {
+public class SingletonListCommande extends Observable{
     final private static SingletonListCommande singleton = new SingletonListCommande();
     
     private HashMap<Integer, HashMap<String, Commande>> listCommande = new HashMap<>();
     
     private SingletonListCommande(){
-        
     }
     
     public static SingletonListCommande singletonListCommande(){
@@ -48,5 +48,17 @@ public class SingletonListCommande {
             ArrayList<Commande> listCommande = new ArrayList<Commande>(hash.values());
             return  listCommande;
         }
+    }
+    
+    public ArrayList<Article> getListArticlesByReservationCodeAndCommandeIdentifier(int codeReservation, String identifierCommande){
+        
+        ArrayList<Commande> array = this.getListCommandByReservationCode(codeReservation);
+        
+        for (Commande c : array) {
+            if (c.getIdentifier().equals(identifierCommande)) {
+                return c.getListArticles();
+            }
+        }
+        return new ArrayList<Article>();
     }
 }

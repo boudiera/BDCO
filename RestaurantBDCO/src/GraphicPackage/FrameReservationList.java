@@ -55,11 +55,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof ArrayList<?>){
-            updateReservationTable((ArrayList<Reservation>) arg);
-        }else{
-            updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
-        }
+        updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
     }
     
     @Override
@@ -162,11 +158,11 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         AddNewReservation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Restaurant BDCO - Liste de Reservations");
+        setTitle("Restaurant BDCO - Liste de Réservations");
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WindowTitle.setText("Liste de Reservations");
+        WindowTitle.setText("Liste de Réservations");
 
         ReservationsTable.setModel(new DefaultTableModel());
         ReservationsTable.setRowHeight(30);

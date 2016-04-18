@@ -40,9 +40,9 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     public void setActiveGraphicView(EnumView window){
         
        if(GLOBAL_GRAPHIC_VIEW.activeWindow != null){
-            if(this.activeWindow.isSingleton()){
-                this.activeWindow.setEnabled(false);    //the old window is set to disabled (if singleton, it means we can reactivate the window the next time it is set)
-            }else{
+            this.activeWindow.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
+
+            if(!this.activeWindow.isSingleton()){
                 Factory.singletonFactory().deleteObserver(this.activeWindow);   //if not singleton, the observer is deleted after it changes the view (it means it is no longer shown)
             }
         }

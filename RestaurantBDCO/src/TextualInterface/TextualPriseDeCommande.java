@@ -100,7 +100,7 @@ public class TextualPriseDeCommande extends AbstractView {
     }
 
     private void afficheListeArticle(int choix) {
-        ArrayList<Article> choixArticles = new ArrayList();
+        ArrayList<Article> choixArticles = new ArrayList<>();
         boolean estVueMenu = false;
         boolean affichageListeArticleFini = false;
         String titreSousMenu = "";

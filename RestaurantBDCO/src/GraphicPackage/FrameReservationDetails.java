@@ -15,6 +15,8 @@ import Modele.UniqueArticle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -37,22 +39,24 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         
         this.TextCodeReservation.setText("Reservation #" + FrameReservationList.singletonFrameReservationList().getSelectedReservationCode());
         
-        /*////////////////////////////////
+        
         ArrayList<Article> la = new ArrayList<>();
         la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
-        
-        this.listCommand.add(new Commande(1234, "Kiki", la,0));
-        
         la.add(UniqueArticle.createDrink("a", (float) 3.3, "mex"));
-        this.listCommand.add(new Commande(1234, "Jojo", la,0));
         
-        la.add(UniqueArticle.createDrink("a", (float) 100.1, "mex"));
-        this.listCommand.add(new Commande(1234, "Jojo", la,0));
-        
-        this.listCommand.add(new Commande(15, "Arnaud Zizi", new ArrayList<Article>(),0));
-        */////////////////////////////////
+        SingletonListCommande.singletonListCommande().addCommand(1, new Commande(15, "Arnaud Zizi", la, 0));
+        SingletonListCommande.singletonListCommande().addCommand(1, new Commande(15, "abcd", new ArrayList<Article>(), 01));
+        SingletonListCommande.singletonListCommande().addCommand(2, new Commande(15, "hhh", new ArrayList<Article>(), 50));
+        SingletonListCommande.singletonListCommande().addCommand(5, new Commande(15, "momomo", la, 500));
+        SingletonListCommande.singletonListCommande().addCommand(5, new Commande(15, "yuiyui", la, 88));
+        SingletonListCommande.singletonListCommande().addCommand(3, new Commande(15, "Arnaud Zizi", la, 0));
+        SingletonListCommande.singletonListCommande().addCommand(3, new Commande(15, "abcd", new ArrayList<Article>(), 01));
+        SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "hhh", new ArrayList<Article>(), 50));
+        SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "momomo", la, 500));
+        SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "yuiyui", la, 88));
         
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
+        updateArticleTable(new ArrayList<Article>());
     }
     
     @Override
@@ -63,11 +67,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof ArrayList<?>){
-            updateCommandeTable((ArrayList<Commande>) arg);
-        }else{
-            updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
-        }
+        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
     }
     
     @Override
@@ -76,7 +76,36 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }
     
     private void updateArticleTable(ArrayList<Article> listArticle){
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Article", "Prix"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;   //all cells false
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 1) {
+                    return Float.class;
+                } else {
+                    return Object.class;
+                }
+            }
+        };
+
+        for (Article a : listArticle) {
+            model.addRow(new Object[]{a.getName(), a.getPrice()});
+        }
+
+        this.ArticleTable.setModel(model);
         
+        try {
+            this.ArticleTable.getColumnModel().getColumn(model.findColumn("Article")).setPreferredWidth(150);
+            this.ArticleTable.getColumnModel().getColumn(model.findColumn("Prix")).setPreferredWidth(10);
+
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            this.ArticleTable.getColumnModel().getColumn(model.findColumn("Prix")).setCellRenderer(centerRenderer);
+        } catch (Exception e) {}
     }
     
     private void updateCommandeTable(ArrayList<Commande> listCommand){
@@ -123,6 +152,17 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         sorter.sort();
     }
     
+    public void updateSelectedCommande(){
+        if (this.CommandeTable.getSelectedRow() == -1) {
+            this.ButtonDeleteSelectedCommand.setEnabled(false);
+        } else {
+            int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
+            String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
+            
+            this.updateArticleTable(SingletonListCommande.singletonListCommande().getListArticlesByReservationCodeAndCommandeIdentifier(codeReservation, identifier));
+            this.ButtonDeleteSelectedCommand.setEnabled(true);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,27 +180,35 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TextCodeReservation = new javax.swing.JLabel();
         ButonGetBill = new javax.swing.JButton();
         PaneCommandeItems = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        ArticleTable = new javax.swing.JTable();
         TextTitleCommandeItems = new javax.swing.JLabel();
         TextTotalBill = new javax.swing.JLabel();
         TextTotalBillValue = new javax.swing.JLabel();
         WindowTitle1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Restaurant BDCO - Détails Réservation");
 
         CommandeTable.setModel(new DefaultTableModel());
         CommandeTable.setRowHeight(60);
         CommandeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        CommandeTable.getTableHeader().setReorderingAllowed(false);
         CommandeTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 CommandeTableMousePressed(evt);
             }
         });
+        CommandeTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CommandeTableKeyPressed(evt);
+            }
+        });
         PaneCommandeList.setViewportView(CommandeTable);
+        CommandeTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WindowTitle.setText("Liste Commandes");
+        WindowTitle.setText("Liste de Commandes");
 
         ButtonDeleteSelectedCommand.setText("Effacer Commande");
         ButtonDeleteSelectedCommand.setEnabled(false);
@@ -181,7 +229,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
 
-        ButonGetBill.setText("Addition");
+        ButonGetBill.setText("Produire la Facture");
         ButonGetBill.setToolTipText("");
         ButonGetBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,13 +237,15 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             }
         });
 
-        jTable2.setModel(new DefaultTableModel());
-        jTable2.setRowHeight(60);
-        PaneCommandeItems.setViewportView(jTable2);
+        ArticleTable.setModel(new DefaultTableModel());
+        ArticleTable.setRowHeight(60);
+        ArticleTable.getTableHeader().setReorderingAllowed(false);
+        PaneCommandeItems.setViewportView(ArticleTable);
+        ArticleTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         TextTitleCommandeItems.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextTitleCommandeItems.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TextTitleCommandeItems.setText("Détail Commande");
+        TextTitleCommandeItems.setText("Détail de la Commande");
 
         TextTotalBill.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         TextTotalBill.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -274,7 +324,10 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonDeleteSelectedCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedCommandActionPerformed
-        // TODO add your handling code here:
+        int codeReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
+        String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
+        SingletonListCommande.singletonListCommande().removeCommand(codeReservation, identifier);
+        this.updateArticleTable(SingletonListCommande.singletonListCommande().getListArticlesByReservationCodeAndCommandeIdentifier(codeReservation, identifier));
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed
@@ -286,12 +339,12 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }//GEN-LAST:event_ButonGetBillActionPerformed
 
     private void CommandeTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CommandeTableMousePressed
-        if(this.CommandeTable.getSelectedRow() == -1){
-            this.ButtonDeleteSelectedCommand.setEnabled(false);
-        }else{
-            this.ButtonDeleteSelectedCommand.setEnabled(true);
-        }
+        this.updateSelectedCommande();
     }//GEN-LAST:event_CommandeTableMousePressed
+
+    private void CommandeTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CommandeTableKeyPressed
+        this.updateSelectedCommande();
+    }//GEN-LAST:event_CommandeTableKeyPressed
 
     /**
      * @param args the command line arguments
@@ -332,6 +385,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable ArticleTable;
     private javax.swing.JButton ButonGetBill;
     private javax.swing.JButton ButtonDeleteSelectedCommand;
     private javax.swing.JButton ButtonNewCommand;
@@ -344,6 +398,5 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     private javax.swing.JLabel TextTotalBillValue;
     private javax.swing.JLabel WindowTitle;
     private javax.swing.JLabel WindowTitle1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

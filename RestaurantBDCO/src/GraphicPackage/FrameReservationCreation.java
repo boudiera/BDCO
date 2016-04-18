@@ -83,10 +83,11 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         createButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Restaurant BDCO - Création de Réservation");
 
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Réservation");
+        jLabel1.setText("Création de Réservation");
 
         nbPeople.setText("1");
         nbPeople.addActionListener(new java.awt.event.ActionListener() {
