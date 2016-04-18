@@ -200,6 +200,11 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     public ArrayList<Article> getArticlesCarteMenu(int codeCarte, TypeArticle typeArticle, Menu menu) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean clientConnu(String nomClient, String numTel) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
