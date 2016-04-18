@@ -8,14 +8,17 @@ package GraphicPackage;
 import InterfaceMVC.EnumView;
 import InterfaceMVC.Exceptions.HeureException;
 import InterfaceMVC.Exceptions.ReservationException;
+import InterfaceMVC.Exceptions.RestaurantCompletException;
 import Modele.Factory;
 import Modele.Service;
 import Modele.Table;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -196,7 +199,6 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Emplacements disponibles");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setEnabled(false);
 
         buttonCalculate.setText("Trouver");
@@ -371,9 +373,29 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
             ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()),
                     Integer.parseInt(day.getText()), service);
-            System.out.println(Factory.singletonFactory().getRequeteFactory());
             
-            //TO DO --Déterminer les locations dispo
+            if (tablesLibres.isEmpty()){
+                throw new RestaurantCompletException();
+            }
+            
+            HashSet<String> hash = new HashSet<>();
+            for(Table t : tablesLibres){
+                hash.add(t.getLocation());
+            }
+            for(String s : hash){
+                jComboBox1.addItem(s);
+            }
+            jComboBox1.setEnabled(true);
+            clientName.setEnabled(false);
+            clientPhone.setEnabled(false);
+            nbPeople.setEnabled(false);
+            day.setEnabled(false);
+            hour.setEnabled(false);
+            year.setEnabled(false);
+            month.setEnabled(false);
+            minute.setEnabled(false);
+            midday.setEnabled(false);
+            evening.setEnabled(false);
             
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);

@@ -92,9 +92,9 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         setReservationTableSortable(model);
 
         try{
-            this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMinWidth(0);
-            this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMaxWidth(0);
-            this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setWidth(0);
+            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMinWidth(0);
+            this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMaxWidth(60);
+            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setWidth(0);
         }catch(Exception e){}
     }
     

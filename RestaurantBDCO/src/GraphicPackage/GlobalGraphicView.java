@@ -41,8 +41,6 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     public void setActiveGraphicView(EnumView window){
         
        if(GLOBAL_GRAPHIC_VIEW.activeWindow != null){
-            this.activeWindow.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
-
             if(!this.activeWindow.isSingleton()){
                 Factory.singletonFactory().deleteObserver(this.activeWindow);   //if not singleton, the observer is deleted after it changes the view (it means it is no longer shown)
             }
@@ -57,11 +55,15 @@ public class GlobalGraphicView extends AbstractView implements Observer{
                 this.activeWindow = new FrameReservationCreation();
                 break;
             case ResevationDetails:
-                this.activeWindow =  FrameReservationDetails.singletonFrameReservationDetails();
+                this.activeWindow = new FrameReservationDetails();
                 SingletonListCommande.singletonListCommande().addObserver(this.activeWindow);
                 break;
             case Commande:
-                this.activeWindow = new FrameCommande();
+                if(this.activeWindow instanceof FrameReservationDetails){
+                    this.activeWindow = new FrameCommande((FrameReservationDetails) this.activeWindow);
+                }else{
+                    this.activeWindow = this.activeWindow;
+                }
                 break;
             default:
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
@@ -81,6 +83,11 @@ public class GlobalGraphicView extends AbstractView implements Observer{
         
         this.activeWindow.setEnabled(b);
         this.activeWindow.setVisible(b);
+    }
+    
+    public void showView(WindowView wv){
+        wv.setEnabled(true);
+        wv.setVisible(true);
     }
 
     @Override
