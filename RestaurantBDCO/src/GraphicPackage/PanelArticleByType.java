@@ -17,6 +17,10 @@ public class PanelArticleByType extends javax.swing.JPanel {
     public PanelArticleByType() {
         initComponents();
     }
+    
+    public javax.swing.JTable getTable(){
+        return jTable1;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

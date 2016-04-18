@@ -296,7 +296,7 @@
           <Font name="DejaVu Sans" size="18" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="D&#xe9;tails Reservation"/>
+        <Property name="text" type="java.lang.String" value="D&#xe9;tails R&#xe9;servation"/>
       </Properties>
     </Component>
   </SubComponents>

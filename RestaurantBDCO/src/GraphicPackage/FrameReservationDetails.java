@@ -244,7 +244,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
         WindowTitle1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        WindowTitle1.setText("Détails Reservation");
+        WindowTitle1.setText("Détails Réservation");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -313,7 +313,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed
-        // TODO add your handling code here:
+        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.Commande);
     }//GEN-LAST:event_ButtonNewCommandActionPerformed
 
     private void ButonGetBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonGetBillActionPerformed
