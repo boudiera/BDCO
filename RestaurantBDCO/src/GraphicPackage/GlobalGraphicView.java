@@ -5,7 +5,7 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.ViewType;
+import InterfaceMVC.EnumView;
 import FactoriesLayer.*;
 import InterfaceMVC.*;
 import Modele.Factory;
@@ -20,14 +20,14 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
     private WindowView activeWindow;
-    private ViewType enumWindow;
+    private EnumView enumWindow;
     
     private GlobalGraphicView(){
     }
     
     public static GlobalGraphicView singletonGlobalGraphicView(){
         if(GLOBAL_GRAPHIC_VIEW.activeWindow == null){
-            GLOBAL_GRAPHIC_VIEW.setActiveGraphicView(ViewType.ReservationList);
+            GLOBAL_GRAPHIC_VIEW.setActiveGraphicView(EnumView.ReservationList);
         }
         return GlobalGraphicView.GLOBAL_GRAPHIC_VIEW;
     }
@@ -36,11 +36,11 @@ public class GlobalGraphicView extends AbstractView implements Observer{
         return this.activeWindow;
     }
     
-    public ViewType getEnumWindowOfActiveView(){
+    public EnumView getEnumWindowOfActiveView(){
         return this.enumWindow;
     }
     
-    public void setActiveGraphicView(ViewType window){
+    public void setActiveGraphicView(EnumView window){
         
        if(GLOBAL_GRAPHIC_VIEW.activeWindow != null){
             if(this.activeWindow.isSingleton()){
@@ -75,7 +75,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     @Override
     public void showView(boolean b) {
         if(this.getController().getViewType() == null){
-            this.setActiveGraphicView(ViewType.ReservationList);
+            this.setActiveGraphicView(EnumView.ReservationList);
         }else{
             this.setActiveGraphicView(this.getController().getViewType());
         }

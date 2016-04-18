@@ -26,17 +26,17 @@ import static Modele.TypeArticle.MENU;
 public class Controller {
     
     protected AbstractView view;
-    private   ViewType viewType;
+    private   EnumView viewType;
     
     public AbstractView getView(){
         return this.view;
     }
     
-    public ViewType getViewType() {
+    public EnumView getViewType() {
         return viewType;
     }
     
-    public void setView(ViewType vt){
+    public void setView(EnumView vt){
         this.viewType = vt;
         this.view.showView(true);
     }

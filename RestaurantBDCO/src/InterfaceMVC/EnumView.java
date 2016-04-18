@@ -9,7 +9,7 @@ package InterfaceMVC;
  *
  * @author trentini
  */
-public enum ViewType {
+public enum EnumView {
     ReservationList,
     ReservationCreation,
     ResevationDetails,

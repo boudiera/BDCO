@@ -5,7 +5,7 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.ViewType;
+import InterfaceMVC.EnumView;
 import FactoriesLayer.ConcreteRequeteFactory;
 import Modele.Article;
 import Modele.Commande;
@@ -63,7 +63,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ReservationList);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationList);
         super.dispose();
     }
     
@@ -319,7 +319,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed
-        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.Commande);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.Commande);
     }//GEN-LAST:event_ButtonNewCommandActionPerformed
 
     private void ButonGetBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonGetBillActionPerformed

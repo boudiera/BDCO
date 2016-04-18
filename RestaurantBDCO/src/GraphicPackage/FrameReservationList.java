@@ -1,6 +1,6 @@
 package GraphicPackage;
 
-import InterfaceMVC.ViewType;
+import InterfaceMVC.EnumView;
 import FactoriesLayer.*;
 import Modele.*;
 import java.util.*;
@@ -232,7 +232,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSelectedReservationActionPerformed
-        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ResevationDetails);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ResevationDetails);
     }//GEN-LAST:event_OpenSelectedReservationActionPerformed
 
     private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
@@ -240,7 +240,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
-        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(ViewType.ReservationCreation);
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationCreation);
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed

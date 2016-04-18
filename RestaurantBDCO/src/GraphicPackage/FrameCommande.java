@@ -40,6 +40,16 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         }
     }
      
+    @Override
+    public void update(Observable o, Object o1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return false;
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -191,10 +201,4 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     private javax.swing.JTable jTable1;
     private GraphicPackage.PanelArticleByType panelArticleByType2;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
