@@ -5,6 +5,7 @@
  */
 package GraphicPackage;
 
+import InterfaceMVC.EnumView;
 import Modele.Article;
 import Modele.TypeArticle;
 import java.util.ArrayList;
@@ -18,26 +19,40 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
+    private Article selectedArticle;
+    
     /**
      * Creates new form FrameCommande
      */
     public FrameCommande() {
         initComponents();
-        DefaultTableModel model = new DefaultTableModel(new String[] {"Nom", "Prix", "Spécialité", "Nb"}, 0);
-        Entrees.getTable().setModel(model);
-        Plats.getTable().setModel(model);
-        Desserts.getTable().setModel(model);
-        Boissons.getTable().setModel(model);
+        DefaultTableModel model[] = new DefaultTableModel[5];
+        for(int i=0; i<5; i++){
+        model[i] = new DefaultTableModel(new String[] {"Nom", "Prix", "Spécialité"}, 0);
+        }
+        Entrees.getTable().setModel(model[0]);
+        Plats.getTable().setModel(model[1]);
+        Desserts.getTable().setModel(model[2]);
+        Boissons.getTable().setModel(model[3]);
+        Menus.getTable().setModel(model[4]);
         updateCarte(1, model);
     }
 
-     private void updateCarte(int codeCarte, DefaultTableModel model) {
+     private void updateCarte(int codeCarte, DefaultTableModel model[]) {
+        int i=-1;
         for(TypeArticle type : TypeArticle.values()){
             ArrayList<Article> list = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(codeCarte, type);
+            i++;
             for(Article article : list){
-                model.addRow(new Object[] {article.getName(), article.getPrice(), article.getSpeciality(), new JSpinner()});
+                model[i].addRow(new Object[] {article.getName(), article.getPrice(), article.getSpeciality(), new JSpinner()});
             }
         }
+    }
+     
+    @Override
+    public void dispose() {
+        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ResevationDetails);
+        super.dispose();
     }
      
     @Override
@@ -64,14 +79,14 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         Plats = new GraphicPackage.PanelArticleByType();
         Desserts = new GraphicPackage.PanelArticleByType();
         Boissons = new GraphicPackage.PanelArticleByType();
-        panelArticleByType2 = new GraphicPackage.PanelArticleByType();
+        Menus = new GraphicPackage.PanelArticleByType();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTabbedPane2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTabbedPane2.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -79,7 +94,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         jTabbedPane2.addTab("Plats", Plats);
         jTabbedPane2.addTab("Desserts", Desserts);
         jTabbedPane2.addTab("Boissons", Boissons);
-        jTabbedPane2.addTab("Menus", panelArticleByType2);
+        jTabbedPane2.addTab("Menus", Menus);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -192,6 +207,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     private GraphicPackage.PanelArticleByType Boissons;
     private GraphicPackage.PanelArticleByType Desserts;
     private GraphicPackage.PanelArticleByType Entrees;
+    private GraphicPackage.PanelArticleByType Menus;
     private GraphicPackage.PanelArticleByType Plats;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -199,6 +215,5 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
-    private GraphicPackage.PanelArticleByType panelArticleByType2;
     // End of variables declaration//GEN-END:variables
 }
