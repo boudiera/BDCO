@@ -21,6 +21,16 @@ public class PanelArticleByType extends javax.swing.JPanel {
     public javax.swing.JTable getTable(){
         return jTable1;
     }
+    
+    private void updateSelectedArticle(){
+        if (this.jTable1.getSelectedRow() == -1) {
+            this.jButton1.setEnabled(false);
+        } else {
+            //this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
+
+            this.jButton1.setEnabled(true);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +62,11 @@ public class PanelArticleByType extends javax.swing.JPanel {
                 jTable1MousePressed(evt);
             }
         });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Add Selected Article");
@@ -81,14 +96,12 @@ public class PanelArticleByType extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        if (this.jTable1.getSelectedRow() == -1) {
-            this.jButton1.setEnabled(false);
-        } else {
-            //this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
-
-            this.jButton1.setEnabled(true);
-        }
+        this.updateSelectedArticle();
     }//GEN-LAST:event_jTable1MousePressed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        this.updateSelectedArticle();
+    }//GEN-LAST:event_jTable1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

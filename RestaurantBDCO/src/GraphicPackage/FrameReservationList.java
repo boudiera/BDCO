@@ -131,6 +131,19 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     public void setVisible(boolean b) {
         super.setVisible(b);
     }
+    
+    private void updateSelectedReservation(){
+        if(this.ReservationsTable.getSelectedRow() == -1){
+            this.DeleteSelectedReservation.setEnabled(false);
+            this.OpenSelectedReservation.setEnabled(false);
+        }else{
+            this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
+
+            this.DeleteSelectedReservation.setEnabled(true);
+            this.OpenSelectedReservation.setEnabled(true);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,6 +175,11 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         ReservationsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 ReservationsTableMousePressed(evt);
+            }
+        });
+        ReservationsTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ReservationsTableKeyPressed(evt);
             }
         });
         PaneOfReservationTable.setViewportView(ReservationsTable);
@@ -240,16 +258,12 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     }//GEN-LAST:event_AddNewReservationActionPerformed
 
     private void ReservationsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationsTableMousePressed
-        if(this.ReservationsTable.getSelectedRow() == -1){
-            this.DeleteSelectedReservation.setEnabled(false);
-            this.OpenSelectedReservation.setEnabled(false);
-        }else{
-            this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
-
-            this.DeleteSelectedReservation.setEnabled(true);
-            this.OpenSelectedReservation.setEnabled(true);
-        }
+        this.updateSelectedReservation();
     }//GEN-LAST:event_ReservationsTableMousePressed
+
+    private void ReservationsTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ReservationsTableKeyPressed
+        this.updateSelectedReservation();
+    }//GEN-LAST:event_ReservationsTableKeyPressed
 
     /**
      * @param args the command line arguments
