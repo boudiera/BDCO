@@ -25,8 +25,8 @@ import static Modele.TypeArticle.MENU;
  */
 public class Controller {
     
-    protected AbstractView view;
-    private   EnumView viewType;
+    private AbstractView view;
+    private EnumView viewType;
     
     public AbstractView getView(){
         return this.view;

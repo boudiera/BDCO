@@ -20,15 +20,12 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
     private WindowView activeWindow;
-    private EnumView enumWindow;
+    private EnumView enumWindow = EnumView.ReservationList;
     
     private GlobalGraphicView(){
     }
     
     public static GlobalGraphicView singletonGlobalGraphicView(){
-        if(GLOBAL_GRAPHIC_VIEW.activeWindow == null){
-            GLOBAL_GRAPHIC_VIEW.setActiveGraphicView(EnumView.ReservationList);
-        }
         return GlobalGraphicView.GLOBAL_GRAPHIC_VIEW;
     }
     
@@ -36,7 +33,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
         return this.activeWindow;
     }
     
-    public EnumView getEnumWindowOfActiveView(){
+    public EnumView getEnumView(){
         return this.enumWindow;
     }
     
@@ -62,7 +59,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
                 this.activeWindow = new FrameReservationDetails();
                 break;
             case Commande:
-                this.activeWindow = new FrameCommande(); //TO-DO: make cast not needed!
+                this.activeWindow = new FrameCommande();
                 break;
             default:
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
@@ -75,7 +72,7 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     @Override
     public void showView(boolean b) {
         if(this.getController().getViewType() == null){
-            this.setActiveGraphicView(EnumView.ReservationList);
+            this.getController().setView(EnumView.ReservationList);
         }else{
             this.setActiveGraphicView(this.getController().getViewType());
         }

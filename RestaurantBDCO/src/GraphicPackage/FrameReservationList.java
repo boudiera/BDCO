@@ -22,11 +22,10 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
 
     final private static FrameReservationList singletonWindow = new FrameReservationList();
     
-    private ArrayList<Reservation> listReservations = new ArrayList<>();
-    private Reservation selectedReservation;
+    private int selectedReservationCode;
 
-    public Reservation getSelectedReservation() {
-        return selectedReservation;
+    public int getSelectedReservationCode() {
+        return selectedReservationCode;
     }
     
     /**
@@ -34,7 +33,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
      */
     private FrameReservationList() {
         initComponents();
-        updateReservationTable(Factory.singletonFactory().getRequeteFactory().getReservationsList());
+        updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
 
         /*   TEST CODE
         ArrayList<Table> CodesTables = new ArrayList<>();
@@ -59,7 +58,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         if(arg instanceof ArrayList<?>){
             updateReservationTable((ArrayList<Reservation>) arg);
         }else{
-            updateReservationTable(Factory.singletonFactory().getRequeteFactory().getReservationsList());
+            updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
         }
     }
     
@@ -68,10 +67,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         return true;
     }
     
-    private void updateReservationTable(ArrayList<Reservation> resReservation){
-        this.listReservations.clear();
-        this.listReservations.addAll(resReservation);
-        
+    private void updateReservationTable(ArrayList<Reservation> listReservations){
         DefaultTableModel model = new DefaultTableModel(new String[]{ "Code", "Date", "Nom", "Téléphone", "No Personnes", "Table(s)" }, 0){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -79,7 +75,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         };
         
-        for (Reservation r : this.listReservations) {
+        for (Reservation r : listReservations) {
            String stringListTables = "[ ";
            Iterator<Table> i = r.getCodeTable().iterator();
            if(!i.hasNext())
@@ -248,12 +244,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             this.DeleteSelectedReservation.setEnabled(false);
             this.OpenSelectedReservation.setEnabled(false);
         }else{
-            for(Reservation r : this.listReservations){
-                if(r.getCodeReservation() == (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0)){
-                    this.selectedReservation = r;
-                    break;
-                }
-            }
+            this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
 
             this.DeleteSelectedReservation.setEnabled(true);
             this.OpenSelectedReservation.setEnabled(true);

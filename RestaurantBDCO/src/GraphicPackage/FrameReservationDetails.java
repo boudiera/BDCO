@@ -29,21 +29,15 @@ import javax.swing.table.TableRowSorter;
  */
 public class FrameReservationDetails extends javax.swing.JFrame implements WindowView {
 
-    ArrayList<Commande> listCommand;
-    
     /**
      * Creates new form FrameReservationDetails
      */
     public FrameReservationDetails() {
         initComponents();
         
-        Reservation selectedReservation = FrameReservationList.singletonFrameReservationList().getSelectedReservation();
+        this.TextCodeReservation.setText("Reservation #" + FrameReservationList.singletonFrameReservationList().getSelectedReservationCode());
         
-        this.TextCodeReservation.setText("Reservation #" + selectedReservation.getCodeReservation());
-        
-        listCommand = SingletonListCommande.singletonListCommande().getListCommandByReservationCode(selectedReservation.getCodeReservation());
-        
-        ////////////////////////////////
+        /*////////////////////////////////
         ArrayList<Article> la = new ArrayList<>();
         la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
         
@@ -56,9 +50,9 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         this.listCommand.add(new Commande(1234, "Jojo", la,0));
         
         this.listCommand.add(new Commande(15, "Arnaud Zizi", new ArrayList<Article>(),0));
-        ////////////////////////////////
+        */////////////////////////////////
         
-        updateCommandeTable();
+        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
     }
     
     @Override
@@ -69,7 +63,11 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public void update(Observable o, Object arg) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(arg instanceof ArrayList<?>){
+            updateCommandeTable((ArrayList<Commande>) arg);
+        }else{
+            updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(FrameReservationList.singletonFrameReservationList().getSelectedReservationCode()));
+        }
     }
     
     @Override
@@ -77,7 +75,11 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         return false;
     }
     
-    private void updateCommandeTable(){
+    private void updateArticleTable(ArrayList<Article> listArticle){
+        
+    }
+    
+    private void updateCommandeTable(ArrayList<Commande> listCommand){
         DefaultTableModel model = new DefaultTableModel(new String[]{ "Identifier", "Sub-Total" }, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -94,7 +96,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             }
         };
         
-        for (Commande c : this.listCommand) {
+        for (Commande c : listCommand) {
             model.addRow(new Object[]{ c.getIdentifier(), c.getPrice() });
         }
         
@@ -187,52 +189,9 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Spaghetti",  new Float(123.6)},
-                {"Boisson",  new Float(1250.99)},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Objet", "Prix"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        jTable2.setModel(new DefaultTableModel());
         jTable2.setRowHeight(60);
         PaneCommandeItems.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable2.getColumnModel().getColumn(1).setPreferredWidth(10);
-        }
 
         TextTitleCommandeItems.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextTitleCommandeItems.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
