@@ -38,6 +38,8 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         this.windowReservationDetails.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
         
         initComponents();
+
+        this.TextCodeReservation.setText("Reservation #" + this.windowReservationDetails.getReservationCode());
         
         DefaultTableModel model[] = new DefaultTableModel[6];
         for(int i=0; i<6; i++){
@@ -70,7 +72,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
      
     @Override
     public void dispose() {
-        ((GlobalGraphicView) GlobalGraphicView.singletonGlobalGraphicView().getController().getView()).showView(windowReservationDetails);
+        GlobalGraphicView.singletonGlobalGraphicView().showView(windowReservationDetails);
         super.dispose();
     }
      
@@ -112,6 +114,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         Menus = new javax.swing.JTable();
         FieldClientName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        TextCodeReservation = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Nouvelle Commande");
@@ -207,6 +210,10 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Identifiant de la Commande:");
 
+        TextCodeReservation.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TextCodeReservation.setText("# ????");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,16 +237,20 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                             .addComponent(ButtonDeleteSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -379,6 +390,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     private javax.swing.JTable Plats;
     private javax.swing.JTable SelectedArticlesTable;
     private javax.swing.JTabbedPane TabsArticlesTypes;
+    private javax.swing.JLabel TextCodeReservation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -344,7 +344,8 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed
-        GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.Commande);
+        WindowView frameCommande = new FrameCommande(this);
+        GlobalGraphicView.singletonGlobalGraphicView().showView(frameCommande);
     }//GEN-LAST:event_ButtonNewCommandActionPerformed
 
     private void ButonGetBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonGetBillActionPerformed
