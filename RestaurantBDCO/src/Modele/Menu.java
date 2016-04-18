@@ -39,7 +39,9 @@ public class Menu extends Article {
         return contientType.containsKey(TypeArticle.PLAT);
     }
             
-    
+    public boolean contientAutreQuePlat(){
+        return contientType.containsKey(TypeArticle.BOISSON) || contientType.containsKey(TypeArticle.DESSERT) ||  contientType.containsKey(TypeArticle.ENTREE);
+    }
     // affiche le menu
     public void printMenu() {
 
