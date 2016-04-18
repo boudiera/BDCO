@@ -13,6 +13,7 @@ import Modele.Menu;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;
+import Modele.Table;
 import Modele.TypeArticle;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -102,7 +103,18 @@ public class Controller {
 		return false;
 	}
     
-
+    // Recupère les tables libres, renvoit une exception si il n'y en pas pas
+    public ArrayList<Table> getTablesLibres (int year, int month, int day, Service service) throws RestaurantCompletException{
+        
+        ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(year, month, day, service);
+        if (tablesLibres == null)
+            throw new RestaurantCompletException();
+        return tablesLibres;
+    }
+    
+    
+    
+    // Verification du bon forma d'entré des données
     public void verifyAddReservation(String year, String month, String day, String hour, String minute, String nbPeople, String phone, String service, String nomClient) throws ReservationException {
        
         int yearIn;
