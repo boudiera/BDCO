@@ -62,7 +62,7 @@ public class TextualReservationList extends AbstractView {
             System.out.println("---------------------------------------------------------------------------------------------------------");
             System.out.print("|      "+reservation.getCodeReservation()+"      |");
             System.out.print(" "+reservation.printClientName()+"|");
-            System.out.print("  "+reservation.getDate().writeDay()+"/"+ reservation.getDate().writeMonth()+"/"+reservation.getDate().getYear()+"  |");
+            System.out.print("  "+reservation.getDate().writeDay()+"/"+ reservation.getDate().writeMonth()+"/"+reservation.getDate().writeYear()+"  |");
             System.out.print("  "+reservation.getPhone()+"  |");
             System.out.print("     "+reservation.getDate().writeHour()+"h"+reservation.getDate().writeMin()+"    |");
             

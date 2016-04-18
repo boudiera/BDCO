@@ -58,8 +58,8 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                 
                 // Conversion de date et heure en ReservationDate
                 ReservationDate date = new ReservationDate(
-                    rsetReservation.getDate("Jour").getYear(),
-                    rsetReservation.getDate("Jour").getMonth(),
+                    rsetReservation.getDate("Jour").getYear()+1900,
+                    rsetReservation.getDate("Jour").getMonth()+1,
                     rsetReservation.getDate("Jour").getDay(),
                     rsetReservation.getInt("Heure"),
                     rsetReservation.getInt("Minutes"));
