@@ -63,7 +63,7 @@ public class TextualPriseDeCommande extends AbstractView {
        
         System.out.println("------------- Commande numéro " + this.commande.getIdentifier() + " Enregistrée ------------");
          // Appel d'une fonction du controller qui enregistre la commande dans l'application
-        this.getController().ajoutCommande(commande);
+        this.getController().addCommande(commande);
         this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), numCommande + 1, this.getController()));
     }
 
@@ -199,7 +199,7 @@ public class TextualPriseDeCommande extends AbstractView {
         }
         // Ajout a la liste des articles + actualisation du prix
         for (int i = 0; i < quantite; i++) {
-            this.getController().ajoutArticleCommande(choixArticles.get(articleIndex - 1), commande);
+            this.getController().addArticleCommande(choixArticles.get(articleIndex - 1), commande);
         }
         this.commande.setPrice(this.commande.getPrice() + choixArticles.get(articleIndex - 1).getPrice()*quantite);
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite );

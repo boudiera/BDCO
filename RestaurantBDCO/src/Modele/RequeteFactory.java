@@ -1,6 +1,7 @@
 package Modele;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
 /** Une liste de reservations */
@@ -13,6 +14,9 @@ public abstract class RequeteFactory{
   
     // Renvoie tous les articles d'une carte en fonction d'un type
     public abstract ArrayList<Article> getArticlesCarte(int codeCarte, TypeArticle typeArticle);
+    
+    // Renvoie tous les articles d'une carte en fonction d'un type
+    public abstract HashMap<String, Article> getArticlesCarteByName(int codeCarte, TypeArticle typeArticle);
     
     // Permet d'avoir tous les articles, d'un menu pour une carte donnée
     public abstract ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu);

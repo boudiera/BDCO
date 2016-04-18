@@ -95,7 +95,7 @@ public class TextualMenuCommande extends AbstractView {
             return -1;
         }
         System.out.println(" ------- > Suppresion de la commande " + numCommande);
-        this.getController().supprimeCommande(codeReservation, commandes.get(numCommande-1));
+        this.getController().deleteCommande(codeReservation, commandes.get(numCommande-1));
         
         return 0;
     }

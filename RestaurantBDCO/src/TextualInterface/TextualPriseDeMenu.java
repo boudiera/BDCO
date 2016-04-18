@@ -56,7 +56,7 @@ public class TextualPriseDeMenu extends AbstractView {
         // La commande est finie, on crée un objet commande et on l'envoi au controller
         // Appel d'une fonction du controller qui enregistre la commande dans l'application
         System.out.println("------------- Menu " + this.menu.getName() + " Enregistré ------------");
-        this.getController().ajoutArticleCommande(menu, commande);
+        this.getController().addArticleCommande(menu, commande);
         this.getController().setView(this.viewCommande);
 
     }
@@ -101,22 +101,22 @@ public class TextualPriseDeMenu extends AbstractView {
         switch (choix) {
             case 1:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées pour un menu donné
-                choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
-                choixArticles.add(new Article("Saucisse", TypeArticle.ENTREE, 10, "ppp"));
-                choixArticles.add(new Article("Carotte", TypeArticle.ENTREE, 5, "lol"));
+                //choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
+                //choixArticles.add(new Article("Saucisse", TypeArticle.ENTREE, 10, "ppp"));
+                //choixArticles.add(new Article("Carotte", TypeArticle.ENTREE, 5, "lol"));
                 titreSousMenu = "--------------------- Affichage des entrées disponibles -------------------------\n";
 
                 break;
             case 2:
-                choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
-                choixArticles.add(new Article("Poulet", TypeArticle.PLAT, 10, "viande"));
-                choixArticles.add(new Article("Poisson panné", TypeArticle.PLAT, 5, "poisson"));
+                //choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
+                //choixArticles.add(new Article("Poulet", TypeArticle.PLAT, 10, "viande"));
+                //choixArticles.add(new Article("Poisson panné", TypeArticle.PLAT, 5, "poisson"));
                 // Appel d'une fonction du controller qui nous renvois une liste d'article de plats  pour un menu donné
                 titreSousMenu = "--------------------- Affichage des plats disponibles -------------------------\n";
                 break;
             case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
-                choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
-                choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
+                //choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
+                //choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
                 titreSousMenu = "--------------------- Affichage des desserts disponibles -------------------------\n";
                 break;
             case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
@@ -161,7 +161,7 @@ public class TextualPriseDeMenu extends AbstractView {
         }
 
        
-        this.getController().ajoutArticleMenu(choixArticles.get(articleIndex - 1), menu);
+        this.getController().addArticleMenu(choixArticles.get(articleIndex - 1), menu);
       
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite);
        return 0;

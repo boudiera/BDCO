@@ -11,8 +11,10 @@ import InterfaceMVC.Exceptions.ReservationException;
 import Modele.Article;
 import Modele.Commande;
 import Modele.TypeArticle;
+import Modele.UniqueArticle;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Observable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -60,13 +62,12 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     }
     
     private void updateCarte(int codeCarte, DefaultTableModel model[]) {
-        int i=0;
         for(TypeArticle type : TypeArticle.values()){
             ArrayList<Article> list = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(codeCarte, type);
+            
             for(Article article : list){
-                model[i].addRow(new Object[] {article.getName(), article.getType().toString(), Float.toString(article.getPrice()), article.getSpeciality().toString() });
+                model[type.ordinal()].addRow(new Object[] {article.getName(), article.getType().toString(), Float.toString(article.getPrice()), article.getSpeciality().toString() });
             }
-            i++;
         }
     }
      
@@ -281,8 +282,8 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 for(int col=0; col < this.SelectedArticlesTable.getColumnCount(); col++){
                     value[col] = (String) this.SelectedArticlesTable.getValueAt(row, col);
                 }
-
-                list.add(new Article(value[0], TypeArticle.valueOf(value[1]), Float.valueOf(value[2]), value[3]));
+                
+                list.add(GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(1, TypeArticle.valueOf(value[1])).get(value[0]));
             }
 
             Commande commande = new Commande(this.windowReservationDetails.getReservationCode(), this.FieldClientName.getText(), list, 0);

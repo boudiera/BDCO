@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import static Modele.TypeArticle.MENU;
+import java.util.HashMap;
 
 /**
  *
@@ -51,19 +52,19 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().getReservationsList();
     }
     
-    public void ajoutCommande(Commande commande){
+    public void addCommande(Commande commande){
         
         // Ajout dans la mémoire de l'application
         SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(),commande);
     }
     
     // Ajoute un article dans une commande
-    public void ajoutArticleCommande( Article a, Commande c){
+    public void addArticleCommande( Article a, Commande c){
         c.ajoutArticle(a);
     }
 
     // Ajoute un article dans un menu
-    public void ajoutArticleMenu( Article a, Menu m){
+    public void addArticleMenu( Article a, Menu m){
         m.ajoutArticle(a);
     }
     // Permet de verifier si un menu est valide ( ici qu'il contient au moin un plat et au moins un autre type d'article)
@@ -75,6 +76,10 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle);
     }
     
+    public HashMap<String, Article> getArticlesByName (int codeCarte, TypeArticle typeArticle){
+        return Factory.singletonFactory().getRequeteFactory().getArticlesCarteByName(codeCarte, typeArticle);
+    }
+    
     
     // Permet d'obtenir toutes les commandes d'une reservation
     public ArrayList<Commande> getCommande (int codeReservation){
@@ -83,7 +88,7 @@ public class Controller {
     
     
     // Permet de supprimer une commande d'une reservation
-    public void supprimeCommande( int codeReservation,Commande commande){
+    public void deleteCommande( int codeReservation,Commande commande){
         SingletonListCommande.singletonListCommande().removeCommand(codeReservation,commande.getIdentifier());
         // Actualisation de la vue
         this.setView(this.getView());
