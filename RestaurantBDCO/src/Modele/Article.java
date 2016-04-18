@@ -1,6 +1,6 @@
 package Modele;
 
-public class Article {
+public abstract class Article {
         private TypeArticle type;
 	private final float price;
 	private final String name;

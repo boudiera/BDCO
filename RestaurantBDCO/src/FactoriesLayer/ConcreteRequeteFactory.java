@@ -178,6 +178,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         try{
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
             ResultSet resVoisines = stmt.executeQuery();
+            
             while(resVoisines.next()){
                 Integer[] t = new Integer[2];
                 t[0] = resVoisines.getInt(1);
@@ -197,13 +198,90 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     }
 
     @Override
-    public ArrayList<Article> getArticlesCarteMenu(int codeCarte, TypeArticle typeArticle, Menu menu) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu) {
+        connexion.open();
+        PreparedStatement stmt;
+        try {
+            if (typeArticle.toString() == "PLAT") {
+                String STMT_1 = "select A.NomArticle, A.NomSpecialite "
+                        + "from Article A, ContientPlat Pl "
+                        + "where A.NomArticle = Pl.NomArticlePlat "
+                        + "and A.TypeArticle = ? "
+                        + "and Pl.NomArticleMenu = ?";
+                stmt = connexion.getConnection().prepareStatement(STMT_1);
+            } else {    
+                String STMT_2 = "select A.NomArticle, A.NomSpecialite "
+                        + "from Article A, ContientAutreArticle Au "
+                        + "where A.NomArticle = Au.NomArticleAutre "
+                        + "and A.TypeArticle = ? "
+                        + "and Au.NomArticleAutre = ?";
+                stmt = connexion.getConnection().prepareStatement(STMT_2);
+            }
+            
+            stmt.setString(1, typeArticle.toString());
+            stmt.setString(2, nomMenu);
+            
+            //  Execution  de la  requete
+            ResultSet rsetArticleMenu = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            ArrayList <Article> resArticleMenu = new ArrayList<> ();
+            while (rsetArticleMenu.next()) {
+                resArticleMenu.add(new ConcreteArticle(
+                        rsetArticleMenu.getString("NomArticle"),
+                        typeArticle,
+                        0,
+                        rsetArticleMenu.getString("NomSpecialite")));
+            }
+            
+            //  Fermeture
+            rsetArticleMenu.close();
+            stmt.close();
+            connexion.close();
+            return resArticleMenu;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }
     }
 
     @Override
-    public boolean clientConnu(String nomClient, String numTel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int clientConnu(String nomClient, String numTel) {
+        connexion.open();
+                
+        String STMT_1 = "select *"
+                + " from Client C"
+                + " where C.NomClient = ?"
+                + " and C.NumTel = ? ";
+        try{
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setString(1, nomClient);
+            stmt.setString(2, numTel);
+            ResultSet rsetClient = stmt.executeQuery();
+            
+            int code = 0;
+            if (rsetClient.next()) {
+                code = rsetClient.getInt("CodeClient");
+            } else {
+                String STMT_2 = "select SeqClient.currVal from Dual";
+                ConcreteInsertionFactory insertFactory = new ConcreteInsertionFactory(connexion);
+                insertFactory.creerClient(nomClient, numTel);
+                stmt = connexion.getConnection().prepareStatement(STMT_2);
+                ResultSet rsetCode = stmt.executeQuery();
+                code = rsetCode.getInt(1);
+                rsetCode.close();
+            }
+            rsetClient.close();
+            stmt.close();
+            connexion.close();
+            return code;
+        }
+        catch(SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return -1;
+        }
     }
     
     

@@ -15,10 +15,10 @@ public abstract class RequeteFactory{
     public abstract ArrayList<Article> getArticlesCarte(int codeCarte, TypeArticle typeArticle);
     
     // Permet d'avoir tous les articles, d'un menu pour une carte donnée
-    public abstract ArrayList<Article> getArticlesCarteMenu(int codeCarte, TypeArticle typeArticle,Menu menu);
+    public abstract ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu);
      
-    // Return vrai si le client est deja présent dans la base de donnée
-    public abstract boolean clientConnu(String nomClient, String numTel);
+    // Return codeClient si le client est deja présent dans la base de donnée, sinon le crée
+    public abstract int clientConnu(String nomClient, String numTel);
 
     // Renvoie la liste des tables voisines
     public abstract ArrayList<Integer[]> tablesVoisines();
