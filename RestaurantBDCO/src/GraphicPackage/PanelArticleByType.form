@@ -58,6 +58,9 @@
             </Property>
             <Property name="rowHeight" type="int" value="30"/>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -65,6 +68,7 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add Selected Article"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

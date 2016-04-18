@@ -47,10 +47,16 @@ public class PanelArticleByType extends javax.swing.JPanel {
             }
         ));
         jTable1.setRowHeight(30);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Add Selected Article");
         jButton1.setToolTipText("");
+        jButton1.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -73,6 +79,16 @@ public class PanelArticleByType extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        if (this.jTable1.getSelectedRow() == -1) {
+            this.jButton1.setEnabled(false);
+        } else {
+            //this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
+
+            this.jButton1.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTable1MousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -28,7 +28,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         initComponents();
         DefaultTableModel model[] = new DefaultTableModel[5];
         for(int i=0; i<5; i++){
-        model[i] = new DefaultTableModel(new String[] {"Nom", "Prix", "Spécialité"}, 0);
+            model[i] = new DefaultTableModel(new String[] {"Nom", "Prix", "Spécialité"}, 0);
         }
         Entrees.getTable().setModel(model[0]);
         Plats.getTable().setModel(model[1]);
