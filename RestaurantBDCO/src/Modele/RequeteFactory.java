@@ -15,8 +15,11 @@ public abstract class RequeteFactory{
     // Renvoie tous les articles d'une carte en fonction d'un type
     public abstract ArrayList<Article> getArticlesCarte(int codeCarte, TypeArticle typeArticle);
     
-    // Permet d'avoir tous les articles, d'un menu pour une carte donnée
+    // Permet d'avoir tous les articles d'un menu
     public abstract ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu);
+    
+    // Permet d'avoir tous les articles d'un menu
+    public abstract ArrayList<TypeArticle> getTypesMenu(String nomMenu);
      
     // Return codeClient si le client est deja présent dans la base de donnée, sinon le crée
     public abstract int clientConnu(String nomClient, String numTel);

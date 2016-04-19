@@ -105,7 +105,9 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             stmt.setString(2, typeArticle.toString());
             ResultSet resCarte = stmt.executeQuery();
             while(resCarte.next()){
-                articles.add(new ConcreteArticle(resCarte.getString(1), TypeArticle.valueOf(resCarte.getString(2)), resCarte.getFloat(3),resCarte.getString(4)));
+                articles.add(new ConcreteArticle(resCarte.getString(1), 
+                        TypeArticle.valueOf(resCarte.getString(2)), 
+                        resCarte.getFloat(3),resCarte.getString(4)));
             }
             resCarte.close();
             stmt.close();
@@ -296,6 +298,38 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             return -1;
         }
     }
+
+    @Override
+    public ArrayList<TypeArticle> getTypesMenu(String nomMenu) {
+        connexion.open();
+        String STMT_1 = "select distinct A.TypeArticle "
+                        + "from Article A, ContientAutreArticle Au "
+                        + "where A.NomArticle = Au.NomArticleAutre "
+                        + "and Pl.NomArticleMenu = ?";
+        
+        try {
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setString(1, nomMenu);
+            
+            //  Execution  de la  requete
+            ResultSet rsetTypesMenu = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            ArrayList <TypeArticle> resTypesMenu = new ArrayList<> ();
+            while (rsetTypesMenu.next()) {
+                resTypesMenu.add(TypeArticle.valueOf(rsetTypesMenu.getString("TypeArticle")));
+            }
+            
+            //  Fermeture
+            rsetTypesMenu.close();
+            stmt.close();
+            connexion.close();
+            return resTypesMenu;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }    }
     
     
     

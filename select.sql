@@ -26,3 +26,9 @@ select A.NomArticle, A.TypeArticle, A.NomSpecialite
 from Article A, ContientAutreArticle Au
 where A.NomArticle = Au.NomArticleAutre
 	and Au.NomArticleMenu = 'GROSSE FAIM';
+
+select distinct A.TypeArticle
+from Article A, ContientAutreArticle Au
+where A.NomArticle = Au.NomArticleAutre
+	and Au.NomArticleMenu = 'GROSSE FAIM';
+
