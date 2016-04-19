@@ -30,13 +30,13 @@ public class ConcreteInsertionFactory extends InsertionFactory {
    @Override
    public void creerClient(String nomClient, String numTel){
        connexion.open();
-       String STMT_1 = " insert into Client"
+       String STMT_1 = " insert into Client "
                + "values (seqClient.nextval,?,?)";
        try{
            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
            stmt.setString(1,nomClient);
            stmt.setString(2,numTel);
-           stmt.executeQuery();
+           stmt.executeUpdate();
            stmt.close();
            connexion.close();
        }
@@ -49,7 +49,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
    @Override
    public void creerCarte(){
        connexion.open();
-       String STMT_1 = " insert into Carte"
+       String STMT_1 = " insert into Carte "
                + "values (seqCarte.nextval)";
        try{
            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
@@ -67,7 +67,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
    @Override
    public void ajoutArticleCarte(String nomArticle, int codeCarte, float prix){
        connexion.open();
-       String STMT_1 = " insert into EstElement"
+       String STMT_1 = " insert into EstElement "
                + "values (?, ?, ?)";
        try{
            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
@@ -90,7 +90,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
           connexion.open();
           int codeReservation;
         
-        String STMT_1 = "insert into Reservation"
+        String STMT_1 = "insert into Reservation "
                 + "values (seqReservation.nextval, ?, ?, ?, ?, ?, ?)";
         String STMT_2 = "select seqReservation.currval from Dual";
         
@@ -122,7 +122,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     @Override
     public void creerOccTable(ArrayList<Table> tablesOcc, int codeReservation) {
         connexion.open();
-        String STMT_1 = "insert into Occupe"
+        String STMT_1 = "insert into Occupe "
                 + "values (?, ?)";
         try{
             PreparedStatement stmt=null;
@@ -146,7 +146,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     @Override
     public void creeCommande(Commande commande) {
         connexion.open();
-        String STMT_1 = "insert into Commande"
+        String STMT_1 = "insert into Commande "
                 + "values (?,?,?)";
         PreparedStatement stmt = null;
         try{
