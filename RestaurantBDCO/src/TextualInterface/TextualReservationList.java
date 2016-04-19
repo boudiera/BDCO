@@ -32,21 +32,7 @@ public class TextualReservationList extends AbstractView {
         }
         
         ArrayList<Reservation> listReservations = this.getController().getReservationList();
-        /*
-        ReservationDate date= new ReservationDate(1994,05,16,20,45);
-        ArrayList<Table> num= new ArrayList<Table>();
-        num.add(new Table(5, null,5,4, 3));
-        num.add(new Table(7, null,5,4, 3));
-        ArrayList<Table> num2= new ArrayList<Table>();
-        num2.add(new Table(1, null,5,4, 3));
-        
-        listReservations.add(new Reservation(1,num, 55, "Patrick", "0476556969",date,Service.SOIR));
-        listReservations.add(new Reservation(2,num2, 1, "José","0476686969",date,Service.MIDI));
-        */
-       
-        
-        
-         
+
          System.out.println("--------------------------------------~AFFICHAGE DES RESERVATIONS~---------------------------------------");
             System.out.println("---------------------------------------------------------------------------------------------------------");
             System.out.print("| Reservation |");

@@ -74,7 +74,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                         rsetReservation.getString("NumTel"),
                         date,
                         Service.valueOf(rsetReservation.getString("NomService"))));
-                
+            
                 //Fermeture
                 rsetTable.close();
             }

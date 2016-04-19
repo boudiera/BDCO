@@ -110,6 +110,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             tab.next();
             codeReservation = tab.getInt(1);
             this.creerOccTable(tablesOcc, codeReservation);
+            System.out.println("Code Reservation" + codeReservation);
             stmt.close();
             tab.close();
             connexion.close();
@@ -129,8 +130,8 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             PreparedStatement stmt=null;
             for(Table t : tablesOcc) {
                  stmt = connexion.getConnection().prepareStatement(STMT_1);
-                 stmt.setInt(1,t.getCodeTable());
-                 stmt.setInt(2,codeReservation);
+                 stmt.setInt(1,codeReservation);
+                 stmt.setInt(2,t.getCodeTable());    
                  stmt.executeQuery();
                 
             }
