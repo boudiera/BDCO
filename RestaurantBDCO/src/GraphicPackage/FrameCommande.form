@@ -120,6 +120,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="ButtonDeleteSelectedArticle">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/minus-button.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Supprimer Article Selection&#xe9;"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -138,6 +141,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonFinishThisCommande">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/database--arrow.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cr&#xe9;er Nouvelle Commande"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -147,6 +153,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonAddSelectedArticle">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/plus-button.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ajouter Article Selection&#xe9;"/>
       </Properties>
       <Events>

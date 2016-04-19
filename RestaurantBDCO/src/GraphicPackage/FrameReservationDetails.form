@@ -139,6 +139,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonDeleteSelectedCommand">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/database--minus.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Effacer Commande"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -148,6 +151,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonNewCommand">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/database--plus.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Nouvelle Commande"/>
       </Properties>
       <Events>
@@ -165,6 +171,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButonGetBill">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/compile.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Produire la Facture"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>

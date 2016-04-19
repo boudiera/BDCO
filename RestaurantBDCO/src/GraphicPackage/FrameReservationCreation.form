@@ -329,6 +329,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonCalculate">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/calendar-search-result.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Trouver"/>
       </Properties>
       <Events>
@@ -337,6 +340,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="createButton">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/book--arrow.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cr&#xe9;er R&#xe9;servation"/>
       </Properties>
       <Events>

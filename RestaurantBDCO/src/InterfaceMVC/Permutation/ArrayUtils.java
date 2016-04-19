@@ -9,7 +9,7 @@
  *
  * Created Aug 31, 2009
  */
-package Modele.Permutation;
+package InterfaceMVC.Permutation;
 
 import java.util.Arrays;
 

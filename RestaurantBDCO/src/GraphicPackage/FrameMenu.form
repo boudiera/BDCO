@@ -115,6 +115,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonCreateMenu">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/report--plus.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cr&#xe9;er Menu"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
@@ -124,6 +127,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="ButtonAddSelectedArticle">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/plus-button.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ajouter Article Selection&#xe9;"/>
       </Properties>
       <Events>

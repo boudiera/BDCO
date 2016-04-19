@@ -9,7 +9,7 @@
  *
  * Created Sep 4, 2009
  */
-package Modele.Permutation;
+package InterfaceMVC.Permutation;
 
 import java.util.Iterator;
 

@@ -5,8 +5,8 @@
  */
 package restaurantbdco;
 
+import InterfaceMVC.Permutation.SepaPnkIterator;
 import InterfaceMVC.RunGraphicMVC;
-import Modele.Permutation.*;
 import TextualInterface.TestTextuel;
 import java.util.Arrays;
 import java.util.Iterator;

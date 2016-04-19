@@ -132,6 +132,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WindowTitle.setText("Nouvelle Menu");
 
+        ButtonCreateMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/report--plus.png"))); // NOI18N
         ButtonCreateMenu.setText("Créer Menu");
         ButtonCreateMenu.setToolTipText("");
         ButtonCreateMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -140,6 +141,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
             }
         });
 
+        ButtonAddSelectedArticle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/plus-button.png"))); // NOI18N
         ButtonAddSelectedArticle.setText("Ajouter Article Selectioné");
         ButtonAddSelectedArticle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

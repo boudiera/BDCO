@@ -33,7 +33,7 @@
                       <Component id="AddNewReservation" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="DeleteSelectedReservation" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="127" max="32767" attributes="0"/>
+                      <EmptySpace pref="67" max="32767" attributes="0"/>
                       <Component id="OpenSelectedReservation" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -101,6 +101,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="OpenSelectedReservation">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/book-open-next.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ouvrir Reservation Selection&#xe9;"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="actionCommand" type="java.lang.String" value="Open Reservation #??"/>
@@ -112,6 +115,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="DeleteSelectedReservation">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/book--minus.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Supprimer Reservation"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -121,6 +127,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="AddNewReservation">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/book--plus.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ajouter Reservation"/>
       </Properties>
       <Events>

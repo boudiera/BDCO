@@ -10,7 +10,7 @@ import Modele.Article;
 import Modele.Commande;
 import Modele.Factory;
 import Modele.Menu;
-import Modele.Permutation.SepaPnkIterator;
+import InterfaceMVC.Permutation.SepaPnkIterator;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;

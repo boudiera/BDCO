@@ -205,6 +205,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         jComboBox1.setEnabled(false);
 
+        buttonCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/calendar-search-result.png"))); // NOI18N
         buttonCalculate.setText("Trouver");
         buttonCalculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,6 +213,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             }
         });
 
+        createButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--arrow.png"))); // NOI18N
         createButton.setText("Créer Réservation");
         createButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

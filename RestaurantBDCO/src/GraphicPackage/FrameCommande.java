@@ -145,6 +145,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         jScrollPane1.setViewportView(SelectedArticlesTable);
         SelectedArticlesTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        ButtonDeleteSelectedArticle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/minus-button.png"))); // NOI18N
         ButtonDeleteSelectedArticle.setText("Supprimer Article Selectioné");
         ButtonDeleteSelectedArticle.setToolTipText("");
         ButtonDeleteSelectedArticle.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +158,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WindowTitle.setText("Nouvelle Commande");
 
+        ButtonFinishThisCommande.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/database--arrow.png"))); // NOI18N
         ButtonFinishThisCommande.setText("Créer Nouvelle Commande");
         ButtonFinishThisCommande.setToolTipText("");
         ButtonFinishThisCommande.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +167,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
             }
         });
 
+        ButtonAddSelectedArticle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/plus-button.png"))); // NOI18N
         ButtonAddSelectedArticle.setText("Ajouter Article Selectioné");
         ButtonAddSelectedArticle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

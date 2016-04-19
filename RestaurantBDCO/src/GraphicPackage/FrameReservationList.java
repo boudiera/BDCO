@@ -181,6 +181,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         PaneOfReservationTable.setViewportView(ReservationsTable);
         ReservationsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        OpenSelectedReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book-open-next.png"))); // NOI18N
         OpenSelectedReservation.setText("Ouvrir Reservation Selectioné");
         OpenSelectedReservation.setToolTipText("");
         OpenSelectedReservation.setActionCommand("Open Reservation #??");
@@ -191,6 +192,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         });
 
+        DeleteSelectedReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--minus.png"))); // NOI18N
         DeleteSelectedReservation.setText("Supprimer Reservation");
         DeleteSelectedReservation.setEnabled(false);
         DeleteSelectedReservation.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +201,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         });
 
+        AddNewReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--plus.png"))); // NOI18N
         AddNewReservation.setText("Ajouter Reservation");
         AddNewReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +222,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
                         .addComponent(AddNewReservation)
                         .addGap(18, 18, 18)
                         .addComponent(DeleteSelectedReservation)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                         .addComponent(OpenSelectedReservation)))
                 .addContainerGap())
         );

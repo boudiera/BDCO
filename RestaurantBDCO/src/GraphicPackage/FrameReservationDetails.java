@@ -221,6 +221,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         WindowTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WindowTitle.setText("Liste de Commandes");
 
+        ButtonDeleteSelectedCommand.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/database--minus.png"))); // NOI18N
         ButtonDeleteSelectedCommand.setText("Effacer Commande");
         ButtonDeleteSelectedCommand.setEnabled(false);
         ButtonDeleteSelectedCommand.addActionListener(new java.awt.event.ActionListener() {
@@ -229,6 +230,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             }
         });
 
+        ButtonNewCommand.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/database--plus.png"))); // NOI18N
         ButtonNewCommand.setText("Nouvelle Commande");
         ButtonNewCommand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +242,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
 
+        ButonGetBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/compile.png"))); // NOI18N
         ButonGetBill.setText("Produire la Facture");
         ButonGetBill.setToolTipText("");
         ButonGetBill.addActionListener(new java.awt.event.ActionListener() {

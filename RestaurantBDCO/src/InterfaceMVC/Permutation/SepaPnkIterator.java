@@ -9,8 +9,10 @@
  *
  * Created Sep 2, 2009
  */
-package Modele.Permutation;
+package InterfaceMVC.Permutation;
 
+import InterfaceMVC.Permutation.ReadOnlyIterator;
+import InterfaceMVC.Permutation.ArrayUtils;
 import java.util.Iterator;
 
 
