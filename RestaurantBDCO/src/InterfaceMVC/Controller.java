@@ -169,6 +169,10 @@ public class Controller {
     public void addArticleCommande(Article a, Commande c){
         c.addArticle(a);
     }
+    
+    public void removeArticleCommande(Article a, Commande c){
+        c.removeArticle(a);
+    }
 
     // Ajoute un article dans un menu
     public void addArticleMenu(Article a, Menu m){

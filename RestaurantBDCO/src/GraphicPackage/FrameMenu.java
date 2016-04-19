@@ -17,6 +17,7 @@ import Modele.UniqueArticle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Observable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -33,7 +35,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
 
     private FrameCommande windowCommande;
     
-    private Menu selectedMenu;
+    private Article selectedMenu;
     
     /**
      * Creates new form FrameCommande
@@ -42,50 +44,57 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         
         this.windowCommande = windowCommande;
         this.windowCommande.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
-        this.selectedMenu = (Menu) this.windowCommande.getSelectedMenu();
+        this.selectedMenu = this.windowCommande.getSelectedMenu();
         
         initComponents();
 
         this.TextCodeReservation.setText("Reservation #" + this.windowCommande.getThisCommande().getCodeReservation());
         
-        DefaultTableModel model[] = new DefaultTableModel[5];
-        for(int i=0; i<model.length; i++){
-            model[i] = new DefaultTableModel(new String[] {"Nom", "Type", "Prix", "Spécialité"}, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;   //all cells false
-                }
-            };
-        }
-        Entrees.setModel(model[0]);
-        Plats.setModel(model[1]);
-        Desserts.setModel(model[2]);
-        Boissons.setModel(model[3]);
-        SelectedArticlesTable.setModel(model[4]);
-        updateListArticlesMenu(this.windowCommande.getSelectedMenu(), model);
+        updateListArticlesMenu();
     }
     
-    private void updateListArticlesMenu(Article menu, DefaultTableModel model[]) {
+    private void updateListArticlesMenu() {
         for(TypeArticle type : TypeArticle.values()){
-            if(!type.equals(TypeArticle.MENU)){
-                HashMap<String, Article> list = GlobalGraphicView.singletonGlobalGraphicView().getController().getMenuArticles(type, menu.getName());
-                
-                for(Article article : list.values()){
-                    model[type.ordinal()].addRow(new Object[] {article.getName(), article.getType().toString(), Float.toString(article.getPrice()), article.getSpeciality().toString() });
-                }
+            LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
+            
+            for(Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getMenuArticles(type, this.windowCommande.getSelectedMenu().getName()).values()){
+                tableMap.put(a.getName(), a);
+            }
+            
+            TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
+            
+            switch(type){
+                case ENTREE:    this.Entrees.setModel(model);    break;
+                case BOISSON:   this.Boissons.setModel(model);   break;
+                case PLAT:      this.Plats.setModel(model);      break;
+                case DESSERT:   this.Desserts.setModel(model);   break;
+                case MENU:      break;
             }
         }
+    }
+    
+    private void updateCommandeMenu(){
+        LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
+
+        for(Article a : ((Menu)this.selectedMenu).getList()){
+            tableMap.put(a.getName(), a);
+        }
+
+        TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
+        
+        this.SelectedArticlesTable.setModel(model);
     }
      
     @Override
     public void dispose() {
         GlobalGraphicView.singletonGlobalGraphicView().showView(windowCommande);
-        super.dispose();
+        //super.dispose();
     }
      
     @Override
     public void update(Observable o, Object o1) {
-        //nothing to update here
+        this.updateListArticlesMenu();
+        this.updateCommandeMenu();
     }
 
     @Override
@@ -249,10 +258,10 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
                 list.add(GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(1, TypeArticle.valueOf(value[1])).get(value[0]));
                 
                 Article a = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(this.windowCommande.getCodeCarte(), TypeArticle.MENU).get(value[0]);
-                GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleMenu(null, this.selectedMenu);
+                GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleMenu(null, (Menu) this.selectedMenu);
             }
 
-            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyMenu(this.selectedMenu);
+            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyMenu((Menu) this.selectedMenu);
             
             //Commande commande = SingletonListCommande.singletonListCommande().getCommande(this.windowCommande.getWindowReservationDetails().getReservationCode(), );
             //GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(selectedMenu, commande);
@@ -305,48 +314,6 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
             GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleMenu(article, menu);
         }
     }//GEN-LAST:event_ButtonAddSelectedArticleActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new FrameMenu().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Boissons;
