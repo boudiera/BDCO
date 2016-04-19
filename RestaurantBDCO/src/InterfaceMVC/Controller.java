@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import static Modele.TypeArticle.MENU;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -63,7 +65,7 @@ public class Controller {
                 while(i.hasNext()){
                     int[] tab=i.next();
                     if(verifycombi(tab, hash)){
-                        if (calculNbPlaces(tab, liste) > nbPlaces){
+                        if (calculNbPlaces(tab, liste) >= nbPlaces){
                             ArrayList<Table> res = new ArrayList<>();
                             for(int k=0; k<tab.length; k++){
                                 res.add(liste.get(tab[k]));
@@ -101,6 +103,47 @@ public class Controller {
         if ((!hash.get(tab[tab.length-1]+1).contains(tab[tab.length-2]+1)))
             return false;
         return true;
+    }
+    
+    // Fonction qui renvoit une hashmap indexe sur le nom des localisation, pour chaque localisation -> on obtient une lise de tables pouvants être occupées en tenant compte du nombre de 
+    public HashMap<String,ArrayList<Table>> getTablesLibresByLocalisation (String annee, String mois, String jour, String service,String nbPersonnes) throws ReservationException{
+        
+                // On récupère toutes les tables libres
+                ArrayList<Table> tablesLibres = getTablesLibres(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Service.valueOf(service));
+               
+                // On les tries par localisation
+                HashMap<String, ArrayList<Table> > tableZones = new HashMap<>();
+                for(Table t : tablesLibres){
+                        if (tableZones.containsKey(t.getLocation()))
+                         tableZones.get(t.getLocation()).add(t);
+                        else {
+                            ArrayList<Table> listTablesZone = new ArrayList<>();
+                            listTablesZone.add(t);
+                            tableZones.put(t.getLocation(),listTablesZone);
+                        }     
+                }
+                
+                Set<String> s = tableZones.keySet();
+                Iterator<String> iterator = s.iterator();
+                
+                HashMap<String,ArrayList<Table>> listTablesOccupeesParLocalisation = new HashMap<>();
+                ArrayList<Table> resultCombinaison;
+                // On itère sur la localisation en cherchant une combinaise de tables libres
+                while(iterator.hasNext()){
+                    String nomLocalisation = iterator.next();
+                    resultCombinaison = findCombinaison(tableZones.get(nomLocalisation),Integer.parseInt(nbPersonnes));
+                    // Si il existe une combinaison pour une localisation on l'ajoute dans la hashmap
+                    if (resultCombinaison != null)
+                             listTablesOccupeesParLocalisation.put(nomLocalisation,resultCombinaison);
+                }
+                
+                return listTablesOccupeesParLocalisation;
+        
+    }
+    
+    // Fonction qui permet d'obetnir le codeClient d'un client 
+    public int getClient(String nomClient, String numTel){
+        return Factory.singletonFactory().getRequeteFactory().clientConnu(nomClient, numTel);
     }
     
     public void addCommande(Commande commande){
@@ -178,6 +221,17 @@ public class Controller {
         if (tablesLibres == null)
             throw new RestaurantCompletException();
         return tablesLibres;
+    }
+    
+    
+    public void creerReservation (ArrayList<Table> tablesOcc, int nbPersonnes, int heure, int minutes,String nomClient, String tel, Date jour, Service nomService) {
+        
+        // recuperation du codeClient 
+        int codeClient = Factory.singletonFactory().getRequeteFactory().clientConnu(nomClient, tel);
+        // Ajout des tables nouvellements occupées
+        Factory.singletonFactory().getInsertionFactory().creerOccTable(tablesOcc, codeClient);
+        // Ajout de la reservation
+        Factory.singletonFactory().getInsertionFactory().creerReservation(tablesOcc, nbPersonnes, heure, minutes, codeClient, jour, nomService);   
     }
     
     
