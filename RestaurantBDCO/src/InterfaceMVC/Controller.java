@@ -54,29 +54,51 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().getReservationsList();
     }
     
-    
-    public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlace){
+    //Appel dans FrameCreation bouton trouver
+    public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces){
         Iterator<int[]> i = null;
         HashMap<Integer, ArrayList<Integer>> hash = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
-        for(int j=1; j<liste.size(); j++)
-        i = new SepaPnkIterator(liste.size(), j);
-            while(i.hasNext()){
-                verifycombi(i.next(), hash);
-            }
-            return new ArrayList<>(); //Non Implémenté TO DO
+        for(int j=1; j<liste.size(); j++){
+            i = new SepaPnkIterator(liste.size(), j);
+                while(i.hasNext()){
+                    int[] tab=i.next();
+                    if(verifycombi(tab, hash)){
+                        if (calculNbPlaces(tab, liste) > nbPlaces){
+                            ArrayList<Table> res = new ArrayList<>();
+                            for(int k=0; k<tab.length; k++){
+                                res.add(liste.get(tab[k]));
+                            }
+                            return res;
+                        }
+                    }
+                }    
+        }
+        return null;
+    }
+    
+    private int calculNbPlaces(int[] tab, ArrayList<Table> liste){
+        int nbPlaces=0;
+        if (tab.length==1)
+            return liste.get(tab[0]).getNbPlace0();
+        nbPlaces += liste.get(tab[0]).getNbPlace1();
+        for(int i=1; i<tab.length-1; i++){
+            nbPlaces += liste.get(tab[i]).getNbPlace2();
+        }
+        nbPlaces += liste.get(tab[tab.length-1]).getNbPlace1();
+        return nbPlaces;
     }
     
     private boolean verifycombi(int[] tab, HashMap<Integer, ArrayList<Integer>> hash){
         if (tab.length==1)
             return true;
-        if (!hash.get(tab[0]).contains(tab[1]))
+        if (!hash.get(tab[0]+1).contains(tab[1]+1))
             return false;
         for(int i=1; i<tab.length-1; i++){
-            if(!hash.get(tab[i]).contains(tab[i-1]) && 
-                    !hash.get(tab[i]).contains(tab[i+1]))
+            if(!hash.get(tab[i]+1).contains(tab[i-1]+1) && 
+                    !hash.get(tab[i]+1).contains(tab[i+1]+1))
                 return false;
         }
-        if ((!hash.get(tab[tab.length]).contains(tab[tab.length-2])))
+        if ((!hash.get(tab[tab.length-1]+1).contains(tab[tab.length-2]+1)))
             return false;
         return true;
     }

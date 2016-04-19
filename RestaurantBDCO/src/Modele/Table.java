@@ -9,7 +9,7 @@ package Modele;
  *
  * @author trentini
  */
-public class Table {
+public class Table implements Comparable<Table>{
     private final int codeTable;
     private final String location;
 
@@ -56,6 +56,15 @@ public class Table {
 
     public void setNbPlace2(int NbPlace2) {
         this.NbPlace2 = NbPlace2;
+    }
+
+    @Override
+    public int compareTo(Table t) {
+        if (this.codeTable>t.getCodeTable())
+            return 1;
+        if (this.codeTable<t.getCodeTable())
+            return -1;
+        return 0;       
     }
     
 }

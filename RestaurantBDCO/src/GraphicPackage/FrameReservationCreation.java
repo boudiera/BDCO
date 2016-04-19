@@ -14,6 +14,8 @@ import Modele.Service;
 import Modele.Table;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Observable;
@@ -21,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *
@@ -399,6 +402,16 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             
             HashMap<Integer, ArrayList<Integer>> h = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
             System.out.println(h);
+            Collections.sort(tablesLibres);
+            for(Table t : tablesLibres){
+                System.out.println(t.getCodeTable());
+            }
+            ArrayList<Table> l = GlobalGraphicView.singletonGlobalGraphicView().getController().findCombinaison(tablesLibres,
+                    Integer.parseInt(nbPeople.getText()));
+            System.out.println(l);
+            for(Table t : l){
+                System.out.println(t.getCodeTable());
+            }
             
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
