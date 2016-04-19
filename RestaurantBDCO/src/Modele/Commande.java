@@ -24,7 +24,7 @@ public class Commande {
         regroupe();
         
     }
-
+    
     // Fonction qui permet de regrouper tous les articles de meme types d'une commande en vue de les afficher
     private void regroupe() {
 
@@ -39,7 +39,7 @@ public class Commande {
     }
     // Ajoute l'article a à la liste d'article et met à jour le regroupe
 
-    public void ajoutArticle(Article a) {
+    public void addArticle(Article a) {
         listArticles.add(a);
         regroupeArticle.clear();
         regroupe();
@@ -59,6 +59,10 @@ public class Commande {
 
     public String getIdentifier() {
         return identifier;
+    }
+    
+    public void setIdentifier(String s){
+        this.identifier = s;
     }
 
     public float getPrice() {

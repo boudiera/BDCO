@@ -81,7 +81,7 @@ public class TextualPriseDeMenu extends AbstractView {
         } else if (choix.equalsIgnoreCase("4")) {
             afficheListeArticle(4);
         } else if (choix.equalsIgnoreCase("v")) {
-            if (this.getController().menuValid(menu)) {
+            if (this.getController().verifyMenu(menu)) {
                 this.commandeFinie = true;
             } else {
                 System.out.println("Le menu doit contenir un plat et un autre article");

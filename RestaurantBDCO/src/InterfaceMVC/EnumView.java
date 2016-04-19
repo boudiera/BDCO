@@ -13,5 +13,6 @@ public enum EnumView {
     ReservationList,
     ReservationCreation,
     ResevationDetails,
-    Commande
+    Commande,
+    Menu
 }

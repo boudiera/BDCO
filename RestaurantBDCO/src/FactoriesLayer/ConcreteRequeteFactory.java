@@ -121,37 +121,6 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     
     
     
-    @Override
-    public HashMap<String, Article> getArticlesCarteByName(int codeCarte, TypeArticle typeArticle){
-        connexion.open();
-        HashMap<String, Article> articles= new HashMap<String, Article>();
-        String STMT_1 = "select E.NomArticle, A.TypeArticle, E.PrixActuel, A.NomSpecialite "
-                + " from Article A, EstElement E "
-                + " where A.NomArticle = E.NomArticle"
-                + " and E.CodeCarte = ?"
-                + " and A.TypeArticle = ?";
-        try{
-            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
-            stmt.setInt(1,codeCarte);
-            stmt.setString(2, typeArticle.toString());
-            ResultSet resCarte = stmt.executeQuery();
-            while(resCarte.next()){
-                articles.put(resCarte.getString(1), new ConcreteArticle(resCarte.getString(1), TypeArticle.valueOf(resCarte.getString(2)), resCarte.getFloat(3),resCarte.getString(4)));
-            }
-            resCarte.close();
-            stmt.close();
-            connexion.close();
-            return articles;
-        }
-        catch(SQLException e) {
-            System.err.println("failed");
-            e.printStackTrace (System.err);
-            return null;
-        }
-    }
-    
-    
-    
     
     @Override // Renvoie les tables libres pour un certain service d'un certain jour
     public ArrayList<Table> tablesLibres(int year, int month, int day, Service service){

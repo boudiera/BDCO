@@ -337,10 +337,8 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     private void ButtonDeleteSelectedCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedCommandActionPerformed
         if(this.CommandeTable.getSelectedRow() >= 0) {
             String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
-            
             SingletonListCommande.singletonListCommande().removeCommand(this.reservationCode, identifier);
         }
-        // TO-DO: voir si ça marche bien...
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed

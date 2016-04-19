@@ -39,17 +39,11 @@ public class GlobalGraphicView extends AbstractView implements Observer{
     }
     
     public void setActiveGraphicView(EnumView window){
-        
-       if(GLOBAL_GRAPHIC_VIEW.activeWindow != null){
-            if(!this.activeWindow.isSingleton()){
-                Factory.singletonFactory().deleteObserver(this.activeWindow);   //if not singleton, the observer is deleted after it changes the view (it means it is no longer shown)
-            }
-        }
-        
         this.enumWindow = window;
         switch(window){
             case ReservationList:
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
+                Factory.singletonFactory().addObserver(this.activeWindow);
                 break;
             case ReservationCreation:
                 this.activeWindow = new FrameReservationCreation();
@@ -65,12 +59,17 @@ public class GlobalGraphicView extends AbstractView implements Observer{
                     this.activeWindow = this.activeWindow;
                 }
                 break;
+            case Menu:
+                if(this.activeWindow instanceof FrameCommande){
+                    this.activeWindow = new FrameMenu((FrameCommande) this.activeWindow);
+                }else{
+                    this.activeWindow = this.activeWindow;
+                }
+                break;
             default:
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
                 break;
         }
-
-        Factory.singletonFactory().addObserver(this.activeWindow);
     }
     
     @Override

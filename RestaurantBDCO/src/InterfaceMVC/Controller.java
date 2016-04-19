@@ -110,16 +110,16 @@ public class Controller {
     }
     
     // Ajoute un article dans une commande
-    public void addArticleCommande( Article a, Commande c){
-        c.ajoutArticle(a);
+    public void addArticleCommande(Article a, Commande c){
+        c.addArticle(a);
     }
 
     // Ajoute un article dans un menu
-    public void addArticleMenu( Article a, Menu m){
+    public void addArticleMenu(Article a, Menu m){
         m.ajoutArticle(a);
     }
     // Permet de verifier si un menu est valide ( ici qu'il contient au moin un plat et au moins un autre type d'article)
-    public boolean menuValid(Menu m){
+    public boolean verifyMenu(Menu m){
         return m.contientPlat()&& (m.contientAutreQuePlat());
     }
     
@@ -128,7 +128,19 @@ public class Controller {
     }
     
     public HashMap<String, Article> getArticlesByName (int codeCarte, TypeArticle typeArticle){
-        return Factory.singletonFactory().getRequeteFactory().getArticlesCarteByName(codeCarte, typeArticle);
+        HashMap<String, Article> list = new HashMap<>();
+        for(Article a : Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle)){
+            list.put(a.getName(), a);
+        }
+        return list;
+    }
+    
+    public HashMap<String, Article> getMenuArticles(TypeArticle typeArticle, String nomMenu){
+        HashMap<String, Article> list = new HashMap<>();
+        for(Article a : Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu)){
+            list.put(a.getName(), a);
+        }
+        return list;
     }
     
     
@@ -145,7 +157,7 @@ public class Controller {
         this.setView(this.getView());
     }
     
-    public boolean ContientAuMoinUnEntier(String chaine) {
+    public boolean containsAtLeastOneInteger(String chaine) {
                 int index =0;
                 while(index < chaine.length()) {
                     try { 
@@ -261,7 +273,7 @@ public class Controller {
       
         
         // Verification du bon format pour le client
-        if( ContientAuMoinUnEntier(nomClient)){
+        if( containsAtLeastOneInteger(nomClient)){
             throw new ParseNomClientException();
         }
         
