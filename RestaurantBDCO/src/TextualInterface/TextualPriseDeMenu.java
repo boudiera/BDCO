@@ -12,6 +12,8 @@ import Modele.Commande;
 import Modele.Menu;
 import Modele.TypeArticle;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -34,14 +36,23 @@ public class TextualPriseDeMenu extends AbstractView {
 
     @Override
     public void showView(boolean b) {
-
+        ArrayList<TypeArticle> typeArticlesMenu;
+        typeArticlesMenu=getController().getTypeArticleMenu(this.menu.getName());
         while (!commandeFinie) {
 
             System.out.println("--------------------- PRISE DE MENU  " + this.menu.getName() + "  -------------------------");
-            System.out.println("1.Entrées ");
+            /*System.out.println("1.Entrées ");
             System.out.println("2.Plats ");
             System.out.println("3.Desserts ");
-            System.out.println("4.Boissons ");
+            System.out.println("4.Boissons ");*/
+            if (typeArticlesMenu.contains(TypeArticle.ENTREE))
+                System.out.println("1.Entrées ");
+            if (typeArticlesMenu.contains(TypeArticle.PLAT))
+                System.out.println("2.Plats ");
+            if (typeArticlesMenu.contains(TypeArticle.DESSERT))
+                System.out.println("3.Desserts ");
+            if (typeArticlesMenu.contains(TypeArticle.BOISSON))
+                System.out.println("4.Boissons ");
             System.out.println("");
             System.out.println("Choix du menu selectionné -> ");
             if (this.menu.getList().isEmpty()) {
@@ -97,10 +108,13 @@ public class TextualPriseDeMenu extends AbstractView {
     private void afficheListeArticle(int choix) {
         ArrayList<Article> choixArticles = new ArrayList<>();
         String titreSousMenu = "";
+        int compteur=1;
+        HashMap<String, Article> choixTypeArticle;
 
         switch (choix) {
             case 1:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées pour un menu donné
+                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.ENTREE, this.menu.getName());
                 //choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
                 //choixArticles.add(new Article("Saucisse", TypeArticle.ENTREE, 10, "ppp"));
                 //choixArticles.add(new Article("Carotte", TypeArticle.ENTREE, 5, "lol"));
@@ -108,6 +122,8 @@ public class TextualPriseDeMenu extends AbstractView {
 
                 break;
             case 2:
+                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.PLAT, this.menu.getName());
+
                 //choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
                 //choixArticles.add(new Article("Poulet", TypeArticle.PLAT, 10, "viande"));
                 //choixArticles.add(new Article("Poisson panné", TypeArticle.PLAT, 5, "poisson"));
@@ -115,22 +131,31 @@ public class TextualPriseDeMenu extends AbstractView {
                 titreSousMenu = "--------------------- Affichage des plats disponibles -------------------------\n";
                 break;
             case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
+                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.DESSERT, this.menu.getName());
                 //choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
                 //choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
                 titreSousMenu = "--------------------- Affichage des desserts disponibles -------------------------\n";
                 break;
             case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
+                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.BOISSON, this.menu.getName());
                 titreSousMenu = "--------------------- Affichage des boissons disponibles -------------------------\n";
                 break;
             default:
+                choixTypeArticle=null;
                 System.exit(0);
                 break;
         }
     
             System.out.println(titreSousMenu);
-            for (Article article : choixArticles) {
+           /* for (Article article : choixTypeArticle) {
                 System.out.println("Article n°" + (choixArticles.indexOf(article) + 1) + " " + article.toString());
-            }
+            }*/
+           Iterator i = choixTypeArticle.keySet().iterator();
+           while (i.hasNext()){
+               String clef=(String)i.next();
+               System.out.println("Article n°" + compteur + " " + choixTypeArticle.get(clef).toString());
+               compteur++;
+           }
 
             lectureEntreeSousMenu(choixArticles);
         }

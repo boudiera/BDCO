@@ -97,6 +97,7 @@ public class TextualAjoutReservation extends AbstractView {
                     annee = lectureEntree();
 
                     if (e instanceof RestaurantCompletException) {
+                        System.out.println("Restaurant complet à la date saisie");
                         System.out.println(" Veuillez entrer l'horaire de la reservation au format 24h");
                         System.out.println("Heure ( Entier ) : ");
                         heure = lectureEntree();

@@ -24,7 +24,15 @@ public abstract class Reservation {
         this.phone = phone;
         this.service = service;
     }
-
+public String PrintReservation(){
+    String service;
+    if (this.service.equals(Service.MIDI))
+        service="midi";
+    else 
+       service="soir";
+    String S="Le "+ this.getDate().toString()+ "service du "+ service;
+    return S;
+}
     public String printNbPeople() {
         int tailleNombre = String.valueOf(this.nbPersonnes).length();
         String affNbPersonne = "";

@@ -143,6 +143,12 @@ public class Controller {
         return list;
     }
     
+    public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu){
+        ArrayList<TypeArticle> list=new ArrayList<>();
+        list=Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
+        return list;
+    }
+    
     
     // Permet d'obtenir toutes les commandes d'une reservation
     public ArrayList<Commande> getCommande (int codeReservation){
