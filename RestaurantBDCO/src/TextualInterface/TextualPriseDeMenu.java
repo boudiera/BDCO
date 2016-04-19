@@ -109,12 +109,11 @@ public class TextualPriseDeMenu extends AbstractView {
         ArrayList<Article> choixArticles = new ArrayList<>();
         String titreSousMenu = "";
         int compteur=1;
-        HashMap<String, Article> choixTypeArticle;
 
         switch (choix) {
             case 1:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées pour un menu donné
-                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.ENTREE, this.menu.getName());
+                choixArticles= this.getController().getArticlesMenu(TypeArticle.ENTREE, this.menu.getName());
                 //choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
                 //choixArticles.add(new Article("Saucisse", TypeArticle.ENTREE, 10, "ppp"));
                 //choixArticles.add(new Article("Carotte", TypeArticle.ENTREE, 5, "lol"));
@@ -122,7 +121,7 @@ public class TextualPriseDeMenu extends AbstractView {
 
                 break;
             case 2:
-                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.PLAT, this.menu.getName());
+                choixArticles= this.getController().getArticlesMenu(TypeArticle.PLAT, this.menu.getName());
 
                 //choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
                 //choixArticles.add(new Article("Poulet", TypeArticle.PLAT, 10, "viande"));
@@ -131,31 +130,25 @@ public class TextualPriseDeMenu extends AbstractView {
                 titreSousMenu = "--------------------- Affichage des plats disponibles -------------------------\n";
                 break;
             case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
-                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.DESSERT, this.menu.getName());
+                choixArticles= this.getController().getArticlesMenu(TypeArticle.DESSERT, this.menu.getName());
                 //choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
                 //choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
                 titreSousMenu = "--------------------- Affichage des desserts disponibles -------------------------\n";
                 break;
             case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
-                choixTypeArticle= this.getController().getMenuArticles(TypeArticle.BOISSON, this.menu.getName());
+                choixArticles= this.getController().getArticlesMenu(TypeArticle.BOISSON, this.menu.getName());
                 titreSousMenu = "--------------------- Affichage des boissons disponibles -------------------------\n";
                 break;
             default:
-                choixTypeArticle=null;
+                choixArticles=null;
                 System.exit(0);
                 break;
         }
     
             System.out.println(titreSousMenu);
-           /* for (Article article : choixTypeArticle) {
+            for (Article article : choixArticles) {
                 System.out.println("Article n°" + (choixArticles.indexOf(article) + 1) + " " + article.toString());
-            }*/
-           Iterator i = choixTypeArticle.keySet().iterator();
-           while (i.hasNext()){
-               String clef=(String)i.next();
-               System.out.println("Article n°" + compteur + " " + choixTypeArticle.get(clef).toString());
-               compteur++;
-           }
+            }
 
             lectureEntreeSousMenu(choixArticles);
         }
@@ -186,7 +179,7 @@ public class TextualPriseDeMenu extends AbstractView {
         }
 
        
-        this.getController().addArticleMenu(choixArticles.get(articleIndex - 1), menu);
+        this.getController().addArticleMenu(choixArticles.get(articleIndex), menu);
       
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite);
        return 0;

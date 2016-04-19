@@ -186,6 +186,12 @@ public class Controller {
         return list;
     }
     
+    public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu){
+        ArrayList<Article> listArticles=new ArrayList<>();
+        listArticles=Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu);
+        return listArticles;
+    }
+            
     public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu){
         ArrayList<TypeArticle> list=new ArrayList<>();
         list=Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
