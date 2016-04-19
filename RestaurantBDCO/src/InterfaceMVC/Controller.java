@@ -195,7 +195,7 @@ public class Controller {
         return list;
     }
     
-    public HashMap<String, Article> getMenuArticles(TypeArticle typeArticle, String nomMenu){
+    public HashMap<String, Article> getArticlesMenuByName(TypeArticle typeArticle, String nomMenu){
         HashMap<String, Article> list = new HashMap<>();
         for(Article a : Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu)){
             list.put(a.getName(), a);

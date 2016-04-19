@@ -131,6 +131,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         FieldClientIdentifier = new javax.swing.JTextField();
         LabelCommandeIdentifier = new javax.swing.JLabel();
         TextCodeReservation = new javax.swing.JLabel();
+        LabelCommandeIdentifier1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Nouvelle Commande");
@@ -217,42 +218,45 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
         TabsArticlesTypes.addTab("MENU", jScrollPane6);
 
-        FieldClientIdentifier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FieldClientIdentifier.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         FieldClientIdentifier.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldClientIdentifier.setText(Calendar.getInstance().getTime().toString());
 
+        LabelCommandeIdentifier.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         LabelCommandeIdentifier.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        LabelCommandeIdentifier.setText("Identifiant de la Commande:");
+        LabelCommandeIdentifier.setText("Identifiant de la");
 
         TextCodeReservation.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
+
+        LabelCommandeIdentifier1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        LabelCommandeIdentifier1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        LabelCommandeIdentifier1.setText("Commande:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(LabelCommandeIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelCommandeIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(LabelCommandeIdentifier1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                             .addComponent(ButtonDeleteSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -268,18 +272,23 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(ButtonDeleteSelectedArticle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(LabelCommandeIdentifier)))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(LabelCommandeIdentifier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LabelCommandeIdentifier1)
+                        .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         pack();
@@ -303,7 +312,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
             case PLAT:    a = (Article) ((SpecialJavaTableModel) this.Plats.getModel()   ).getObjectAt(this.Plats.getSelectedRow()   ); break;
             case DESSERT: a = (Article) ((SpecialJavaTableModel) this.Desserts.getModel()).getObjectAt(this.Desserts.getSelectedRow()); break;
             case BOISSON: a = (Article) ((SpecialJavaTableModel) this.Boissons.getModel()).getObjectAt(this.Boissons.getSelectedRow()); break;
-            case MENU:    a = (Article) ((SpecialJavaTableModel) this.Menus.getModel()   ).getObjectAt(this.Menus.getSelectedRow()   );
+            case MENU:    a = (Article) ((SpecialJavaTableModel) this.Menus.getModel()   ).getObjectAt(this.Menus.getSelectedRow()   ); break;
         }
         
         if(this.thisCommande.getRegroupeArticle().containsKey(a.getName())){
@@ -333,6 +342,9 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 if(a.getQuantity() == 0){
                     a.addQuantity();
                     GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
+                    if(a.getType().equals(TypeArticle.MENU)){
+                        ((Menu) a).restartArticlesInMenu();
+                    }
                 }
             }
         }
@@ -348,6 +360,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     private javax.swing.JTable Entrees;
     private javax.swing.JTextField FieldClientIdentifier;
     private javax.swing.JLabel LabelCommandeIdentifier;
+    private javax.swing.JLabel LabelCommandeIdentifier1;
     private javax.swing.JTable Menus;
     private javax.swing.JTable Plats;
     private javax.swing.JTable SelectedArticlesTable;

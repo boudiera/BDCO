@@ -50,14 +50,14 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
 
         this.TextCodeReservation.setText("Reservation #" + this.windowCommande.getThisCommande().getCodeReservation());
         
-        updateListArticlesMenu();
+        this.update(null, null);
     }
     
     private void updateListArticlesMenu() {
         for(TypeArticle type : TypeArticle.values()){
             LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
             
-            for(Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getMenuArticles(type, this.windowCommande.getSelectedMenu().getName()).values()){
+            for(Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesMenuByName(type, this.windowCommande.getSelectedMenu().getName()).values()){
                 tableMap.put(a.getName(), a);
             }
             
@@ -76,7 +76,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
     private void updateCommandeMenu(){
         LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
 
-        for(Article a : ((Menu)this.selectedMenu).getList()){
+        for(Article a : ((Menu) this.selectedMenu).getList()){
             tableMap.put(a.getName(), a);
         }
 
@@ -87,10 +87,19 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
      
     @Override
     public void dispose() {
+        GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(selectedMenu, this.windowCommande.getThisCommande());
+        this.windowCommande.update(null, null);
+        ((Menu) this.selectedMenu).restartArticlesInMenu();
+        
         GlobalGraphicView.singletonGlobalGraphicView().showView(windowCommande);
-        //super.dispose();
+        super.dispose();
     }
-     
+
+    private void correctDispose(){
+        GlobalGraphicView.singletonGlobalGraphicView().showView(windowCommande);
+        super.dispose();
+    }
+    
     @Override
     public void update(Observable o, Object o1) {
         this.updateListArticlesMenu();
@@ -126,6 +135,8 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         jScrollPane5 = new javax.swing.JScrollPane();
         Boissons = new javax.swing.JTable();
         TextCodeReservation = new javax.swing.JLabel();
+        WindowTitle1 = new javax.swing.JLabel();
+        WindowTitle2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Nouvelle Commande");
@@ -198,6 +209,14 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
 
+        WindowTitle1.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
+        WindowTitle1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        WindowTitle1.setText("• Il est possible d'ajouter juste 1 article par type;");
+
+        WindowTitle2.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
+        WindowTitle2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        WindowTitle2.setText("• Il faut choisir au moins 1 PLAT et 1 autre type d'article disponible;");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,7 +234,9 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
-                            .addComponent(ButtonCreateMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(ButtonCreateMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(WindowTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(WindowTitle2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -233,7 +254,12 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(WindowTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(WindowTitle2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,6 +272,9 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
 
     private void ButtonCreateMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCreateMenuActionPerformed
         if(this.SelectedArticlesTable.getRowCount() > 0){
+            /*GlobalGraphicView.singletonGlobalGraphicView().getController().addCommande(this.thisCommande);
+
+            
             ArrayList<Article> list = new ArrayList<>();
 
             for(int row=0; row < this.SelectedArticlesTable.getRowCount(); row++){
@@ -265,13 +294,37 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
             
             //Commande commande = SingletonListCommande.singletonListCommande().getCommande(this.windowCommande.getWindowReservationDetails().getReservationCode(), );
             //GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(selectedMenu, commande);
-            this.dispose();
+            */
+            this.correctDispose();
         }else{
             JOptionPane.showMessageDialog(this.getParent(), new NewCommandeException().getMessage());
         }
     }//GEN-LAST:event_ButtonCreateMenuActionPerformed
 
     private void ButtonAddSelectedArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddSelectedArticleActionPerformed
+        Article a = null;
+        
+        switch (TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()))) {
+            case ENTREE:  a = (Article) ((SpecialJavaTableModel) this.Entrees.getModel() ).getObjectAt(this.Entrees.getSelectedRow() ); break;
+            case PLAT:    a = (Article) ((SpecialJavaTableModel) this.Plats.getModel()   ).getObjectAt(this.Plats.getSelectedRow()   ); break;
+            case DESSERT: a = (Article) ((SpecialJavaTableModel) this.Desserts.getModel()).getObjectAt(this.Desserts.getSelectedRow()); break;
+            case BOISSON: a = (Article) ((SpecialJavaTableModel) this.Boissons.getModel()).getObjectAt(this.Boissons.getSelectedRow()); break;
+            case MENU:    break;
+        }
+        
+        //if(this.windowCommande.getThisCommande().getRegroupeArticle().containsKey(a.getName())){
+        //    GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.windowCommande.getThisCommande());
+        //    a.addQuantity();
+        //}
+        ((Menu)this.selectedMenu).ajoutArticle(a);
+        
+        //GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.windowCommande.getThisCommande());
+        
+        this.updateCommandeMenu();
+        
+        
+        
+        /*
         int row = 0;
         JTable jtable = new JTable();
         TypeArticle ta = null;
@@ -313,6 +366,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
             Menu menu = (Menu) GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(this.windowCommande.getCodeCarte(), TypeArticle.MENU).get(selectedMenu);
             GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleMenu(article, menu);
         }
+        */
     }//GEN-LAST:event_ButtonAddSelectedArticleActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -326,6 +380,8 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
     private javax.swing.JTabbedPane TabsArticlesTypes;
     private javax.swing.JLabel TextCodeReservation;
     private javax.swing.JLabel WindowTitle;
+    private javax.swing.JLabel WindowTitle1;
+    private javax.swing.JLabel WindowTitle2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
