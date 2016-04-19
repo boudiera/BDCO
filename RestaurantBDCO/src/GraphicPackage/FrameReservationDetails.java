@@ -62,11 +62,20 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     public void update(Observable o, Object arg) {
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         this.updateSelectedCommande();
+        updateTotalValue();
     }
     
     @Override
     public boolean isSingleton(){
         return false;
+    }
+    
+    private void updateTotalValue(){
+        float total=0;
+        for(int i=0; i<CommandeTable.getRowCount(); i++){
+           total+=((Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(i)).getPrice();
+        }
+        TextTotalBillValue.setText(Float.toString(total));
     }
     
     private void updateArticleTable(ArrayList<Article> listArticle){
@@ -211,7 +220,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
         TextTotalBillValue.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         TextTotalBillValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TextTotalBillValue.setText("€ 1 250,00");
+        TextTotalBillValue.setText("€ 0");
         TextTotalBillValue.setToolTipText("");
         TextTotalBillValue.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 

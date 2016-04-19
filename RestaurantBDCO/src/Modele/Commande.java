@@ -43,6 +43,7 @@ public class Commande {
         listArticles.add(a);
         regroupeArticle.clear();
         regroupe();
+        this.price += a.getPrice();
     }
     
     public void removeArticle(Article a){
