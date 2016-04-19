@@ -144,7 +144,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT);
             stmt.setDate(1, d);
-            stmt.setString(2, service.toString());
+            stmt.setString(2, service.name());
             //  Execution  de la  requete
             ResultSet rsetTable = stmt.executeQuery ();
             
@@ -284,6 +284,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                 insertFactory.creerClient(nomClient, numTel);
                 stmt = connexion.getConnection().prepareStatement(STMT_2);
                 ResultSet rsetCode = stmt.executeQuery();
+                rsetCode.next();
                 code = rsetCode.getInt(1);
                 rsetCode.close();
             }
