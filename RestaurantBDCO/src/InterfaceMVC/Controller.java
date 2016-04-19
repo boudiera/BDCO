@@ -11,6 +11,7 @@ import Modele.Commande;
 import Modele.Factory;
 import Modele.Menu;
 import InterfaceMVC.Permutation.SepaPnkIterator;
+import InterfaceMVC.Permutation.TypedSepaPnkIterator;
 import Modele.Reservation;
 import Modele.Service;
 import Modele.SingletonListCommande;
@@ -22,6 +23,7 @@ import java.util.List;
 import static Modele.TypeArticle.MENU;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -58,17 +60,28 @@ public class Controller {
     
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces){
-        Iterator<int[]> i = null;
-        HashMap<Integer, ArrayList<Integer>> hash = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
+        Iterator<Integer[]> i = null;
+        HashMap<Integer, ArrayList<Integer>> tablesVoisines = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
+        Integer[] tabNum= new Integer[liste.size()];
+        for(int n=0; n<liste.size(); n++){
+            tabNum[n] = liste.get(n).getCodeTable();
+            System.out.println(
+                    liste.get(n).getCodeTable() + " => " + liste.get(n).getNbPlace0() + " , " + liste.get(n).getNbPlace1() + " , " +
+                            liste.get(n).getNbPlace2());
+        }
         for(int j=1; j<liste.size(); j++){
-            i = new SepaPnkIterator(liste.size(), j);
+            i = new TypedSepaPnkIterator<>(tabNum, j);
                 while(i.hasNext()){
-                    int[] tab=i.next();
-                    if(verifycombi(tab, hash)){
-                        if (calculNbPlaces(tab, liste) >= nbPlaces){
+                    Integer[] tab=i.next();
+                    if(verifycombi(tab, tablesVoisines)){
+                        HashMap<Integer, Table> hash = new HashMap<>();
+                        for(Table t : liste){
+                            hash.put(t.getCodeTable(), t);
+                        }
+                        if (calculNbPlaces(tab, hash) >= nbPlaces){
                             ArrayList<Table> res = new ArrayList<>();
-                            for(int k=0; k<tab.length; k++){
-                                res.add(liste.get(tab[k]));
+                            for (Integer tab1 : tab) {
+                                res.add(hash.get(tab1));
                             }
                             return res;
                         }
@@ -78,29 +91,29 @@ public class Controller {
         return null;
     }
     
-    private int calculNbPlaces(int[] tab, ArrayList<Table> liste){
+    private int calculNbPlaces(Integer[] tab, HashMap<Integer, Table> hash ){
         int nbPlaces=0;
         if (tab.length==1)
-            return liste.get(tab[0]).getNbPlace0();
-        nbPlaces += liste.get(tab[0]).getNbPlace1();
+            return hash.get(tab[0]).getNbPlace0();
+        nbPlaces += hash.get(tab[0]).getNbPlace1();
         for(int i=1; i<tab.length-1; i++){
-            nbPlaces += liste.get(tab[i]).getNbPlace2();
+            nbPlaces += hash.get(tab[i]).getNbPlace2();
         }
-        nbPlaces += liste.get(tab[tab.length-1]).getNbPlace1();
+        nbPlaces += hash.get(tab[tab.length-1]).getNbPlace1();
         return nbPlaces;
     }
     
-    private boolean verifycombi(int[] tab, HashMap<Integer, ArrayList<Integer>> hash){
+    private boolean verifycombi(Integer[] tab, HashMap<Integer, ArrayList<Integer>> hash){
         if (tab.length==1)
             return true;
-        if (!hash.get(tab[0]+1).contains(tab[1]+1))
+        if (!hash.get(tab[0]).contains(tab[1]))
             return false;
         for(int i=1; i<tab.length-1; i++){
-            if(!hash.get(tab[i]+1).contains(tab[i-1]+1) && 
-                    !hash.get(tab[i]+1).contains(tab[i+1]+1))
+            if(!hash.get(tab[i]).contains(tab[i-1]) && 
+                    !hash.get(tab[i]).contains(tab[i+1]))
                 return false;
         }
-        if ((!hash.get(tab[tab.length-1]+1).contains(tab[tab.length-2]+1)))
+        if ((!hash.get(tab[tab.length-1]).contains(tab[tab.length-2])))
             return false;
         return true;
     }
