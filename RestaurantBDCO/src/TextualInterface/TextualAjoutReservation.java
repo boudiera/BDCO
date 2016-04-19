@@ -184,7 +184,7 @@ public class TextualAjoutReservation extends AbstractView {
             System.out.println("Appuyer sur v pour valider ou q pour l'annuler : ");
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
-                this.getController().creerReservation(codeTable,Integer.parseInt(nbPersonnes),Integer.parseInt(heure),Integer.parseInt(minutes),nomClient,tel,new java.sql.Date(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour)),Service.valueOf(service));
+                this.getController().creerReservation(codeTable,Integer.parseInt(nbPersonnes),Integer.parseInt(heure),Integer.parseInt(minutes),nomClient,tel,new java.sql.Date(Integer.parseInt(annee)-1900, Integer.parseInt(mois)-1, Integer.parseInt(jour)),Service.valueOf(service));
                 System.out.println(">>>>>>>>>>>>>>>> Reservation validée ! <<<<<<<<<<<<<<<<<<<");
                
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());

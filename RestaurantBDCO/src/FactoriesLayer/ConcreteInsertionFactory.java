@@ -107,6 +107,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             stmt = connexion.getConnection().prepareStatement(STMT_2);
             ResultSet tab;
             tab = stmt.executeQuery();
+            tab.next();
             codeReservation = tab.getInt(1);
             this.creerOccTable(tablesOcc, codeReservation);
             stmt.close();
