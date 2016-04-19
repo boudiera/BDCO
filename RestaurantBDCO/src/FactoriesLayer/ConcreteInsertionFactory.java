@@ -29,7 +29,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     
    @Override
    public void creerClient(String nomClient, String numTel){
-       connexion.open();
+       //connexion.open();
        String STMT_1 = " insert into Client "
                + "values (seqClient.nextval,?,?)";
        try{
@@ -38,7 +38,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
            stmt.setString(2,numTel);
            stmt.executeUpdate();
            stmt.close();
-           connexion.close();
+          // connexion.close();
        }
        catch (SQLException e) {
             System.err.println("failed");
@@ -102,13 +102,15 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             stmt.setInt(3,minutes);
             stmt.setInt(4, codeClient);
             stmt.setDate(5, jour);
-            stmt.setString(6,nomService.toString());
+            stmt.setString(6,nomService.name());
             stmt.executeQuery();
             stmt = connexion.getConnection().prepareStatement(STMT_2);
             ResultSet tab;
             tab = stmt.executeQuery();
+            tab.next();
             codeReservation = tab.getInt(1);
             this.creerOccTable(tablesOcc, codeReservation);
+            System.out.println("Code Reservation" + codeReservation);
             stmt.close();
             tab.close();
             connexion.close();
@@ -121,20 +123,20 @@ public class ConcreteInsertionFactory extends InsertionFactory {
 
     @Override
     public void creerOccTable(ArrayList<Table> tablesOcc, int codeReservation) {
-        connexion.open();
+        //connexion.open();
         String STMT_1 = "insert into Occupe "
                 + "values (?, ?)";
         try{
             PreparedStatement stmt=null;
             for(Table t : tablesOcc) {
                  stmt = connexion.getConnection().prepareStatement(STMT_1);
-                 stmt.setInt(1,t.getCodeTable());
-                 stmt.setInt(2,codeReservation);
+                 stmt.setInt(1,codeReservation);
+                 stmt.setInt(2,t.getCodeTable());    
                  stmt.executeQuery();
                 
             }
             stmt.close();
-            connexion.close();
+         //   connexion.close();
             
         }
         catch (SQLException e) {

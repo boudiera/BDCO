@@ -240,10 +240,11 @@ public class Controller {
         
         // recuperation du codeClient 
         int codeClient = Factory.singletonFactory().getRequeteFactory().clientConnu(nomClient, tel);
-        // Ajout des tables nouvellements occupées
-        Factory.singletonFactory().getInsertionFactory().creerOccTable(tablesOcc, codeClient);
+        
         // Ajout de la reservation
         Factory.singletonFactory().getInsertionFactory().creerReservation(tablesOcc, nbPersonnes, heure, minutes, codeClient, jour, nomService);   
+        
+        
     }
     
     

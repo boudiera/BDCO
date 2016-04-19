@@ -1,4 +1,4 @@
--- Insetions de n-uplets de test
+﻿-- Insetions de n-uplets de test
 
 CREATE SEQUENCE SeqClient;
 CREATE SEQUENCE SeqTable;
