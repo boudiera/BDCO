@@ -12,10 +12,16 @@ import InterfaceMVC.Exceptions.*;
 import Modele.ReservationDate;
 import Modele.Service;
 import Modele.Table;
+import java.sql.Array;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -30,13 +36,14 @@ public class TextualAjoutReservation extends AbstractView {
     @Override
     public void showView(boolean b) {
         String jour, mois, annee, heure, minutes;
-        ArrayList<Integer> codeTable;
+        ArrayList<Table> codeTable = new ArrayList<>();
         String nbPersonnes;
         String nomClient;
         String tel;
         String choix;
         boolean verificationFini = false;
         String service;
+        String localisation="";
         ReservationDate date;
 
         // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
@@ -74,14 +81,46 @@ public class TextualAjoutReservation extends AbstractView {
             try {
                 this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
 
-                /// FAIRE LA FONCTION QUI TROUVES LES TABLES LIBRES + AFFICHER les nom -> plus possibilité de modif la dates si aucune places libres // Ajout d'une nouvelle exception ?
-                ArrayList<Table> tablesLibres = this.getController().getTablesLibres(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Service.valueOf(service));
-                for(Table a : tablesLibres){
-                    System.out.println(a.getCodeTable() + " Location " + a.getLocation());
+                HashMap<String,ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
+  
+                Set<String> s =  listTablesOccupeesParLocalisation.keySet();
+                Iterator<String> iterator = s.iterator();
+                // Tableau qui contient les nomes de zones , indexé par des entiers ( pour la selection des zones après )
+                ArrayList<String> nomZone = new ArrayList<>();
+                System.out.println("Endroit(s) de localisation possible --->");
+                int i = 1;
+                while(iterator.hasNext()){
+                    String nomLocalisation = iterator.next();
+                    nomZone.add(nomLocalisation);
+                    System.out.println(i+". " + nomLocalisation);
+                    i++;
+                    
                 }
-                System.err.println("Choississez la location voulue ");
-                choix = lectureEntree();
                 
+                boolean choixLocalisationfini;
+                int valeurChoix = 0;
+                do {   
+                   choixLocalisationfini = false; 
+                   System.out.println("Choississez la localisation voulue");
+                   choix = lectureEntree();
+                   try {
+                       valeurChoix = Integer.parseInt(choix);
+                       choixLocalisationfini = true;
+                   }
+                   catch (Exception e){  
+                       System.out.println(" La valeur entrée doit être un entier positif");
+                   }   
+                } while (!choixLocalisationfini && valeurChoix > 0 && valeurChoix < listTablesOccupeesParLocalisation.size());
+                
+                localisation = nomZone.get(valeurChoix-1);
+                codeTable = listTablesOccupeesParLocalisation.get(localisation);
+                System.out.println("Vous avez choisis la zone " + localisation );
+                for( Table a : listTablesOccupeesParLocalisation.get(localisation)){
+                     System.out.println(a.getCodeTable() + " Location " + a.getLocation());
+                    
+                }
+                
+   
                 verificationFini = true;
             } catch (ReservationException e) {
                 System.out.println(e.getMessage());
@@ -137,16 +176,18 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println("1.Date : " + date.writeDayMonth());
         System.out.println("2.Heure : " + date.writeHourMin());
         System.out.println("3.Service : " + service);
-        System.out.println("4.Nombre de personne : " + nbPersonnes);
-        System.out.println("5.Nom client : " + nomClient);
-        System.out.println("6.Telephone : " + tel);
+        System.out.println("4.Localisation : " + localisation);
+        System.out.println("5.Nombre de personne : " + nbPersonnes);
+        System.out.println("6.Nom client : " + nomClient);
+        System.out.println("7.Telephone : " + tel);
 
         do {
             System.out.println("Appuyer sur v pour valider ou q pour l'annuler : ");
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
+                this.getController().creerReservation(codeTable,Integer.parseInt(nbPersonnes),Integer.parseInt(heure),Integer.parseInt(minutes),nomClient,tel,new java.sql.Date(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour)),Service.valueOf(service));
                 System.out.println(">>>>>>>>>>>>>>>> Reservation validée ! <<<<<<<<<<<<<<<<<<<");
-                // APPEL DE LA FONCTION DU CONTROLLER QUI ENVOIT LA RESERVATION DANS LA BASE DE DONNEE 
+               
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
                 return;
             } else if (choix.equalsIgnoreCase("q")) {
