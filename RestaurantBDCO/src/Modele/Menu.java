@@ -1,5 +1,6 @@
 package Modele;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,12 +29,15 @@ public abstract class Menu extends Article {
         // Si le list d'article contient deja un article du meme type, on le supprime et on ajoute le nouvel article
         if (contientType.containsKey(article.getType())) {
             list.remove(contientType.get(article.getType()));
-
         }
         contientType.put(article.getType(), article);
         list.add(article);
     }
 
+    public void restartArticlesInMenu(){
+        this.list = new ArrayList<>();
+        this.contientType = new HashMap<>();
+    }
     
     public boolean contientPlat(){
         return contientType.containsKey(TypeArticle.PLAT);

@@ -1,5 +1,7 @@
 package Modele;
 
+import java.util.List;
+
 public abstract class Article {
 
     private TypeArticle type;
@@ -52,5 +54,5 @@ public abstract class Article {
         String res = "NomArticle : " + name + " Prix : " + price + " Spécialité : " + speciality;
         return res;
     }
-
+    
 }
