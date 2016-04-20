@@ -21,7 +21,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         this.connexion = connexion;
     }
 
-    @Override // REnvoie TOUTES les réservations
+    @Override // Renvoie TOUTES les réservations
     public ArrayList<Reservation> getReservationsList() {
         connexion.open();
         try {
@@ -126,9 +126,6 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             return null;
         }
     }
-    
-    
-    
     
     @Override // Renvoie les tables libres pour un certain service d'un certain jour
     public ArrayList<Table> tablesLibres(int year, int month, int day, Service service){
@@ -410,7 +407,5 @@ connexion.open();
             return -1;
         }       
        }
-    
-    
     
 }
