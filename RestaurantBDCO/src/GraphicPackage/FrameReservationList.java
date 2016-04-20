@@ -1,11 +1,8 @@
 package GraphicPackage;
 
 import InterfaceMVC.EnumView;
-import FactoriesLayer.*;
 import Modele.*;
 import java.util.*;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.*;
 
 /*
@@ -34,19 +31,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     private FrameReservationList() {
         initComponents();
         updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
-
-        /*   TEST CODE
-        ArrayList<Table> CodesTables = new ArrayList<>();
-        CodesTables.add(new Table(2, "window", 4, 3, 2));
-        CodesTables.add(new Table(5, "window", 4, 3, 2));
-        CodesTables.add(new Table(6, "window", 4, 3, 2));
-        CodesTables.add(new Table(15, "window", 4, 3, 2));
-
-        this.ListReservs.add(new Reservation(1, CodesTables, 12, "BB", "123456", new ReservationDate(2016, 11, 20, 15, 30), Service.MIDI));
-        this.ListReservs.add(new Reservation(5, new ArrayList<Table>(), 5, "AA", "123456", new ReservationDate(2016, 10, 5, 15, 30), Service.MIDI));
-        this.ListReservs.add(new Reservation(6, new ArrayList<Table>(), 500, "CC", "123456", new ReservationDate(2016, 11, 2, 15, 30), Service.MIDI));
-        //END OF TEST CODE
-        */
     }
     
     public static FrameReservationList singletonFrameReservationList(){
@@ -64,64 +48,22 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     }
     
     private void updateReservationTable(ArrayList<Reservation> listReservations){
-        DefaultTableModel model = new DefaultTableModel(new String[]{ "Code", "Date", "Nom", "Téléphone", "No Personnes", "Table(s)" }, 0){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;   //all cells false
-            }
-        };
-        
+        LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
         for (Reservation r : listReservations) {
-           String stringListTables = "[ ";
-           Iterator<Table> i = r.getCodeTable().iterator();
-           if(!i.hasNext())
-               stringListTables += "none";
-           while(i.hasNext()){
-               stringListTables += i.next().getCodeTable();
-               if(i.hasNext())
-                   stringListTables += ", ";
-           }
-           stringListTables += " ]";
-            
-            model.addRow(new Object[]{ r.getCodeReservation(), r.getDate().writeDateSortable(),
-                r.getClientName(), r.getPhone(), r.getNbPersonnes(), stringListTables});
+            tableMap.put(Integer.toString(r.getCodeReservation()), r);
         }
         
+        TableModel model = new SpecialJavaTableModel(tableMap, Reservation.class);
+        
         this.ReservationsTable.setModel(model);
-
-        setReservationTableSortable(model);
+        this.ReservationsTable.setAutoCreateRowSorter(true);
 
         try{
-            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMinWidth(0);
-            this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setMaxWidth(60);
-            //this.ReservationsTable.getColumnModel().getColumn(model.findColumn("Code")).setWidth(0);
+            this.ReservationsTable.getColumnModel().getColumn(0).setMaxWidth(60);
+            this.ReservationsTable.getColumnModel().getColumn(4).setMaxWidth(60);
         }catch(Exception e){}
     }
     
-    private void setReservationTableSortable(DefaultTableModel model){
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.ReservationsTable.getModel());
-        this.ReservationsTable.setRowSorter(sorter);
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        
-        try{
-            sortKeys.add(new RowSorter.SortKey(model.findColumn("Nom"), SortOrder.ASCENDING));
-            sorter.setSortKeys(sortKeys);
-
-            int unsortableColumn;
-
-            unsortableColumn = model.findColumn("No Personnes");
-            if(unsortableColumn != -1){
-                sorter.setSortable(unsortableColumn, false);
-            }
-
-            unsortableColumn = model.findColumn("Table(s)");
-            if(unsortableColumn != -1){
-                sorter.setSortable(unsortableColumn, false);
-            }
-        }catch(Exception e){}
-        
-        sorter.sort();
-    }
     
     @Override
     public void setVisible(boolean b) {
@@ -134,7 +76,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             this.OpenSelectedReservation.setEnabled(false);
         }else{
             this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
-
             this.DeleteSelectedReservation.setEnabled(true);
             this.OpenSelectedReservation.setEnabled(true);
         }
@@ -263,44 +204,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     private void ReservationsTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ReservationsTableKeyPressed
         this.updateSelectedReservation();
     }//GEN-LAST:event_ReservationsTableKeyPressed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameReservationList().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddNewReservation;

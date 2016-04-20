@@ -5,24 +5,13 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.EnumView;
 import InterfaceMVC.Exceptions.NewCommandeException;
-import InterfaceMVC.Exceptions.ReservationException;
-import Modele.Article;
-import Modele.Commande;
-import Modele.Menu;
-import Modele.TypeArticle;
-import Modele.UniqueArticle;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Observable;
-import javax.swing.JLabel;
+import Modele.*;
+import java.util.*;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -52,41 +41,48 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
      * Creates new form FrameCommande
      */
     public FrameCommande(FrameReservationDetails windowReservationDetails) {
+        initComponents();
         
         this.windowReservationDetails = windowReservationDetails;
         this.windowReservationDetails.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
         
         this.thisCommande = new Commande(windowReservationDetails.getReservationCode(), new String(), new ArrayList<Article>(), 0);
-        
-        initComponents();
 
         this.TextCodeReservation.setText("Reservation #" + this.thisCommande.getCodeReservation());
         
-        DefaultTableModel model[] = new DefaultTableModel[6];
-        for(int i=0; i<model.length; i++){
-            model[i] = new DefaultTableModel(new String[] {"Nom", "Type", "Prix", "Spécialité"}, 0) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return false;   //all cells false
-                }
-            };
-        }
-        Entrees.setModel(model[0]);
-        Plats.setModel(model[1]);
-        Desserts.setModel(model[2]);
-        Boissons.setModel(model[3]);
-        Menus.setModel(model[4]);
-        SelectedArticlesTable.setModel(model[5]);
-        updateCarte(codeCarte, model);
+        updateCarte(codeCarte);
     }
     
-    private void updateCarte(int codeCarte, DefaultTableModel model[]) {
+    private void updateCarte(int codeCarte) {
         for(TypeArticle type : TypeArticle.values()){
-            ArrayList<Article> list = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(codeCarte, type);
-            for(Article article : list){
-                model[type.ordinal()].addRow(new Object[] {article.getName(), article.getType().toString(), Float.toString(article.getPrice()), article.getSpeciality().toString() });
+            LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
+            
+            for(Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(codeCarte, type)){
+                tableMap.put(a.getName(), a);
+            }
+            
+            TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
+            
+            switch(type){
+                case ENTREE:    this.Entrees.setModel(model);    break;
+                case BOISSON:   this.Boissons.setModel(model);   break;
+                case PLAT:      this.Plats.setModel(model);      break;
+                case DESSERT:   this.Desserts.setModel(model);   break;
+                case MENU:      this.Menus.setModel(model);      break;
             }
         }
+    }
+    
+    private void updateCommande(){
+        LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
+
+        for(Article a : this.thisCommande.getListArticles()){
+            tableMap.put(a.getName(), a);
+        }
+
+        TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
+        
+        this.SelectedArticlesTable.setModel(model);
     }
 
     @Override
@@ -97,7 +93,8 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
      
     @Override
     public void update(Observable o, Object o1) {
-        //nothing to update here
+        updateCarte(codeCarte);
+        updateCommande();
     }
 
     @Override
@@ -134,6 +131,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         FieldClientIdentifier = new javax.swing.JTextField();
         LabelCommandeIdentifier = new javax.swing.JLabel();
         TextCodeReservation = new javax.swing.JLabel();
+        LabelCommandeIdentifier1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Nouvelle Commande");
@@ -220,42 +218,45 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
         TabsArticlesTypes.addTab("MENU", jScrollPane6);
 
-        FieldClientIdentifier.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FieldClientIdentifier.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         FieldClientIdentifier.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         FieldClientIdentifier.setText(Calendar.getInstance().getTime().toString());
 
+        LabelCommandeIdentifier.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         LabelCommandeIdentifier.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        LabelCommandeIdentifier.setText("Identifiant de la Commande:");
+        LabelCommandeIdentifier.setText("Identifiant de la");
 
         TextCodeReservation.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextCodeReservation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TextCodeReservation.setText("# ????");
+
+        LabelCommandeIdentifier1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        LabelCommandeIdentifier1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        LabelCommandeIdentifier1.setText("Commande:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(LabelCommandeIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LabelCommandeIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(LabelCommandeIdentifier1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                             .addComponent(ButtonDeleteSelectedArticle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -271,31 +272,30 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TabsArticlesTypes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(ButtonDeleteSelectedArticle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(LabelCommandeIdentifier)))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(LabelCommandeIdentifier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LabelCommandeIdentifier1)
+                        .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ButtonFinishThisCommande, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FieldClientIdentifier, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonFinishThisCommandeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonFinishThisCommandeActionPerformed
-        if(this.SelectedArticlesTable.getRowCount() > 0){
-            for(int row=0; row < this.SelectedArticlesTable.getRowCount(); row++){
-                TypeArticle ta = TypeArticle.valueOf((String) this.SelectedArticlesTable.getValueAt(row, 1));
-                String articlaName = (String) this.SelectedArticlesTable.getValueAt(row, 0);
-                this.thisCommande.addArticle(GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(codeCarte, ta).get(articlaName));
-            }
-
+        if(this.SelectedArticlesTable.getRowCount() > 0) {
             this.thisCommande.setIdentifier(this.FieldClientIdentifier.getText());
             GlobalGraphicView.singletonGlobalGraphicView().getController().addCommande(this.thisCommande);
             this.dispose();
@@ -305,97 +305,51 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     }//GEN-LAST:event_ButtonFinishThisCommandeActionPerformed
 
     private void ButtonAddSelectedArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddSelectedArticleActionPerformed
-        int row = 0;
-        JTable jtable = new JTable();
-        boolean isMenu = false;
+        Article a = null;
         
-        switch(TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()))){
-            case ENTREE:
-                row = this.Entrees.getSelectedRow();
-                jtable = this.Entrees;
-                break;
-            case PLAT:
-                row = this.Plats.getSelectedRow();
-                jtable = this.Plats;
-                break;
-            case DESSERT:
-                row = this.Desserts.getSelectedRow();
-                jtable = this.Desserts;
-                break;
-            case BOISSON:
-                row = this.Boissons.getSelectedRow();
-                jtable = this.Boissons;
-                break;
-            case MENU:
-                row = this.Menus.getSelectedRow();
-                jtable = this.Menus;
-                isMenu = true;
-                break;
-            default:
-                row = 0;
-                break;
+        switch (TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()))) {
+            case ENTREE:  a = (Article) ((SpecialJavaTableModel) this.Entrees.getModel() ).getObjectAt(this.Entrees.getSelectedRow() ); break;
+            case PLAT:    a = (Article) ((SpecialJavaTableModel) this.Plats.getModel()   ).getObjectAt(this.Plats.getSelectedRow()   ); break;
+            case DESSERT: a = (Article) ((SpecialJavaTableModel) this.Desserts.getModel()).getObjectAt(this.Desserts.getSelectedRow()); break;
+            case BOISSON: a = (Article) ((SpecialJavaTableModel) this.Boissons.getModel()).getObjectAt(this.Boissons.getSelectedRow()); break;
+            case MENU:    a = (Article) ((SpecialJavaTableModel) this.Menus.getModel()   ).getObjectAt(this.Menus.getSelectedRow()   ); break;
         }
         
-        if(isMenu){
-            this.selectedMenu = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(this.codeCarte, TypeArticle.MENU).get(jtable.getValueAt(jtable.getSelectedRow(), 0));
+        if(this.thisCommande.getRegroupeArticle().containsKey(a.getName())){
+            GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
+            a.addQuantity();
+        }
+        
+        GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
+        
+        if(a.getType().equals(TypeArticle.MENU)){
+            this.selectedMenu = a;
             WindowView frameMenu = new FrameMenu(this);
             GlobalGraphicView.singletonGlobalGraphicView().showView(frameMenu);
-        }else{
-            if(row >= 0){
-                DefaultTableModel model = (DefaultTableModel) this.SelectedArticlesTable.getModel();
-                model.addRow(new Object[]{ jtable.getValueAt(row, 0), jtable.getValueAt(row, 1), jtable.getValueAt(row, 2), jtable.getValueAt(row, 3) });
-            }
         }
+        
+        this.updateCommande();
     }//GEN-LAST:event_ButtonAddSelectedArticleActionPerformed
 
     private void ButtonDeleteSelectedArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedArticleActionPerformed
         if(this.SelectedArticlesTable.getSelectedRow() >= 0){
-            DefaultTableModel model = (DefaultTableModel) this.SelectedArticlesTable.getModel();
-            model.removeRow(this.SelectedArticlesTable.getSelectedRow());
-        }
-    }//GEN-LAST:event_ButtonDeleteSelectedArticleActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            Article a = (Article) ((SpecialJavaTableModel) this.SelectedArticlesTable.getModel()).getObjectAt(this.SelectedArticlesTable.getSelectedRow());
+            
+            if (this.thisCommande.getRegroupeArticle().containsKey(a.getName())) {
+                GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
+                a.removeQuantity();
+                GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
+                if(a.getQuantity() == 0){
+                    a.addQuantity();
+                    GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
+                    if(a.getType().equals(TypeArticle.MENU)){
+                        ((Menu) a).restartArticlesInMenu();
+                    }
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameCommande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameCommande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameCommande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameCommande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new FrameCommande().setVisible(true);
-            }
-        });
-    }
+        this.updateCommande();
+    }//GEN-LAST:event_ButtonDeleteSelectedArticleActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Boissons;
@@ -406,6 +360,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
     private javax.swing.JTable Entrees;
     private javax.swing.JTextField FieldClientIdentifier;
     private javax.swing.JLabel LabelCommandeIdentifier;
+    private javax.swing.JLabel LabelCommandeIdentifier1;
     private javax.swing.JTable Menus;
     private javax.swing.JTable Plats;
     private javax.swing.JTable SelectedArticlesTable;

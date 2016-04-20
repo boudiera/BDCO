@@ -43,6 +43,13 @@ public class Commande {
         listArticles.add(a);
         regroupeArticle.clear();
         regroupe();
+        this.price += a.getPrice();
+    }
+    
+    public void removeArticle(Article a){
+        listArticles.remove(a);
+        regroupeArticle.clear();
+        regroupe();
     }
 
     // Permet d'afficher les articles d'une commandes sous la forme nom x Quantité 

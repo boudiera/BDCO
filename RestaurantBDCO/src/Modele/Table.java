@@ -67,4 +67,9 @@ public class Table implements Comparable<Table>{
         return 0;       
     }
     
+    @Override
+    public String toString(){
+        return Integer.toString(this.codeTable);
+    }
+    
 }

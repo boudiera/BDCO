@@ -9,10 +9,13 @@ import InterfaceMVC.EnumView;
 import FactoriesLayer.ConcreteRequeteFactory;
 import Modele.Article;
 import Modele.Commande;
+import Modele.Menu;
 import Modele.Reservation;
 import Modele.SingletonListCommande;
+import Modele.TypeArticle;
 import Modele.UniqueArticle;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -41,31 +44,14 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
      * Creates new form FrameReservationDetails
      */
     public FrameReservationDetails() {
-        this.reservationCode = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();
-        
         initComponents();
         
-        /*
-        ArrayList<Article> la = new ArrayList<>();
-        la.add(UniqueArticle.createDrink("a", (float) 20.5, "mexicain"));
-        la.add(UniqueArticle.createDrink("a", (float) 3.3, "mex"));
-        
-        SingletonListCommande.singletonListCommande().addCommand(1, new Commande(15, "Arnaud Zizi", la, 0));
-        SingletonListCommande.singletonListCommande().addCommand(1, new Commande(15, "abcd", new ArrayList<Article>(), 01));
-        SingletonListCommande.singletonListCommande().addCommand(2, new Commande(15, "hhh", new ArrayList<Article>(), 50));
-        SingletonListCommande.singletonListCommande().addCommand(5, new Commande(15, "momomo", la, 500));
-        SingletonListCommande.singletonListCommande().addCommand(5, new Commande(15, "yuiyui", la, 88));
-        SingletonListCommande.singletonListCommande().addCommand(3, new Commande(15, "Arnaud Zizi", la, 0));
-        SingletonListCommande.singletonListCommande().addCommand(3, new Commande(15, "abcd", new ArrayList<Article>(), 01));
-        SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "hhh", new ArrayList<Article>(), 50));
-        SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "momomo", la, 500));
-        SingletonListCommande.singletonListCommande().addCommand(4, new Commande(15, "yuiyui", la, 88));
-        //*/
-        
+        this.reservationCode = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();        
         this.TextCodeReservation.setText("Reservation #" + this.reservationCode);
         
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         updateArticleTable(new ArrayList<Article>());
+        updateTotalValue();
     }
     
     @Override
@@ -79,6 +65,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     public void update(Observable o, Object arg) {
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         this.updateSelectedCommande();
+        updateTotalValue();
     }
     
     @Override
@@ -86,90 +73,82 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         return false;
     }
     
-    private void updateArticleTable(ArrayList<Article> listArticle){
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Article", "Prix"}, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;   //all cells false
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 1) {
-                    return Float.class;
-                } else {
-                    return Object.class;
-                }
-            }
-        };
-
-        for (Article a : listArticle) {
-            model.addRow(new Object[]{a.getName(), a.getPrice()});
+    private void updateTotalValue(){
+        float total=0;
+        for(int i=0; i<CommandeTable.getRowCount(); i++){
+           total+=((Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(i)).getPrice();
         }
-
-        this.ArticleTable.setModel(model);
-        
-        try {
-            this.ArticleTable.getColumnModel().getColumn(model.findColumn("Article")).setPreferredWidth(150);
-            this.ArticleTable.getColumnModel().getColumn(model.findColumn("Prix")).setPreferredWidth(10);
-
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-            this.ArticleTable.getColumnModel().getColumn(model.findColumn("Prix")).setCellRenderer(centerRenderer);
-        } catch (Exception e) {}
+        TextTotalBillValue.setText("€ " + Float.toString(total));
     }
     
-    private void updateCommandeTable(ArrayList<Commande> listCommand){
-        DefaultTableModel model = new DefaultTableModel(new String[]{ "Identifier", "Sub-Total" }, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;   //all cells false
-            }
+    private void updateMenuArticleTable(){
+        if (this.ArticleTable.getSelectedRow() >= 0) {
+            LinkedHashMap<String, Object> tableMap2 = new LinkedHashMap<>();
             
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if(columnIndex == 1){
-                    return Float.class;
-                }else{
-                    return Object.class;
+            if(((Article)((SpecialJavaTableModel) this.ArticleTable.getModel()).getObjectAt(this.ArticleTable.getSelectedRow())).getType().equals(TypeArticle.MENU)){
+                for (Article a : ((Menu) ((SpecialJavaTableModel) this.ArticleTable.getModel()).getObjectAt(this.ArticleTable.getSelectedRow())).getList()) {
+                    tableMap2.put(a.getName(), a);
                 }
             }
-        };
-        
-        for (Commande c : listCommand) {
-            model.addRow(new Object[]{ c.getIdentifier(), c.getPrice() });
+
+            TableModel model2 = new SpecialJavaTableModel(tableMap2, Article.class);
+
+            this.MenuArticleTable.setModel(model2);
+            this.MenuArticleTable.setAutoCreateRowSorter(true);
+
+            try {
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+                this.ArticleTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+            } catch (Exception e) {}
+        }
+    }
+    
+    private void updateArticleTable(ArrayList<Article> listArticle){
+        LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
+        for (Article a : listArticle) {
+            tableMap.put(a.getName(), a);
         }
         
-        this.CommandeTable.setModel(model);
-        sortCommandeTable(model);
+        TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
+        
+        this.ArticleTable.setModel(model);
+        this.ArticleTable.setAutoCreateRowSorter(true);
         
         try{
-            this.CommandeTable.getColumnModel().getColumn(model.findColumn("Identifier")).setPreferredWidth(180);
-            this.CommandeTable.getColumnModel().getColumn(model.findColumn("Sub-Total")).setPreferredWidth(10);
-            
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-            this.CommandeTable.getColumnModel().getColumn(model.findColumn("Sub-Total")).setCellRenderer(centerRenderer);
+            this.ArticleTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         }catch(Exception e){}
     }
     
-    private void sortCommandeTable(DefaultTableModel model){
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.CommandeTable.getModel());
-        this.CommandeTable.setRowSorter(sorter);
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+    private void updateCommandeTable(ArrayList<Commande> listCommand){
+        LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
+        for (Commande c : listCommand) {
+            tableMap.put(c.getIdentifier(), c);
+        }
         
-        sortKeys.add(new RowSorter.SortKey(model.findColumn("Identifier"), SortOrder.ASCENDING));
-        sorter.setSortKeys(sortKeys);
-        sorter.sort();
+        TableModel model = new SpecialJavaTableModel(tableMap, Commande.class);
+        
+        this.CommandeTable.setModel(model);
+        this.CommandeTable.setAutoCreateRowSorter(true);
+        
+        try{
+            this.CommandeTable.getColumnModel().getColumn(0).setPreferredWidth(180);
+            this.CommandeTable.getColumnModel().getColumn(1).setPreferredWidth(10);
+            
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            this.CommandeTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        }catch(Exception e){}
     }
-    
+
     public void updateSelectedCommande(){
         if (this.CommandeTable.getSelectedRow() == -1) {
             this.ButtonDeleteSelectedCommand.setEnabled(false);
             this.updateArticleTable(new ArrayList<Article>());
         } else {
             String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
-            
             this.updateArticleTable(SingletonListCommande.singletonListCommande().getListArticlesByReservationCodeAndCommandeIdentifier(this.reservationCode, identifier));
             this.ButtonDeleteSelectedCommand.setEnabled(true);
         }
@@ -196,6 +175,9 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TextTotalBill = new javax.swing.JLabel();
         TextTotalBillValue = new javax.swing.JLabel();
         WindowTitle1 = new javax.swing.JLabel();
+        PaneCommandeItems1 = new javax.swing.JScrollPane();
+        MenuArticleTable = new javax.swing.JTable();
+        TextTitleCommandeItems1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Détails Réservation");
@@ -254,12 +236,22 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         ArticleTable.setModel(new DefaultTableModel());
         ArticleTable.setRowHeight(60);
         ArticleTable.getTableHeader().setReorderingAllowed(false);
+        ArticleTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ArticleTableMousePressed(evt);
+            }
+        });
+        ArticleTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ArticleTableKeyPressed(evt);
+            }
+        });
         PaneCommandeItems.setViewportView(ArticleTable);
         ArticleTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         TextTitleCommandeItems.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
         TextTitleCommandeItems.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TextTitleCommandeItems.setText("Détail de la Commande");
+        TextTitleCommandeItems.setText("Articles de la Commande");
 
         TextTotalBill.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         TextTotalBill.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -267,13 +259,23 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
         TextTotalBillValue.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
         TextTotalBillValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TextTotalBillValue.setText("€ 1 250,00");
+        TextTotalBillValue.setText("€ 0");
         TextTotalBillValue.setToolTipText("");
         TextTotalBillValue.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         WindowTitle1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
         WindowTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WindowTitle1.setText("Détails Réservation");
+
+        MenuArticleTable.setModel(new DefaultTableModel());
+        MenuArticleTable.setRowHeight(60);
+        MenuArticleTable.getTableHeader().setReorderingAllowed(false);
+        PaneCommandeItems1.setViewportView(MenuArticleTable);
+        MenuArticleTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        TextTitleCommandeItems1.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        TextTitleCommandeItems1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        TextTitleCommandeItems1.setText("Articles du Menu Selectioné");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -283,27 +285,32 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ButtonNewCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonDeleteSelectedCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButonGetBill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(TextTotalBill, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TextTotalBillValue, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(WindowTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PaneCommandeList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PaneCommandeItems, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(WindowTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(TextCodeReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(PaneCommandeList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ButtonNewCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(ButtonDeleteSelectedCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(TextTotalBill, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TextTotalBillValue, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ButonGetBill, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(PaneCommandeItems, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(PaneCommandeItems1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(TextTitleCommandeItems1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -318,19 +325,21 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                     .addComponent(TextTitleCommandeItems, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(PaneCommandeList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(PaneCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(TextTitleCommandeItems1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TextTotalBill, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TextTotalBillValue, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(PaneCommandeItems, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE))
+                        .addComponent(PaneCommandeItems1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(PaneCommandeList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ButtonNewCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ButtonDeleteSelectedCommand, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ButonGetBill, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ButonGetBill, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TextTotalBill, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TextTotalBillValue, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -361,43 +370,13 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         this.updateSelectedCommande();
     }//GEN-LAST:event_CommandeTableKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameReservationDetails.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void ArticleTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ArticleTableKeyPressed
+        this.updateMenuArticleTable();
+    }//GEN-LAST:event_ArticleTableKeyPressed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameReservationDetails().setVisible(true);
-            }
-        });
-    }
+    private void ArticleTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ArticleTableMousePressed
+        this.updateMenuArticleTable();
+    }//GEN-LAST:event_ArticleTableMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ArticleTable;
@@ -405,10 +384,13 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     private javax.swing.JButton ButtonDeleteSelectedCommand;
     private javax.swing.JButton ButtonNewCommand;
     private javax.swing.JTable CommandeTable;
+    private javax.swing.JTable MenuArticleTable;
     private javax.swing.JScrollPane PaneCommandeItems;
+    private javax.swing.JScrollPane PaneCommandeItems1;
     private javax.swing.JScrollPane PaneCommandeList;
     private javax.swing.JLabel TextCodeReservation;
     private javax.swing.JLabel TextTitleCommandeItems;
+    private javax.swing.JLabel TextTitleCommandeItems1;
     private javax.swing.JLabel TextTotalBill;
     private javax.swing.JLabel TextTotalBillValue;
     private javax.swing.JLabel WindowTitle;

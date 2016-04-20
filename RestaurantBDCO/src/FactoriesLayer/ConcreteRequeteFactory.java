@@ -105,9 +105,15 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             stmt.setString(2, typeArticle.toString());
             ResultSet resCarte = stmt.executeQuery();
             while(resCarte.next()){
-                articles.add(new ConcreteArticle(resCarte.getString(1), 
-                        TypeArticle.valueOf(resCarte.getString(2)), 
-                        resCarte.getFloat(3),resCarte.getString(4)));
+                if(TypeArticle.valueOf(resCarte.getString(2)).equals(TypeArticle.MENU)){
+                    articles.add(new ConcreteMenu(resCarte.getString(1), 
+                            TypeArticle.valueOf(resCarte.getString(2)), 
+                            resCarte.getFloat(3),resCarte.getString(4)));
+                }else{
+                    articles.add(new ConcreteArticle(resCarte.getString(1), 
+                            TypeArticle.valueOf(resCarte.getString(2)), 
+                            resCarte.getFloat(3),resCarte.getString(4)));
+                }
             }
             resCarte.close();
             stmt.close();

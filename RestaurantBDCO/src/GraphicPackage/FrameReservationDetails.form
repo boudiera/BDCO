@@ -28,35 +28,42 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="ButtonNewCommand" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="ButtonDeleteSelectedCommand" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="ButonGetBill" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="TextTotalBill" min="-2" pref="112" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="TextTotalBillValue" min="-2" pref="195" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="WindowTitle" alignment="0" max="32767" attributes="0"/>
-                          <Component id="PaneCommandeList" alignment="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="PaneCommandeItems" pref="0" max="32767" attributes="0"/>
-                          <Component id="TextTitleCommandeItems" pref="291" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Component id="WindowTitle1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="TextCodeReservation" min="-2" pref="157" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="PaneCommandeList" pref="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="ButtonNewCommand" min="-2" pref="175" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="ButtonDeleteSelectedCommand" min="-2" pref="175" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="WindowTitle" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="TextTitleCommandeItems" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="TextTotalBill" pref="184" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="TextTotalBillValue" min="-2" pref="195" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="ButonGetBill" min="-2" pref="317" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="PaneCommandeItems" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="PaneCommandeItems1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="TextTitleCommandeItems1" pref="317" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,23 +81,25 @@
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="PaneCommandeList" pref="0" max="32767" attributes="0"/>
+                  <Component id="PaneCommandeItems" pref="340" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="TextTitleCommandeItems1" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="TextTotalBill" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="TextTotalBillValue" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="PaneCommandeItems1" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="PaneCommandeItems" pref="342" max="32767" attributes="0"/>
+                  <Component id="PaneCommandeList" alignment="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="ButtonNewCommand" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="ButtonDeleteSelectedCommand" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="ButonGetBill" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="ButonGetBill" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="TextTotalBill" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="TextTotalBillValue" alignment="0" pref="50" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -201,6 +210,10 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ArticleTableMousePressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ArticleTableKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -210,7 +223,7 @@
           <Font name="DejaVu Sans" size="14" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="D&#xe9;tail de la Commande"/>
+        <Property name="text" type="java.lang.String" value="Articles de la Commande"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="TextTotalBill">
@@ -228,7 +241,7 @@
           <Font name="DejaVu Sans" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="&#x20ac; 1 250,00"/>
+        <Property name="text" type="java.lang.String" value="&#x20ac; 0"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Curseur par d&#xe9;faut"/>
@@ -242,6 +255,38 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="D&#xe9;tails R&#xe9;servation"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="PaneCommandeItems1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="MenuArticleTable">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultTableModel()" type="code"/>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="1"/>
+            </Property>
+            <Property name="rowHeight" type="int" value="60"/>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="TextTitleCommandeItems1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="DejaVu Sans" size="14" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Articles du Menu Selection&#xe9;"/>
       </Properties>
     </Component>
   </SubComponents>
