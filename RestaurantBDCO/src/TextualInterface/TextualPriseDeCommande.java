@@ -9,6 +9,7 @@ import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
 import Modele.Article;
 import Modele.Commande;
+import Modele.Factory;
 import Modele.Menu;
 import Modele.TypeArticle;
 import java.util.ArrayList;

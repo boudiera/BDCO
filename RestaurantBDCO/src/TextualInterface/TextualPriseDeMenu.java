@@ -38,6 +38,11 @@ public class TextualPriseDeMenu extends AbstractView {
     public void showView(boolean b) {
         ArrayList<TypeArticle> typeArticlesMenu;
         typeArticlesMenu=getController().getTypeArticleMenu(this.menu.getName());
+        
+        for (TypeArticle a : typeArticlesMenu){
+            
+            System.out.println(a.name());
+        }
         while (!commandeFinie) {
 
             System.out.println("--------------------- PRISE DE MENU  " + this.menu.getName() + "  -------------------------");
@@ -47,7 +52,7 @@ public class TextualPriseDeMenu extends AbstractView {
             System.out.println("4.Boissons ");*/
             if (typeArticlesMenu.contains(TypeArticle.ENTREE))
                 System.out.println("1.Entrées ");
-            if (typeArticlesMenu.contains(TypeArticle.PLAT))
+            // On a forcement un plat
                 System.out.println("2.Plats ");
             if (typeArticlesMenu.contains(TypeArticle.DESSERT))
                 System.out.println("3.Desserts ");

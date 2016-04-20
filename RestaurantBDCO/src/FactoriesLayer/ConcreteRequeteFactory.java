@@ -220,7 +220,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         connexion.open();
         PreparedStatement stmt;
         try {
-            if (typeArticle.toString() == "PLAT") {
+            if (typeArticle.name().equalsIgnoreCase("PLAT")) {
                 String STMT_1 = "select A.NomArticle, A.NomSpecialite "
                         + "from Article A, ContientPlat Pl "
                         + "where A.NomArticle = Pl.NomArticlePlat "
@@ -232,7 +232,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                         + "from Article A, ContientAutreArticle Au "
                         + "where A.NomArticle = Au.NomArticleAutre "
                         + "and A.TypeArticle = ? "
-                        + "and Au.NomArticleAutre = ?";
+                        + "and Au.NomArticleMenu = ?";
                 stmt = connexion.getConnection().prepareStatement(STMT_2);
             }
             
@@ -309,7 +309,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         String STMT_1 = "select distinct A.TypeArticle "
                         + "from Article A, ContientAutreArticle Au "
                         + "where A.NomArticle = Au.NomArticleAutre "
-                        + "and Pl.NomArticleMenu = ?";
+                        + "and Au.NomArticleMenu = ?";
         
         try {
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
@@ -337,7 +337,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     }
 
     @Override
-    public ArrayList<Menu> getMenu(int codeCarte) {
+    public ArrayList<Article> getMenu(int codeCarte) {
         connexion.open();
         String STMT_1 = "select A.NomArticle, A.TypeArticle, A.NomSpecialite, El.PrixActuel " +
                 "from Article A, EstElement El " +
@@ -353,7 +353,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             ResultSet rsetMenu = stmt.executeQuery ();
             
             //  Conversion  du  resultat  en ArrayList <Table>
-            ArrayList <Menu> resMenu = new ArrayList<> ();
+            ArrayList <Article> resMenu = new ArrayList<> ();
             while (rsetMenu.next()) {
                 resMenu.add(new ConcreteMenu(
                         rsetMenu.getString("NomArticle"),
