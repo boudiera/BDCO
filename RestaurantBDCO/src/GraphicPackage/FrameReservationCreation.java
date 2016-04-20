@@ -373,38 +373,21 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
     private void buttonCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCalculateActionPerformed
         Service service;
-        if (midday.isEnabled())
+        if (midday.isSelected())
             service=Service.MIDI;
         else
             service=Service.SOIR;
-        try {
-            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
-                    day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
-            ArrayList<Table> tablesLibres = Factory.singletonFactory().getRequeteFactory().tablesLibres(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()),
-                    Integer.parseInt(day.getText()), service);
-            if (tablesLibres.isEmpty()){
-                throw new RestaurantCompletException();
-            }
-            
-            HashMap<Integer, ArrayList<Integer>> h = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
-            System.out.println(h);
-            //Collections.sort(tablesLibres);
-            
-            HashMap<String, ArrayList<Table>> hash;
-            hash = new HashMap<>();
-            for(Table t : tablesLibres){
-                System.out.println(t.getCodeTable() + " " + t.getLocation());
-                if (!hash.containsKey(t.getLocation()))
-                    hash.put(t.getLocation(), new ArrayList<Table>());
-                hash.get(t.getLocation()).add(t);
-            }
+        try {            
+           HashMap<String, ArrayList<Table>> hash;
+            System.out.println(service.name());
+           hash = GlobalGraphicView.singletonGlobalGraphicView().getController()
+                   .getTablesLibresByLocalisation(year.getText(), month.getText(), day.getText(),
+                           service.name(), nbPeople.getText());
             
             for (ArrayList<Table> list : hash.values()){
-                ArrayList<Table> res = GlobalGraphicView.singletonGlobalGraphicView().getController().findCombinaison(list,
-                        Integer.parseInt(nbPeople.getText()));
-                if (res!=null){
-                    hashglobal.put(list.get(0).getLocation(), res);
-                    for(Table t : res){
+                if (list!=null){
+                    hashglobal.put(list.get(0).getLocation(), list);
+                    for(Table t : list){
                         System.out.println(t.getCodeTable() + " " + t.getLocation());
                     }
                     jComboBox1.addItem(list.get(0).getLocation());
@@ -424,6 +407,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                 minute.setEnabled(false);
                 midday.setEnabled(false);
                 evening.setEnabled(false);
+                buttonCalculate.setEnabled(false);
                 jComboBox1.setEnabled(true);
             }
                 
@@ -435,19 +419,19 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         Service service;
-        if (midday.isEnabled())
+        if (midday.isSelected())
             service=Service.MIDI;
         else
             service=Service.SOIR;
         try {
             GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
-            Date jour = new Date(Integer.parseInt(year.getText()), Integer.parseInt(month.getText()), Integer.parseInt(day.getText()));
-            
-            int codeClient = GlobalGraphicView.singletonGlobalGraphicView().getController().getClient(clientName.getText(), clientPhone.getText());
-            Factory.singletonFactory().getInsertionFactory().creerReservation(hashglobal.get(jComboBox1.getSelectedItem()), Integer.parseInt(nbPeople.getText()),
-                    Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()), codeClient, jour, service); // Problème code client, pas d'info dessus 
-            Factory.singletonFactory().notify();
+            Date jour = new Date(Integer.parseInt(year.getText())-1900, Integer.parseInt(month.getText())-1, Integer.parseInt(day.getText()));
+            GlobalGraphicView.singletonGlobalGraphicView().getController().creerReservation(hashglobal.get((String)jComboBox1.getSelectedItem()),
+                    Integer.parseInt(nbPeople.getText()),
+                    Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()), clientName.getText(), clientPhone.getText(),
+                    jour, service);  
+            dispose();
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
