@@ -50,6 +50,7 @@ public class Commande {
         listArticles.remove(a);
         regroupeArticle.clear();
         regroupe();
+        this.price -= a.getPrice();
     }
 
     // Permet d'afficher les articles d'une commandes sous la forme nom x Quantité 

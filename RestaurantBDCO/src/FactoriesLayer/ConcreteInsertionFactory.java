@@ -159,15 +159,11 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             }
             stmt.close();
             connexion.close();
-        
-
-
         }
         catch (SQLException e) {
             System.err.println("failed");
             e.printStackTrace (System.err);
         }    
-        
     }
 
     @Override

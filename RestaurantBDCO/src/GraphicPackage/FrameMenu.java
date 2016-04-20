@@ -5,25 +5,13 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.EnumView;
-import InterfaceMVC.Exceptions.NewCommandeException;
-import InterfaceMVC.Exceptions.ReservationException;
+import InterfaceMVC.Exceptions.*;
 import Modele.Article;
-import Modele.Commande;
 import Modele.Menu;
-import Modele.SingletonListCommande;
 import Modele.TypeArticle;
-import Modele.UniqueArticle;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Observable;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -35,16 +23,17 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
 
     private FrameCommande windowCommande;
     
-    private Article selectedMenu;
+    private Menu selectedMenu;
     
     /**
      * Creates new form FrameCommande
+     * @param windowCommande
      */
     public FrameMenu(FrameCommande windowCommande) {
         
         this.windowCommande = windowCommande;
         this.windowCommande.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
-        this.selectedMenu = this.windowCommande.getSelectedMenu();
+        this.selectedMenu = (Menu) this.windowCommande.getSelectedMenu();
         
         initComponents();
 
@@ -76,7 +65,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
     private void updateCommandeMenu(){
         LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
 
-        for(Article a : ((Menu) this.selectedMenu).getList()){
+        for(Article a : (this.selectedMenu).getList()){
             tableMap.put(a.getName(), a);
         }
 
@@ -89,7 +78,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
     public void dispose() {
         GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(selectedMenu, this.windowCommande.getThisCommande());
         this.windowCommande.update(null, null);
-        ((Menu) this.selectedMenu).restartArticlesInMenu();
+        (this.selectedMenu).restartArticlesInMenu();
         
         GlobalGraphicView.singletonGlobalGraphicView().showView(windowCommande);
         super.dispose();
@@ -272,30 +261,11 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
 
     private void ButtonCreateMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCreateMenuActionPerformed
         if(this.SelectedArticlesTable.getRowCount() > 0){
-            /*GlobalGraphicView.singletonGlobalGraphicView().getController().addCommande(this.thisCommande);
-
-            
-            ArrayList<Article> list = new ArrayList<>();
-
-            for(int row=0; row < this.SelectedArticlesTable.getRowCount(); row++){
-                String value[] = new String[this.SelectedArticlesTable.getColumnCount()];
-
-                for(int col=0; col < this.SelectedArticlesTable.getColumnCount(); col++){
-                    value[col] = (String) this.SelectedArticlesTable.getValueAt(row, col);
-                }
-              
-                list.add(GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(1, TypeArticle.valueOf(value[1])).get(value[0]));
-                
-                Article a = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(this.windowCommande.getCodeCarte(), TypeArticle.MENU).get(value[0]);
-                GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleMenu(null, (Menu) this.selectedMenu);
+            if(GlobalGraphicView.singletonGlobalGraphicView().getController().verifyMenu(this.selectedMenu)){
+                this.correctDispose();
+            }else{
+                JOptionPane.showMessageDialog(this.getParent(), new MenuMustHavePlatEtDAutre().getMessage());
             }
-
-            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyMenu((Menu) this.selectedMenu);
-            
-            //Commande commande = SingletonListCommande.singletonListCommande().getCommande(this.windowCommande.getWindowReservationDetails().getReservationCode(), );
-            //GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(selectedMenu, commande);
-            */
-            this.correctDispose();
         }else{
             JOptionPane.showMessageDialog(this.getParent(), new NewCommandeException().getMessage());
         }

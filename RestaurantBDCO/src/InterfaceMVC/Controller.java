@@ -181,7 +181,7 @@ public class Controller {
     }
     // Permet de verifier si un menu est valide ( ici qu'il contient au moin un plat et au moins un autre type d'article)
     public boolean verifyMenu(Menu m){
-        return m.contientPlat()&& (m.contientAutreQuePlat());
+        return (m.contientPlat()) && (m.contientAutreQuePlat());
     }
     
     public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
