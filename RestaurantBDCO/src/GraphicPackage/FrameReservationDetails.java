@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Observable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -70,17 +71,17 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     private void updateMenuArticleTable(){
         if (this.ArticleTable.getSelectedRow() >= 0) {
-            LinkedHashMap<String, Object> tableMap2 = new LinkedHashMap<>();
+            LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
             
             if(((Article)((SpecialJavaTableModel) this.ArticleTable.getModel()).getObjectAt(this.ArticleTable.getSelectedRow())).getType().equals(TypeArticle.MENU)){
                 for (Article a : ((Menu) ((SpecialJavaTableModel) this.ArticleTable.getModel()).getObjectAt(this.ArticleTable.getSelectedRow())).getList()) {
-                    tableMap2.put(a.getName(), a);
+                    tableMap.put(a.getName(), a);
                 }
             }
 
-            TableModel model2 = new SpecialJavaTableModel(tableMap2, Article.class);
+            TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
 
-            this.MenuArticleTable.setModel(model2);
+            this.MenuArticleTable.setModel(model);
             this.MenuArticleTable.setAutoCreateRowSorter(true);
 
             try {
@@ -335,8 +336,8 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
     private void ButtonDeleteSelectedCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedCommandActionPerformed
         if(this.CommandeTable.getSelectedRow() >= 0) {
-            String identifier = (String) this.CommandeTable.getValueAt(this.CommandeTable.getSelectedRow(), 0);
-            SingletonListCommande.singletonListCommande().removeCommand(this.reservationCode, identifier);
+            Commande comm = (Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(this.CommandeTable.getSelectedRow());
+            GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(this.reservationCode, comm);
         }
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
@@ -346,15 +347,38 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }//GEN-LAST:event_ButtonNewCommandActionPerformed
 
     private void ButonGetBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonGetBillActionPerformed
-        for(Object obj : ((SpecialJavaTableModel)this.CommandeTable.getModel()).getAll().values()){
-            Commande comm = ((Commande)obj);
-            /*for(Article a : comm.getListArticles()){
-                Integer i = comm.getRegroupeArticle().get(a.getName());
-                System.out.println("    " + a.getName() + "--" + a.getType() + "--" + a.getQuantity() + " vs " + i);
-            }*/
-            for(String nomA : comm.getRegroupeArticle().keySet()){
-                System.out.println(nomA + " : " + comm.getRegroupeArticle().get(nomA));
+        int answer = JOptionPane.showConfirmDialog(this.getParent(), "Vous voulez vraiment facturer?", "Confirmation...", JOptionPane.YES_NO_OPTION);
+        
+        if(answer == JOptionPane.YES_OPTION){
+            String FinalBill = "- - - - - FACTURE - - - - -\n\n";
+            String FinalPrice = this.TextTotalBillValue.getText();
+            
+            for (Object obj : ((SpecialJavaTableModel) this.CommandeTable.getModel()).getAll().values()) {
+                Commande comm = ((Commande) obj);
+                
+                FinalBill += "• " + comm.getIdentifier() + ":\n";
+                FinalBill += "• Sub-Total: € " + comm.getPrice() + "\n";
+                for (String nomA : comm.getRegroupeArticle().keySet()) {
+                    FinalBill += "   : " + comm.getRegroupeArticle().get(nomA) + " " + nomA + "\n";
+                }
+                FinalBill += "\n";
+                
+                
+                // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+                
+                //GlobalGraphicView.singletonGlobalGraphicView().getController().    endCommand(comm);
+                
+                // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+                
+                GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(this.reservationCode, comm);
             }
+            this.updateSelectedCommande();
+            
+            FinalBill += "- - - - - - - - - - - - - - - - -\n";
+            FinalBill += "T O T A L :  " + FinalPrice + "\n";
+            FinalBill += "- - - - - - - - - - - - - - - - -\n";
+            JOptionPane.showMessageDialog(this.getParent(), FinalBill);
         }
     }//GEN-LAST:event_ButonGetBillActionPerformed
 

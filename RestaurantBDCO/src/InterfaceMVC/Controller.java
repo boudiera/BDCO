@@ -218,12 +218,9 @@ public class Controller {
         return SingletonListCommande.singletonListCommande().getListCommandByReservationCode(codeReservation);
     }
     
-    
     // Permet de supprimer une commande d'une reservation
-    public void deleteCommande( int codeReservation,Commande commande){
+    public void deleteCommande(int codeReservation, Commande commande){
         SingletonListCommande.singletonListCommande().removeCommand(codeReservation,commande.getIdentifier());
-        // Actualisation de la vue
-        this.setView(this.getView());
     }
     
     public boolean containsAtLeastOneInteger(String chaine) {
