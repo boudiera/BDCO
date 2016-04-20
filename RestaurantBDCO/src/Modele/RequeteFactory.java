@@ -20,8 +20,7 @@ public abstract class RequeteFactory{
     
     // Permet d'avoir tous les articles d'un menu
     public abstract ArrayList<TypeArticle> getTypesMenu(String nomMenu);
-     
-    
+      
     // Fonction qui renvoit les menus d'une carte
     public abstract ArrayList<Menu> getMenu(int codeCarte);
         

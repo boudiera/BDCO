@@ -32,3 +32,10 @@ from Article A, ContientAutreArticle Au
 where A.NomArticle = Au.NomArticleAutre
 	and Au.NomArticleMenu = 'GROSSE FAIM';
 
+select A.NomArticle, A.TypeArticle, A.NomSpecialite
+from Article A, EstElement El
+where A.NomArticle = El.NomArticle
+and El.CodeCarte = 3;
+
+
+

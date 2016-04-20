@@ -336,12 +336,44 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             System.err.println("failed");
             e.printStackTrace (System.err);
             return null;
-        }    }
+        }    
+    }
 
     @Override
     public ArrayList<Menu> getMenu(int codeCarte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        connexion.open();
+        String STMT_1 = "select A.NomArticle, A.TypeArticle, A.NomSpecialite, El.PrixActuel " +
+                "from Article A, EstElement El " +
+                "where A.NomArticle = El.NomArticle " +
+                "and El.CodeCarte = ?";
+        
+        try {
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1, codeCarte);
+            
+            //  Execution  de la  requete
+            ResultSet rsetMenu = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            ArrayList <Menu> resMenu = new ArrayList<> ();
+            while (rsetMenu.next()) {
+                resMenu.add(new ConcreteMenu(
+                        rsetMenu.getString("NomArticle"),
+                        TypeArticle.valueOf(rsetMenu.getString("TypeArticle")),
+                        rsetMenu.findColumn("PrixActuel"),
+                        rsetMenu.getString("NomSpecialite")));
+            }
+            
+            //  Fermeture
+            rsetMenu.close();
+            stmt.close();
+            connexion.close();
+            return resMenu;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }       }
 
     @Override
     public int getCodeCarte(int codeReservation) {
