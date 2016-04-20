@@ -30,33 +30,33 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
  *
  * @author trentini
  */
-public class FrameReservationCreation extends javax.swing.JFrame implements WindowView{
+public class FrameReservationCreation extends javax.swing.JFrame implements WindowView {
 
     private HashMap<String, ArrayList<Table>> hashglobal = new HashMap<>();
-    
+
     /**
      * Creates new form FrameReservationCreation
      */
     public FrameReservationCreation() {
         initComponents();
     }
-    
+
     @Override
     public void dispose() {
         GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationList);
         super.dispose();
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public boolean isSingleton(){
+    public boolean isSingleton() {
         return false;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,6 +218,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
         createButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--arrow.png"))); // NOI18N
         createButton.setText("Créer Réservation");
+        createButton.setEnabled(false);
         createButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createButtonActionPerformed(evt);
@@ -373,30 +374,33 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
     private void buttonCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCalculateActionPerformed
         Service service;
-        if (midday.isSelected())
-            service=Service.MIDI;
-        else
-            service=Service.SOIR;
-        try {            
-           HashMap<String, ArrayList<Table>> hash;
+        if (midday.isSelected()) {
+            service = Service.MIDI;
+        } else {
+            service = Service.SOIR;
+        }
+        try {
+            GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
+                    day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
+            HashMap<String, ArrayList<Table>> hash;
             System.out.println(service.name());
-           hash = GlobalGraphicView.singletonGlobalGraphicView().getController()
-                   .getTablesLibresByLocalisation(year.getText(), month.getText(), day.getText(),
-                           service.name(), nbPeople.getText());
-            
-            for (ArrayList<Table> list : hash.values()){
-                if (list!=null){
+            hash = GlobalGraphicView.singletonGlobalGraphicView().getController()
+                    .getTablesLibresByLocalisation(year.getText(), month.getText(), day.getText(),
+                            service.name(), nbPeople.getText());
+
+            for (ArrayList<Table> list : hash.values()) {
+                if (list != null) {
                     hashglobal.put(list.get(0).getLocation(), list);
-                    for(Table t : list){
+                    for (Table t : list) {
                         System.out.println(t.getCodeTable() + " " + t.getLocation());
                     }
                     jComboBox1.addItem(list.get(0).getLocation());
                 }
             }
-            
-            if (jComboBox1.getItemCount() == 0)
+
+            if (jComboBox1.getItemCount() == 0) {
                 throw new RestaurantCompletException();
-            else{
+            } else {
                 clientName.setEnabled(false);
                 clientPhone.setEnabled(false);
                 nbPeople.setEnabled(false);
@@ -408,9 +412,10 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                 midday.setEnabled(false);
                 evening.setEnabled(false);
                 buttonCalculate.setEnabled(false);
+                createButton.setEnabled(true);
                 jComboBox1.setEnabled(true);
             }
-                
+
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
@@ -419,19 +424,21 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         Service service;
-        if (midday.isSelected())
-            service=Service.MIDI;
-        else
-            service=Service.SOIR;
+        if (midday.isSelected()) {
+            service = Service.MIDI;
+        } else {
+            service = Service.SOIR;
+        }
         try {
             GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
-            Date jour = new Date(Integer.parseInt(year.getText())-1900, Integer.parseInt(month.getText())-1, Integer.parseInt(day.getText()));
-            GlobalGraphicView.singletonGlobalGraphicView().getController().creerReservation(hashglobal.get((String)jComboBox1.getSelectedItem()),
+            Date jour = new Date(Integer.parseInt(year.getText()) - 1900, Integer.parseInt(month.getText()) - 1, Integer.parseInt(day.getText()));
+            GlobalGraphicView.singletonGlobalGraphicView().getController().creerReservation(hashglobal.get((String) jComboBox1.getSelectedItem()),
                     Integer.parseInt(nbPeople.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()), clientName.getText(), clientPhone.getText(),
-                    jour, service);  
-            dispose();
+                    jour, service);
+            Factory.singletonFactory().notifyObservers();
+            this.dispose();
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
