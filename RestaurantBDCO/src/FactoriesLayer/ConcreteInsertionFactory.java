@@ -26,9 +26,9 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     public ConcreteInsertionFactory(TheConnection connexion) {
         this.connexion = connexion;
     }
-    
-   @Override
-   public void creerClient(String nomClient, String numTel){
+
+    @Override
+    public void creerClient(String nomClient, String numTel){
        //connexion.open();
        String STMT_1 = " insert into Client "
                + "values (seqClient.nextval,?,?)";
@@ -44,10 +44,10 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             System.err.println("failed");
             e.printStackTrace (System.err);
         }
-   }
-    
-   @Override
-   public void creerCarte(){
+    }
+
+    @Override
+    public void creerCarte(){
        connexion.open();
        String STMT_1 = " insert into Carte "
                + "values (seqCarte.nextval)";
@@ -61,11 +61,11 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             System.err.println("failed");
             e.printStackTrace (System.err);
         }
-   }
-   
-    
-   @Override
-   public void ajoutArticleCarte(String nomArticle, int codeCarte, float prix){
+    }
+
+
+    @Override
+    public void ajoutArticleCarte(String nomArticle, int codeCarte, float prix){
        connexion.open();
        String STMT_1 = " insert into EstElement "
                + "values (?, ?, ?)";
@@ -82,8 +82,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             System.err.println("failed");
             e.printStackTrace (System.err);
         }
-   }
-  
+    }
 
     @Override
     public void creerReservation(ArrayList<Table> tablesOcc, int nbPersonnes, int heure, int minutes, int codeClient, Date jour, Service nomService) {
