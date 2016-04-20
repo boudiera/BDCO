@@ -1,8 +1,10 @@
 package GraphicPackage;
 
 import InterfaceMVC.EnumView;
+import InterfaceMVC.Exceptions.*;
 import Modele.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
 /*
@@ -40,6 +42,15 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     @Override
     public void update(Observable o, Object arg) {
         updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
+    }
+    
+    @Override
+    public void dispose(){
+        if(SingletonListCommande.singletonListCommande().isEmpty()){
+            super.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this.getParent(), new CommandesNotSaved().getMessage());
+        }
     }
     
     @Override
@@ -98,7 +109,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         DeleteSelectedReservation = new javax.swing.JButton();
         AddNewReservation = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Liste de Réservations");
 
         WindowTitle.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N

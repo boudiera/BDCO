@@ -17,7 +17,6 @@ import java.util.*;
  * @author trentini
  */
 public class GlobalGraphicView extends AbstractView implements Observer{
-
     final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
     private WindowView activeWindow;

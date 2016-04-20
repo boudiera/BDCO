@@ -88,9 +88,9 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         jLabel10 = new javax.swing.JLabel();
         minute = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        ComboBoxPlaces = new javax.swing.JComboBox();
         buttonCalculate = new javax.swing.JButton();
-        createButton = new javax.swing.JButton();
+        buttonCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Création de Réservation");
@@ -206,7 +206,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Emplacements disponibles");
 
-        jComboBox1.setEnabled(false);
+        ComboBoxPlaces.setEnabled(false);
 
         buttonCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/calendar-search-result.png"))); // NOI18N
         buttonCalculate.setText("Trouver");
@@ -216,12 +216,12 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             }
         });
 
-        createButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--arrow.png"))); // NOI18N
-        createButton.setText("Créer Réservation");
-        createButton.setEnabled(false);
-        createButton.addActionListener(new java.awt.event.ActionListener() {
+        buttonCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--arrow.png"))); // NOI18N
+        buttonCreate.setText("Créer Réservation");
+        buttonCreate.setEnabled(false);
+        buttonCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createButtonActionPerformed(evt);
+                buttonCreateActionPerformed(evt);
             }
         });
 
@@ -232,7 +232,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(createButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,7 +255,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonCalculate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(ComboBoxPlaces, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
@@ -323,9 +323,9 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(buttonCalculate)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboBoxPlaces, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -394,11 +394,11 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                     for (Table t : list) {
                         System.out.println(t.getCodeTable() + " " + t.getLocation());
                     }
-                    jComboBox1.addItem(list.get(0).getLocation());
+                    ComboBoxPlaces.addItem(list.get(0).getLocation());
                 }
             }
 
-            if (jComboBox1.getItemCount() == 0) {
+            if (ComboBoxPlaces.getItemCount() == 0) {
                 throw new RestaurantCompletException();
             } else {
                 clientName.setEnabled(false);
@@ -412,8 +412,8 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                 midday.setEnabled(false);
                 evening.setEnabled(false);
                 buttonCalculate.setEnabled(false);
-                createButton.setEnabled(true);
-                jComboBox1.setEnabled(true);
+                buttonCreate.setEnabled(true);
+                ComboBoxPlaces.setEnabled(true);
             }
 
         } catch (ReservationException ex) {
@@ -422,7 +422,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
         }
     }//GEN-LAST:event_buttonCalculateActionPerformed
 
-    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+    private void buttonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCreateActionPerformed
         Service service;
         if (midday.isSelected()) {
             service = Service.MIDI;
@@ -433,7 +433,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
             Date jour = new Date(Integer.parseInt(year.getText()) - 1900, Integer.parseInt(month.getText()) - 1, Integer.parseInt(day.getText()));
-            GlobalGraphicView.singletonGlobalGraphicView().getController().creerReservation(hashglobal.get((String) jComboBox1.getSelectedItem()),
+            GlobalGraphicView.singletonGlobalGraphicView().getController().creerReservation(hashglobal.get((String) ComboBoxPlaces.getSelectedItem()),
                     Integer.parseInt(nbPeople.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()), clientName.getText(), clientPhone.getText(),
                     jour, service);
@@ -443,7 +443,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
         }
-    }//GEN-LAST:event_createButtonActionPerformed
+    }//GEN-LAST:event_buttonCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,15 +484,15 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox ComboBoxPlaces;
     private javax.swing.JButton buttonCalculate;
+    private javax.swing.JButton buttonCreate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField clientName;
     private javax.swing.JTextField clientPhone;
-    private javax.swing.JButton createButton;
     private javax.swing.JTextField day;
     private javax.swing.JRadioButton evening;
     private javax.swing.JTextField hour;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

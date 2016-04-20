@@ -306,25 +306,30 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
     private void ButtonAddSelectedArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddSelectedArticleActionPerformed
         Article a = null;
+        TableModel table = null;
+        int row = -1;
         
         switch (TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()))) {
-            case ENTREE:  a = (Article) ((SpecialJavaTableModel) this.Entrees.getModel() ).getObjectAt(this.Entrees.getSelectedRow() ); break;
-            case PLAT:    a = (Article) ((SpecialJavaTableModel) this.Plats.getModel()   ).getObjectAt(this.Plats.getSelectedRow()   ); break;
-            case DESSERT: a = (Article) ((SpecialJavaTableModel) this.Desserts.getModel()).getObjectAt(this.Desserts.getSelectedRow()); break;
-            case BOISSON: a = (Article) ((SpecialJavaTableModel) this.Boissons.getModel()).getObjectAt(this.Boissons.getSelectedRow()); break;
-            case MENU:    a = (Article) ((SpecialJavaTableModel) this.Menus.getModel()   ).getObjectAt(this.Menus.getSelectedRow()   ); break;
+            case ENTREE:  table = this.Entrees.getModel();  row = this.Entrees.getSelectedRow();  break;
+            case PLAT:    table = this.Plats.getModel();    row = this.Plats.getSelectedRow();    break;
+            case DESSERT: table = this.Desserts.getModel(); row = this.Desserts.getSelectedRow(); break;
+            case BOISSON: table = this.Boissons.getModel(); row = this.Boissons.getSelectedRow(); break;
+            case MENU:    table = this.Menus.getModel();    row = this.Menus.getSelectedRow();    break;
         }
-        
-        if(a.getType().equals(TypeArticle.MENU) && this.thisCommande.getRegroupeArticle().keySet().contains(a.getName())){
-            JOptionPane.showMessageDialog(this.getParent(), new MenuAlreadyAddedException().getMessage());
-        }else{
-            GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
-            a.setQuantity(this.thisCommande.getRegroupeArticle().get(a.getName()));
+        if(row >= 0){
+            a = (Article) ((SpecialJavaTableModel) table).getObjectAt(row);
 
-            if (a.getType().equals(TypeArticle.MENU)) {
-                this.selectedMenu = a;
-                WindowView frameMenu = new FrameMenu(this);
-                GlobalGraphicView.singletonGlobalGraphicView().showView(frameMenu);
+            if(a.getType().equals(TypeArticle.MENU) && this.thisCommande.getRegroupeArticle().keySet().contains(a.getName())){
+                JOptionPane.showMessageDialog(this.getParent(), new MenuAlreadyAddedException().getMessage());
+            }else{
+                GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
+                a.setQuantity(this.thisCommande.getRegroupeArticle().get(a.getName()));
+
+                if (a.getType().equals(TypeArticle.MENU)) {
+                    this.selectedMenu = a;
+                    WindowView frameMenu = new FrameMenu(this);
+                    GlobalGraphicView.singletonGlobalGraphicView().showView(frameMenu);
+                }
             }
         }
         

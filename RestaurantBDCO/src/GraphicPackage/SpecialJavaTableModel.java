@@ -12,7 +12,14 @@ import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
+ * <p>
+ * A TableModel designed to stock the following
+ * objects: Reservation, Commande and Article
+ * </p>
+ * <p>
+ * -- Use with others objets is undefined
+ * </p>
+ * 
  * @author Iago Felipe Trentin
  */
 public class SpecialJavaTableModel extends AbstractTableModel {
@@ -37,7 +44,7 @@ public class SpecialJavaTableModel extends AbstractTableModel {
     
     @Override
     public boolean isCellEditable(int row, int column) {
-        return false;   //all cells false
+        return false;   //all cells false = not editable
     }
     
     @Override
@@ -150,25 +157,25 @@ public class SpecialJavaTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         if(type.equals(Reservation.class)){
             switch (columnIndex) {
-                case 0: return Integer.TYPE;
+                case 0: return int.class;
                 case 1: return String.class;
                 case 2: return String.class;
-                case 3: return Integer.TYPE;
-                case 4: return Integer.TYPE;
+                case 3: return int.class;
+                case 4: return int.class;
                 case 5: return String.class;
             }
         }else if(type.equals(Commande.class)){
             switch (columnIndex) {
                 case 0: return String.class;
-                case 1: return Float.TYPE;
+                case 1: return float.class;
             }
         }else if(type.equals(Article.class)){
             switch (columnIndex) {
                 case 0: return String.class;
                 case 1: return TypeArticle.class;
-                case 2: return Float.TYPE;
+                case 2: return float.class;
                 case 3: return String.class;
-                case 4: return Integer.TYPE;
+                case 4: return int.class;
             }
         }
         

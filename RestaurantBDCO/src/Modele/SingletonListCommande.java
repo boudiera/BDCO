@@ -26,6 +26,10 @@ public class SingletonListCommande extends Observable{
         return SingletonListCommande.SINGLETON_LIST_COMMANDE;
     }
     
+    public boolean isEmpty(){
+        return this.listCommande.isEmpty();
+    }
+    
     public void addCommand(int codeReservation, Commande commande){
         if(this.listCommande.containsKey(codeReservation)){
             this.listCommande.get(codeReservation).put(commande.getIdentifier(), commande);
@@ -40,6 +44,9 @@ public class SingletonListCommande extends Observable{
     
     public void removeCommand(int codeReservation, String identifier){
         this.listCommande.get(codeReservation).remove(identifier);
+        if(this.listCommande.get(codeReservation).isEmpty()){
+            this.listCommande.remove(codeReservation);
+        }
         
         this.setChanged();
         this.notifyObservers();
