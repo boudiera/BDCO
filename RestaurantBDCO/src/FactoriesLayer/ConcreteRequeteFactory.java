@@ -344,7 +344,8 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         connexion.open();
         String STMT_1 = "select A.NomArticle, A.TypeArticle, A.NomSpecialite, El.PrixActuel " +
                 "from Article A, EstElement El " +
-                "where A.NomArticle = El.NomArticle " +
+                "where A.NomArticle = El.NomArticle " + 
+                "and A.TypeArticle = 'MENU' " +
                 "and El.CodeCarte = ?";
         
         try {
