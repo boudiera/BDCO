@@ -22,7 +22,7 @@ public abstract class RequeteFactory{
     public abstract ArrayList<TypeArticle> getTypesMenu(String nomMenu);
       
     // Fonction qui renvoit les menus d'une carte
-    public abstract ArrayList<Menu> getMenu(int codeCarte);
+    public abstract ArrayList<Article> getMenu(int codeCarte);
         
     // Fonction qui renvoit le codecarte d'une reservation
     public abstract int getCodeCarte(int codeReservation);    

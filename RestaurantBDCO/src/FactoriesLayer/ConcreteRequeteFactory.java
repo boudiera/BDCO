@@ -340,7 +340,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     }
 
     @Override
-    public ArrayList<Menu> getMenu(int codeCarte) {
+    public ArrayList<Article> getMenu(int codeCarte) {
         connexion.open();
         String STMT_1 = "select A.NomArticle, A.TypeArticle, A.NomSpecialite, El.PrixActuel " +
                 "from Article A, EstElement El " +
@@ -355,7 +355,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             ResultSet rsetMenu = stmt.executeQuery ();
             
             //  Conversion  du  resultat  en ArrayList <Table>
-            ArrayList <Menu> resMenu = new ArrayList<> ();
+            ArrayList <Article> resMenu = new ArrayList<> ();
             while (rsetMenu.next()) {
                 resMenu.add(new ConcreteMenu(
                         rsetMenu.getString("NomArticle"),

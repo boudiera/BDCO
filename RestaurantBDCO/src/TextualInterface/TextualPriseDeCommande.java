@@ -9,6 +9,7 @@ import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
 import Modele.Article;
 import Modele.Commande;
+import Modele.Factory;
 import Modele.Menu;
 import Modele.TypeArticle;
 import java.util.ArrayList;
@@ -129,7 +130,7 @@ public class TextualPriseDeCommande extends AbstractView {
                 break;
             case 5:// Appel d'une fonction du controller qui nous renvois une liste d'article de menu
                 titreSousMenu ="--------------------- Affichage des menu disponibles -------------------------\n";
-                choixArticles  =  this.getController().getArticles(1,TypeArticle.MENU);
+                choixArticles  =  Factory.singletonFactory().getRequeteFactory().getMenu(1);
               // choixArticles.add(new Menu("Menu gros", "viande", 20));
                // choixArticles.add(new Menu("Menu faible", "salade", 5));
                 estVueMenu = true;
