@@ -25,12 +25,14 @@ public class TextualPriseDeMenu extends AbstractView {
     Menu menu;
     AbstractView viewCommande;
     Commande commande;
+     ArrayList<TypeArticle>  TypeArticlePropose;
     private boolean commandeFinie = false;
 
     public TextualPriseDeMenu(Controller controller, Menu menu, AbstractView viewCommande, Commande commande) {
         this.menu = menu;
         this.viewCommande = viewCommande;
         this.commande = commande;
+        TypeArticlePropose = new ArrayList<>();
         setController(controller);
     }
 
@@ -39,25 +41,30 @@ public class TextualPriseDeMenu extends AbstractView {
         ArrayList<TypeArticle> typeArticlesMenu;
         typeArticlesMenu=getController().getTypeArticleMenu(this.menu.getName());
         
-        for (TypeArticle a : typeArticlesMenu){
-            
-            System.out.println(a.name());
-        }
+     
         while (!commandeFinie) {
-
+            int i = 1;
             System.out.println("--------------------- PRISE DE MENU  " + this.menu.getName() + "  -------------------------");
-            /*System.out.println("1.Entrées ");
-            System.out.println("2.Plats ");
-            System.out.println("3.Desserts ");
-            System.out.println("4.Boissons ");*/
-            if (typeArticlesMenu.contains(TypeArticle.ENTREE))
-                System.out.println("1.Entrées ");
+         
+            if (typeArticlesMenu.contains(TypeArticle.ENTREE)){
+                System.out.println(i+".Entrées ");
+                i++;
+                TypeArticlePropose.add(TypeArticle.ENTREE);
+            }    
             // On a forcement un plat
-                System.out.println("2.Plats ");
-            if (typeArticlesMenu.contains(TypeArticle.DESSERT))
-                System.out.println("3.Desserts ");
-            if (typeArticlesMenu.contains(TypeArticle.BOISSON))
-                System.out.println("4.Boissons ");
+                System.out.println(i+".Plats ");
+                i++;
+                TypeArticlePropose.add(TypeArticle.PLAT);
+            if (typeArticlesMenu.contains(TypeArticle.DESSERT)){
+                System.out.println(i+".Desserts ");
+                i++;
+                TypeArticlePropose.add(TypeArticle.DESSERT);
+            }    
+            if (typeArticlesMenu.contains(TypeArticle.BOISSON)){
+                System.out.println(i+".Boissons ");
+                i++;
+                TypeArticlePropose.add(TypeArticle.BOISSON);
+            }   
             System.out.println("");
             System.out.println("Choix du menu selectionné -> ");
             if (this.menu.getList().isEmpty()) {
@@ -88,15 +95,16 @@ public class TextualPriseDeMenu extends AbstractView {
         afficheChoixMenu();
         Scanner sc = new Scanner(System.in);
         String choix = sc.nextLine();
-        if (choix.equalsIgnoreCase("1")) {
-            afficheListeArticle(1);
-        } else if (choix.equalsIgnoreCase("2")) {
-            afficheListeArticle(2);
-        } else if (choix.equalsIgnoreCase("3")) {
-            afficheListeArticle(3);
-        } else if (choix.equalsIgnoreCase("4")) {
-            afficheListeArticle(4);
-        } else if (choix.equalsIgnoreCase("v")) {
+        int valChoix = 0;
+        try {
+            valChoix = Integer.parseInt(choix);
+            if (valChoix<= 0 || valChoix > TypeArticlePropose.size())
+                throw new Exception();
+            afficheListeArticle(valChoix);
+        }
+            catch (Exception e){     
+        }                  
+        if (choix.equalsIgnoreCase("v")) {
             if (this.getController().verifyMenu(menu)) {
                 this.commandeFinie = true;
             } else {
@@ -106,7 +114,7 @@ public class TextualPriseDeMenu extends AbstractView {
             System.out.println(" ------------- Prise de Menu annulée ------------");
             this.getController().setView(this.viewCommande);
 
-        }
+        } 
 
     }
 
@@ -114,9 +122,9 @@ public class TextualPriseDeMenu extends AbstractView {
         ArrayList<Article> choixArticles = new ArrayList<>();
         String titreSousMenu = "";
         int compteur=1;
-
-        switch (choix) {
-            case 1:
+        TypeArticle type = TypeArticlePropose.get(choix-1);
+        switch (type) {
+            case ENTREE:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées pour un menu donné
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.ENTREE, this.menu.getName());
                 //choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
@@ -125,7 +133,7 @@ public class TextualPriseDeMenu extends AbstractView {
                 titreSousMenu = "--------------------- Affichage des entrées disponibles -------------------------\n";
 
                 break;
-            case 2:
+            case PLAT:
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.PLAT, this.menu.getName());
 
                 //choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
@@ -134,13 +142,13 @@ public class TextualPriseDeMenu extends AbstractView {
                 // Appel d'une fonction du controller qui nous renvois une liste d'article de plats  pour un menu donné
                 titreSousMenu = "--------------------- Affichage des plats disponibles -------------------------\n";
                 break;
-            case 3:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
+            case DESSERT:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.DESSERT, this.menu.getName());
                 //choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
                 //choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
                 titreSousMenu = "--------------------- Affichage des desserts disponibles -------------------------\n";
                 break;
-            case 4:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
+            case BOISSON:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.BOISSON, this.menu.getName());
                 titreSousMenu = "--------------------- Affichage des boissons disponibles -------------------------\n";
                 break;
@@ -184,7 +192,7 @@ public class TextualPriseDeMenu extends AbstractView {
         }
 
        
-        this.getController().addArticleMenu(choixArticles.get(articleIndex), menu);
+        this.getController().addArticleMenu(choixArticles.get(articleIndex-1), menu);
       
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite);
        return 0;
