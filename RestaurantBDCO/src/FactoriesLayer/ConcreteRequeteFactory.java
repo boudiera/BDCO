@@ -373,12 +373,42 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             System.err.println("failed");
             e.printStackTrace (System.err);
             return null;
-        }       }
+        }       
+    }
 
     @Override
     public int getCodeCarte(int codeReservation) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+connexion.open();
+        String STMT_1 = "select S.CodeCarte" +
+                "from Reservation R, Service S " +
+                "where R.Jour = S.Jour " +
+                "and R.NomService = S.NomService " + 
+                "and R.CodeReservation = ?";
+        
+        try {
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1, codeReservation);
+            
+            //  Execution  de la  requete
+            ResultSet rsetCodeCarte = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            int resCodeCarte = -1;
+            if (rsetCodeCarte.next()) {
+                resCodeCarte = rsetCodeCarte.getInt("CodeCarte");
+            }
+            
+            //  Fermeture
+            rsetCodeCarte.close();
+            stmt.close();
+            connexion.close();
+            return resCodeCarte;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return -1;
+        }       
+       }
     
     
     

@@ -37,5 +37,9 @@ from Article A, EstElement El
 where A.NomArticle = El.NomArticle
 and El.CodeCarte = 3;
 
-
+select S.CodeCarte
+from Reservation R, Service S
+where R.Jour = S.Jour
+and R.NomService = S.NomService
+and R.CodeReservation = 4;
 
