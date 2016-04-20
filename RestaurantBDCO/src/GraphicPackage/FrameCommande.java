@@ -315,12 +315,13 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
             case MENU:    a = (Article) ((SpecialJavaTableModel) this.Menus.getModel()   ).getObjectAt(this.Menus.getSelectedRow()   ); break;
         }
         
-        if(this.thisCommande.getRegroupeArticle().containsKey(a.getName())){
+        /*if(this.thisCommande.getRegroupeArticle().containsKey(a.getName())){
             GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
             a.addQuantity();
-        }
+        }*/
         
         GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
+        a.setQuantity(this.thisCommande.getRegroupeArticle().get(a.getName()));
         
         if(a.getType().equals(TypeArticle.MENU)){
             this.selectedMenu = a;
@@ -337,10 +338,10 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
             
             if (this.thisCommande.getRegroupeArticle().containsKey(a.getName())) {
                 GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
-                a.removeQuantity();
+                //a.removeQuantity();
                 GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
                 if(a.getQuantity() == 0){
-                    a.addQuantity();
+                    //a.addQuantity();
                     GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.thisCommande);
                     if(a.getType().equals(TypeArticle.MENU)){
                         ((Menu) a).restartArticlesInMenu();

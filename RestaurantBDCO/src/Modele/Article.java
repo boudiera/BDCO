@@ -21,12 +21,8 @@ public abstract class Article {
         return this.quantity;
     }
     
-    public void addQuantity(){
-        this.quantity++;
-    }
-    
-    public void removeQuantity(){
-        this.quantity--;
+    public void setQuantity(int q){
+        this.quantity = q;
     }
     
     public float getPrice() {

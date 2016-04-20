@@ -360,8 +360,14 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
 
     private void ButonGetBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonGetBillActionPerformed
         for(Object obj : ((SpecialJavaTableModel)this.CommandeTable.getModel()).getAll().values()){
-            Article a = ((Article)obj);
-            System.out.println(a.getName() + "--" + a.getType() + "--" + a.getQuantity());
+            Commande comm = ((Commande)obj);
+            /*for(Article a : comm.getListArticles()){
+                Integer i = comm.getRegroupeArticle().get(a.getName());
+                System.out.println("    " + a.getName() + "--" + a.getType() + "--" + a.getQuantity() + " vs " + i);
+            }*/
+            for(String nomA : comm.getRegroupeArticle().keySet()){
+                System.out.println(nomA + " : " + comm.getRegroupeArticle().get(nomA));
+            }
         }
     }//GEN-LAST:event_ButonGetBillActionPerformed
 
