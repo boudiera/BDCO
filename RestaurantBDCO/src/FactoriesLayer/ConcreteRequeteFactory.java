@@ -337,6 +337,16 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             e.printStackTrace (System.err);
             return null;
         }    }
+
+    @Override
+    public ArrayList<Menu> getMenu(int codeCarte) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getCodeCarte(int codeReservation) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

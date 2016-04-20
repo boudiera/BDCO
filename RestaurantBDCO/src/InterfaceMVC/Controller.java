@@ -118,7 +118,7 @@ public class Controller {
         return true;
     }
     
-    // Fonction qui renvoit une hashmap indexe sur le nom des localisation, pour chaque localisation -> on obtient une lise de tables pouvants être occupées en tenant compte du nombre de 
+    // Fonction qui renvoit une hashmap indexe sur le nom des localisation, pour chaque localisation -> on obtient une lise de tables pouvants être occupées en tenant compte du nombre de personne
     public HashMap<String,ArrayList<Table>> getTablesLibresByLocalisation (String annee, String mois, String jour, String service,String nbPersonnes) throws ReservationException{
         
                 // On récupère toutes les tables libres
@@ -141,7 +141,7 @@ public class Controller {
                 
                 HashMap<String,ArrayList<Table>> listTablesOccupeesParLocalisation = new HashMap<>();
                 ArrayList<Table> resultCombinaison;
-                // On itère sur la localisation en cherchant une combinaise de tables libres
+                // On itère sur la localisation en cherchant une combinaison de tables libres
                 while(iterator.hasNext()){
                     String nomLocalisation = iterator.next();
                     resultCombinaison = findCombinaison(tableZones.get(nomLocalisation),Integer.parseInt(nbPersonnes));
