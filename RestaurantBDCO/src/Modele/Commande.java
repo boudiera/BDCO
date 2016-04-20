@@ -16,10 +16,10 @@ public class Commande {
 
     private String identifier;
 
-    public Commande(int codeReservation, String identifier, ArrayList<Article> list,int prix) {
+    public Commande(int codeReservation, String identifier, ArrayList<Article> list) {
         this.identifier = identifier;
         this.codeReservation = codeReservation;
-        this.price = prix;
+        this.price = 0;
         this.listArticles = list;
         regroupe();
         

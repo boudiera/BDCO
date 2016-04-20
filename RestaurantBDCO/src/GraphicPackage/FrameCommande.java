@@ -46,7 +46,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         this.windowReservationDetails = windowReservationDetails;
         this.windowReservationDetails.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
         
-        this.thisCommande = new Commande(windowReservationDetails.getReservationCode(), new String(), new ArrayList<Article>(), 0);
+        this.thisCommande = new Commande(windowReservationDetails.getReservationCode(), new String(), new ArrayList<Article>());
 
         this.TextCodeReservation.setText("Reservation #" + this.thisCommande.getCodeReservation());
         

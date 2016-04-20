@@ -34,7 +34,7 @@ public class TextualPriseDeCommande extends AbstractView {
     public TextualPriseDeCommande(Controller controller, int codeReservation, int numCommande) {
         this.numCommande = numCommande;
         this.codeReservation = codeReservation;
-        this.commande = new Commande(codeReservation, String.valueOf(this.numCommande + 1), new ArrayList<Article>(),0);
+        this.commande = new Commande(codeReservation, String.valueOf(this.numCommande + 1), new ArrayList<Article>());
         setController(controller);
     }
 
@@ -55,6 +55,7 @@ public class TextualPriseDeCommande extends AbstractView {
                 System.out.println("Vide ");
             } else {
                 this.commande.printArticle();
+                System.out.println("Prix : " + this.commande.getPrice());
             }
 
             lectureEntreeMenu();
@@ -202,7 +203,7 @@ public class TextualPriseDeCommande extends AbstractView {
         for (int i = 0; i < quantite; i++) {
             this.getController().addArticleCommande(choixArticles.get(articleIndex - 1), commande);
         }
-        this.commande.setPrice(this.commande.getPrice() + choixArticles.get(articleIndex - 1).getPrice()*quantite);
+       
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite );
         return false;
     }
