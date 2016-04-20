@@ -220,7 +220,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         connexion.open();
         PreparedStatement stmt;
         try {
-            if (typeArticle.toString() == "PLAT") {
+            if (typeArticle.name().equalsIgnoreCase("PLAT")) {
                 String STMT_1 = "select A.NomArticle, A.NomSpecialite "
                         + "from Article A, ContientPlat Pl "
                         + "where A.NomArticle = Pl.NomArticlePlat "
@@ -232,7 +232,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                         + "from Article A, ContientAutreArticle Au "
                         + "where A.NomArticle = Au.NomArticleAutre "
                         + "and A.TypeArticle = ? "
-                        + "and Au.NomArticleAutre = ?";
+                        + "and Au.NomArticleMenu = ?";
                 stmt = connexion.getConnection().prepareStatement(STMT_2);
             }
             
@@ -309,7 +309,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         String STMT_1 = "select distinct A.TypeArticle "
                         + "from Article A, ContientAutreArticle Au "
                         + "where A.NomArticle = Au.NomArticleAutre "
-                        + "and Pl.NomArticleMenu = ?";
+                        + "and Au.NomArticleMenu = ?";
         
         try {
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
