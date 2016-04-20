@@ -1,11 +1,12 @@
 package Modele;
 
-import java.util.AbstractList;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class Menu extends Article {
+public class Menu extends Article{
 
     private List<Article> list;
     private HashMap<TypeArticle, Article> contientType;

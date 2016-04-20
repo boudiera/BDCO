@@ -21,7 +21,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         this.connexion = connexion;
     }
 
-    @Override // REnvoie TOUTES les réservations
+    @Override // Renvoie TOUTES les réservations
     public ArrayList<Reservation> getReservationsList() {
         connexion.open();
         try {
@@ -126,9 +126,6 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             return null;
         }
     }
-    
-    
-    
     
     @Override // Renvoie les tables libres pour un certain service d'un certain jour
     public ArrayList<Table> tablesLibres(int year, int month, int day, Service service){
@@ -336,8 +333,79 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             System.err.println("failed");
             e.printStackTrace (System.err);
             return null;
-        }    }
-    
-    
+        }    
+    }
+
+    @Override
+    public ArrayList<Menu> getMenu(int codeCarte) {
+        connexion.open();
+        String STMT_1 = "select A.NomArticle, A.TypeArticle, A.NomSpecialite, El.PrixActuel " +
+                "from Article A, EstElement El " +
+                "where A.NomArticle = El.NomArticle " + 
+                "and A.TypeArticle = 'MENU' " +
+                "and El.CodeCarte = ?";
+        
+        try {
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1, codeCarte);
+            
+            //  Execution  de la  requete
+            ResultSet rsetMenu = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            ArrayList <Menu> resMenu = new ArrayList<> ();
+            while (rsetMenu.next()) {
+                resMenu.add(new ConcreteMenu(
+                        rsetMenu.getString("NomArticle"),
+                        TypeArticle.valueOf(rsetMenu.getString("TypeArticle")),
+                        rsetMenu.findColumn("PrixActuel"),
+                        rsetMenu.getString("NomSpecialite")));
+            }
+            
+            //  Fermeture
+            rsetMenu.close();
+            stmt.close();
+            connexion.close();
+            return resMenu;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }       
+    }
+
+    @Override
+    public int getCodeCarte(int codeReservation) {
+connexion.open();
+        String STMT_1 = "select S.CodeCarte" +
+                "from Reservation R, Service S " +
+                "where R.Jour = S.Jour " +
+                "and R.NomService = S.NomService " + 
+                "and R.CodeReservation = ?";
+        
+        try {
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1, codeReservation);
+            
+            //  Execution  de la  requete
+            ResultSet rsetCodeCarte = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            int resCodeCarte = -1;
+            if (rsetCodeCarte.next()) {
+                resCodeCarte = rsetCodeCarte.getInt("CodeCarte");
+            }
+            
+            //  Fermeture
+            rsetCodeCarte.close();
+            stmt.close();
+            connexion.close();
+            return resCodeCarte;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return -1;
+        }       
+       }
     
 }

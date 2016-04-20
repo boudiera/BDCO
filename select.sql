@@ -32,3 +32,14 @@ from Article A, ContientAutreArticle Au
 where A.NomArticle = Au.NomArticleAutre
 	and Au.NomArticleMenu = 'GROSSE FAIM';
 
+select A.NomArticle, A.TypeArticle, A.NomSpecialite
+from Article A, EstElement El
+where A.NomArticle = El.NomArticle
+and El.CodeCarte = 3;
+
+select S.CodeCarte
+from Reservation R, Service S
+where R.Jour = S.Jour
+and R.NomService = S.NomService
+and R.CodeReservation = 4;
+
