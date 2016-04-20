@@ -32,18 +32,22 @@ public class Factory extends Observable {
     private InsertionFactory insertionFactory = new ConcreteInsertionFactory(new TheConnection(new ConnectionInfo()));
     
     public RequeteFactory getRequeteFactory(){
+        this.setChanged();
         return this.requeteFactory;
     }
 
     public InsertionFactory getInsertionFactory() {
+        this.setChanged();
         return this.insertionFactory;
     }
 
     public void setInsertionFactory(InsertionFactory insertionFactory) {
+        this.setChanged();
         this.insertionFactory = insertionFactory;
     }
    
     public void setRequeteFactory(RequeteFactory requeteFactory) {
+        this.setChanged();
         this.requeteFactory = requeteFactory;
     }
 }

@@ -430,8 +430,9 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             GlobalGraphicView.singletonGlobalGraphicView().getController().creerReservation(hashglobal.get((String)jComboBox1.getSelectedItem()),
                     Integer.parseInt(nbPeople.getText()),
                     Integer.parseInt(hour.getText()), Integer.parseInt(minute.getText()), clientName.getText(), clientPhone.getText(),
-                    jour, service);  
-            dispose();
+                    jour, service);
+            Factory.singletonFactory().notifyObservers();
+            this.dispose();
         } catch (ReservationException ex) {
             //Logger.getLogger(FrameReservationCreation.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this.getParent(), ex.getMessage());
