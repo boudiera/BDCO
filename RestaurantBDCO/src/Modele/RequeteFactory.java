@@ -2,7 +2,6 @@ package Modele;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observable;
 
 /** Une liste de reservations */
 public abstract class RequeteFactory{

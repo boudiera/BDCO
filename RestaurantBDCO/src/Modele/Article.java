@@ -1,7 +1,5 @@
 package Modele;
 
-import java.util.List;
-
 public abstract class Article {
 
     private TypeArticle type;

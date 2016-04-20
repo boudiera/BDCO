@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GraphicPackage;
 
 import InterfaceMVC.EnumView;
-import InterfaceMVC.Exceptions.HeureException;
 import InterfaceMVC.Exceptions.ReservationException;
 import InterfaceMVC.Exceptions.RestaurantCompletException;
 import Modele.Factory;
@@ -14,17 +9,9 @@ import Modele.Service;
 import Modele.Table;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 /**
  *

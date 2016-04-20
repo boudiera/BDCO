@@ -5,9 +5,6 @@
  */
 package InterfaceMVC;
 
-import FactoriesLayer.ConcreteRequeteFactory;
-import FactoriesLayer.ConnectionInfo;
-import FactoriesLayer.TheConnection;
 import GraphicPackage.*;
 
 /**

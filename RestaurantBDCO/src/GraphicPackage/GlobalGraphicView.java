@@ -6,7 +6,6 @@
 package GraphicPackage;
 
 import InterfaceMVC.EnumView;
-import FactoriesLayer.*;
 import InterfaceMVC.*;
 import Modele.Factory;
 import Modele.SingletonListCommande;

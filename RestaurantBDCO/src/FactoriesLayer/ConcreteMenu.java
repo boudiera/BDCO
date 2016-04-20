@@ -5,7 +5,6 @@
  */
 package FactoriesLayer;
 
-import Modele.Article;
 import Modele.Menu;
 import Modele.TypeArticle;
 

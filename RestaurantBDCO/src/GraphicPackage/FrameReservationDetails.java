@@ -1,32 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GraphicPackage;
 
 import InterfaceMVC.EnumView;
-import FactoriesLayer.ConcreteRequeteFactory;
 import Modele.Article;
 import Modele.Commande;
 import Modele.Menu;
-import Modele.Reservation;
 import Modele.SingletonListCommande;
 import Modele.TypeArticle;
-import Modele.UniqueArticle;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *

@@ -1,6 +1,5 @@
 package FactoriesLayer;
 
-import Modele.Article;
 import Modele.Commande;
 import Modele.Service;
 import java.sql.Date;

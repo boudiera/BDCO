@@ -9,15 +9,10 @@ import InterfaceMVC.AbstractView;
 import InterfaceMVC.Controller;
 import Modele.Article;
 import Modele.Commande;
-import Modele.Factory;
 import Modele.Menu;
 import Modele.TypeArticle;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
-import static Modele.TypeArticle.MENU;
 
 /**
  *

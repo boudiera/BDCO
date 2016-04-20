@@ -6,8 +6,6 @@
 package Modele;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**

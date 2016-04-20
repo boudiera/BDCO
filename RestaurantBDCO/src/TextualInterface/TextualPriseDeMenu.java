@@ -12,8 +12,6 @@ import Modele.Commande;
 import Modele.Menu;
 import Modele.TypeArticle;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
