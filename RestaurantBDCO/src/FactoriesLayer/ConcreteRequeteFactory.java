@@ -27,6 +27,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                     + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
                     + "from Reservation R, Client C "
                     + "where R.CodeClient = C.CodeClient";
+                   // + "order by R.Jour, R.Heure, R.Minutes";
             
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
