@@ -32,6 +32,7 @@ public class TextualReservationList extends AbstractView {
         }
         
         ArrayList<Reservation> listReservations = this.getController().getReservationList();
+        ArrayList<Reservation> listReservationsTriee=this.getController().triListeReservation(listReservations);
 
          System.out.println("--------------------------------------~AFFICHAGE DES RESERVATIONS~---------------------------------------");
             System.out.println("---------------------------------------------------------------------------------------------------------");
@@ -43,7 +44,7 @@ public class TextualReservationList extends AbstractView {
             System.out.print(" nbPersonnes  |");
             System.out.println("  Code Table   ");
             
-         for (Reservation reservation : listReservations){
+         for (Reservation reservation : listReservationsTriee){
             
             System.out.println("---------------------------------------------------------------------------------------------------------");
             System.out.print("|      "+reservation.getCodeReservation()+"      |");
@@ -86,4 +87,6 @@ public class TextualReservationList extends AbstractView {
         } while (true);
       
     }
+
+  
 }

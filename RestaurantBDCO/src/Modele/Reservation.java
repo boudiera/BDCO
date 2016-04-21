@@ -69,6 +69,24 @@ public String PrintReservation(){
         return listCodeTables;
     }
 
+    //retourn vrai si la date de la reservation est plus recente que celle passée en paramettre
+    public boolean EstPlusRecente (Reservation res){
+        if(this.date.getYear()<res.getDate().getYear())
+            return true;
+        else if(this.date.getYear()==res.getDate().getYear() && this.date.getMonth()<res.getDate().getMonth())
+            return true;
+        else if(this.date.getYear()==res.getDate().getYear() && this.date.getMonth()==res.getDate().getMonth() && this.date.getDay()<res.getDate().getDay())
+            return true;
+        else if(this.date.getYear()==res.getDate().getYear() && this.date.getMonth()==res.getDate().getMonth() && this.date.getDay()==res.getDate().getDay()&& this.date.getHour()<res.getDate().getHour())
+            return true;
+        else if(this.date.getYear()==res.getDate().getYear() && this.date.getMonth()==res.getDate().getMonth() && this.date.getDay()==res.getDate().getDay()&& this.date.getHour()==res.getDate().getHour()&& this.date.getMin()<res.getDate().getMin())
+            return true;
+        else
+            return false;                 
+    }
+    
+    
+    
     public int getNbPersonnes() {
         return nbPersonnes;
     }
