@@ -200,6 +200,10 @@ public class Controller {
     public void removeArticleCommande(Article a, Commande c){
         c.removeArticle(a);
     }
+    
+    public void endCommande(Commande comm){
+        Factory.singletonFactory().getInsertionFactory().addCommande(comm);
+    }
 
     // Ajoute un article dans un menu
     public void addArticleMenu(Article a, Menu m){

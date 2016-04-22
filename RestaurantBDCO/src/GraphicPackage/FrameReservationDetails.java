@@ -363,13 +363,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 }
                 FinalBill += "\n";
                 
-                
-                // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-                
-                //GlobalGraphicView.singletonGlobalGraphicView().getController().    endCommand(comm);
-                
-                // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+                GlobalGraphicView.singletonGlobalGraphicView().getController().endCommande(comm);
                 
                 GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(this.reservationCode, comm);
             }

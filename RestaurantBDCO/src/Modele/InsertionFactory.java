@@ -32,6 +32,8 @@ public abstract class InsertionFactory {
     // Insert dans la base de donnée une commande ( attention a update et pas insert ) si une commande de la meme reservation contient des articles similaires
     public abstract void creeCommande(Commande commande);
         
+    public abstract void addCommande(Commande commande);
+    
     // Supprime dans la base de donnée une commande faire attention de update et non delete si la quantité d'article commandé de la reservation ( d'ou vient la commande ) est > 0 (voir google drive)
     public abstract void supprimeCommande(Commande commande);
     
