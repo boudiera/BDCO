@@ -376,7 +376,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
     @Override
     public int getCodeCarte(int codeReservation) {
 connexion.open();
-        String STMT_1 = "select S.CodeCarte" +
+        String STMT_1 = "select S.CodeCarte " +
                 "from Reservation R, Service S " +
                 "where R.Jour = S.Jour " +
                 "and R.NomService = S.NomService " + 

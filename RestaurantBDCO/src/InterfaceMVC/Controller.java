@@ -54,6 +54,10 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().getReservationsList();
     }
     
+    public int getCodeCarte(int codeReservation){
+        return Factory.singletonFactory().getRequeteFactory().getCodeCarte(codeReservation);
+    }
+    
     //fonction de tri de Reservation, de la plus récente à la plus éloignée
       public ArrayList<Reservation> triListeReservation(ArrayList<Reservation> listNonTriee){
         ArrayList<Reservation> listTriee=new ArrayList<>();

@@ -16,7 +16,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
 
     private FrameReservationDetails windowReservationDetails;
     
-    private int codeCarte = 1;
+    private int codeCarte;
     private Article selectedMenu;
     private Commande thisCommande;
 
@@ -42,17 +42,18 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         this.windowReservationDetails.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
         
         this.thisCommande = new Commande(windowReservationDetails.getReservationCode(), new String(), new ArrayList<Article>());
-
+        this.codeCarte = GlobalGraphicView.singletonGlobalGraphicView().getController().getCodeCarte(this.thisCommande.getCodeReservation());
+        
         this.TextCodeReservation.setText("Reservation #" + this.thisCommande.getCodeReservation());
         
-        updateCarte(codeCarte);
+        updateCarte();
     }
     
-    private void updateCarte(int codeCarte) {
+    private void updateCarte() {
         for(TypeArticle type : TypeArticle.values()){
             LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
             
-            for(Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(codeCarte, type)){
+            for(Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getArticles(this.codeCarte, type)){
                 tableMap.put(a.getName(), a);
             }
             
@@ -88,7 +89,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
      
     @Override
     public void update(Observable o, Object o1) {
-        updateCarte(codeCarte);
+        updateCarte();
         updateCommande();
     }
 
