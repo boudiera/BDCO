@@ -77,11 +77,9 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     
     private void updateSelectedReservation(){
         if(this.ReservationsTable.getSelectedRow() == -1){
-            this.DeleteSelectedReservation.setEnabled(false);
             this.OpenSelectedReservation.setEnabled(false);
         }else{
             this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
-            this.DeleteSelectedReservation.setEnabled(true);
             this.OpenSelectedReservation.setEnabled(true);
         }
     }
@@ -100,7 +98,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         PaneOfReservationTable = new javax.swing.JScrollPane();
         ReservationsTable = new javax.swing.JTable();
         OpenSelectedReservation = new javax.swing.JButton();
-        DeleteSelectedReservation = new javax.swing.JButton();
         AddNewReservation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -138,15 +135,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         });
 
-        DeleteSelectedReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--minus.png"))); // NOI18N
-        DeleteSelectedReservation.setText("Supprimer Reservation");
-        DeleteSelectedReservation.setEnabled(false);
-        DeleteSelectedReservation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteSelectedReservationActionPerformed(evt);
-            }
-        });
-
         AddNewReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--plus.png"))); // NOI18N
         AddNewReservation.setText("Ajouter Reservation");
         AddNewReservation.addActionListener(new java.awt.event.ActionListener() {
@@ -162,14 +150,12 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PaneOfReservationTable)
+                    .addComponent(PaneOfReservationTable, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
                     .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(AddNewReservation)
-                        .addGap(18, 18, 18)
-                        .addComponent(DeleteSelectedReservation)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                        .addComponent(OpenSelectedReservation)))
+                        .addComponent(AddNewReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(OpenSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -182,7 +168,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddNewReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DeleteSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(OpenSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -193,10 +178,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     private void OpenSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSelectedReservationActionPerformed
         GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ResevationDetails);
     }//GEN-LAST:event_OpenSelectedReservationActionPerformed
-
-    private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
 
     private void AddNewReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNewReservationActionPerformed
         GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationCreation);
@@ -212,7 +193,6 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddNewReservation;
-    private javax.swing.JButton DeleteSelectedReservation;
     private javax.swing.JButton OpenSelectedReservation;
     private javax.swing.JScrollPane PaneOfReservationTable;
     private javax.swing.JTable ReservationsTable;
