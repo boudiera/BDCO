@@ -90,6 +90,9 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 centerRenderer.setHorizontalAlignment(JLabel.CENTER);
                 this.ArticleTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
             } catch (Exception e) {}
+        }else{
+            TableModel model = new SpecialJavaTableModel(new LinkedHashMap<String, Object>(), Article.class);
+            this.MenuArticleTable.setModel(model);
         }
     }
     
@@ -369,6 +372,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(this.reservationCode, comm);
             }
             this.updateSelectedCommande();
+            this.updateMenuArticleTable();
             
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
             FinalBill += "T O T A L :  " + FinalPrice + "\n";
