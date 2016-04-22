@@ -53,6 +53,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     public void update(Observable o, Object arg) {
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         this.updateSelectedCommande();
+        updateMenuArticleTable();
         updateTotalValue();
     }
     
