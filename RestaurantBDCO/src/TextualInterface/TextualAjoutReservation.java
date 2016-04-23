@@ -79,18 +79,20 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
 
+        //Verification des informations rentrées, en appelant la fonction du controller VerifyAddReservation
         while (!verificationFini) {
             try {
                 this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
-
+                
+                //Gestion de la localisation
                 HashMap<String, ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
-
                 Set<String> s = listTablesOccupeesParLocalisation.keySet();
                 Iterator<String> iterator = s.iterator();
                 // Tableau qui contient les nomes de zones , indexé par des entiers ( pour la selection des zones après )
                 ArrayList<String> nomZone = new ArrayList<>();
                 System.out.println("Endroit(s) de localisation possible --->");
                 int i = 1;
+                //Affichage des choix à l'utilisateur
                 while (iterator.hasNext()) {
                     String nomLocalisation = iterator.next();
                     nomZone.add(nomLocalisation);
@@ -101,6 +103,7 @@ public class TextualAjoutReservation extends AbstractView {
                 boolean choixLocalisationfini;
                 int valeurChoix = 0;
 
+                //Gestion du choix de localisation
                 do {
                     choixLocalisationfini = false;
                     System.out.println("Choississez la localisation voulue");
@@ -187,8 +190,6 @@ public class TextualAjoutReservation extends AbstractView {
                         choix2=lectureEntree();
                     }while (!choix2.equalsIgnoreCase("v"));
                 }
-                    
-
             }
 
         }
