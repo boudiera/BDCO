@@ -18,7 +18,6 @@ import javax.swing.table.TableModel;
 public class FrameMenu extends javax.swing.JFrame implements WindowView {
 
     private FrameCommande windowCommande;
-    
     private Menu selectedMenu;
     
     /**
@@ -26,15 +25,13 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
      * @param windowCommande
      */
     public FrameMenu(FrameCommande windowCommande) {
-        
         this.windowCommande = windowCommande;
         this.windowCommande.setEnabled(false);    //the old window is set to disabled (it means we can reactivate the window the next time it is set)
         this.selectedMenu = (Menu) this.windowCommande.getSelectedMenu();
-        
-        initComponents();
 
-        this.TextCodeReservation.setText("Reservation #" + this.windowCommande.getThisCommande().getCodeReservation());
+        initComponents();
         
+        this.TextCodeReservation.setText("Reservation #" + this.windowCommande.getThisCommande().getCodeReservation());
         this.update(null, null);
     }
     
@@ -66,7 +63,6 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         }
 
         TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
-        
         this.SelectedArticlesTable.setModel(model);
     }
      
@@ -268,71 +264,35 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
     }//GEN-LAST:event_ButtonCreateMenuActionPerformed
 
     private void ButtonAddSelectedArticleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddSelectedArticleActionPerformed
+        int row = -1;
         Article a = null;
+        TypeArticle ta = TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()));
         
-        switch (TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()))) {
-            case ENTREE:  a = (Article) ((SpecialJavaTableModel) this.Entrees.getModel() ).getObjectAt(this.Entrees.getSelectedRow() ); break;
-            case PLAT:    a = (Article) ((SpecialJavaTableModel) this.Plats.getModel()   ).getObjectAt(this.Plats.getSelectedRow()   ); break;
-            case DESSERT: a = (Article) ((SpecialJavaTableModel) this.Desserts.getModel()).getObjectAt(this.Desserts.getSelectedRow()); break;
-            case BOISSON: a = (Article) ((SpecialJavaTableModel) this.Boissons.getModel()).getObjectAt(this.Boissons.getSelectedRow()); break;
-            case MENU:    break;
+        if(ta != null){
+            switch(ta) {
+                case ENTREE:  row = this.Entrees.getSelectedRow();  break;
+                case PLAT:    row = this.Plats.getSelectedRow();    break;
+                case DESSERT: row = this.Desserts.getSelectedRow(); break;
+                case BOISSON: row = this.Boissons.getSelectedRow(); break;
+                case MENU:    break;
+            }
         }
         
-        //if(this.windowCommande.getThisCommande().getRegroupeArticle().containsKey(a.getName())){
-        //    GlobalGraphicView.singletonGlobalGraphicView().getController().removeArticleCommande(a, this.windowCommande.getThisCommande());
-        //    a.addQuantity();
-        //}
-        ((Menu)this.selectedMenu).ajoutArticle(a);
+        if(row >= 0){
+            switch(ta) {
+                case ENTREE:  a = (Article) ((SpecialJavaTableModel) this.Entrees.getModel() ).getObjectAt(row); break;
+                case PLAT:    a = (Article) ((SpecialJavaTableModel) this.Plats.getModel()   ).getObjectAt(row); break;
+                case DESSERT: a = (Article) ((SpecialJavaTableModel) this.Desserts.getModel()).getObjectAt(row); break;
+                case BOISSON: a = (Article) ((SpecialJavaTableModel) this.Boissons.getModel()).getObjectAt(row); break;
+                case MENU:    break;
+            }
+        }
         
-        //GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.windowCommande.getThisCommande());
+        if(a != null){
+            ((Menu)this.selectedMenu).ajoutArticle(a);
+        }
         
         this.updateCommandeMenu();
-        
-        
-        
-        /*
-        int row = 0;
-        JTable jtable = new JTable();
-        TypeArticle ta = null;
-        
-        switch(TypeArticle.valueOf(this.TabsArticlesTypes.getTitleAt(this.TabsArticlesTypes.getSelectedIndex()))){
-            case ENTREE:
-                row = this.Entrees.getSelectedRow();
-                jtable = this.Entrees;
-                ta = TypeArticle.ENTREE;
-                break;
-            case PLAT:
-                row = this.Plats.getSelectedRow();
-                jtable = this.Plats;
-                ta = TypeArticle.PLAT;
-                break;
-            case DESSERT:
-                row = this.Desserts.getSelectedRow();
-                jtable = this.Desserts;
-                ta = TypeArticle.DESSERT;
-                break;
-            case BOISSON:
-                row = this.Boissons.getSelectedRow();
-                jtable = this.Boissons;
-                ta = TypeArticle.BOISSON;
-                break;
-            case MENU:
-                row = 0;
-                ta = TypeArticle.MENU;
-                break;
-            default:
-                break;
-        }
-        
-        DefaultTableModel model = (DefaultTableModel) this.SelectedArticlesTable.getModel();
-        if(row >= 0){
-            model.addRow(new Object[]{ jtable.getValueAt(row, 0), jtable.getValueAt(row, 1), jtable.getValueAt(row, 2), jtable.getValueAt(row, 3) });
-            
-            Article article = GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(this.windowCommande.getCodeCarte(), ta).get(jtable.getValueAt(row, 0));
-            Menu menu = (Menu) GlobalGraphicView.singletonGlobalGraphicView().getController().getArticlesByName(this.windowCommande.getCodeCarte(), TypeArticle.MENU).get(selectedMenu);
-            GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleMenu(article, menu);
-        }
-        */
     }//GEN-LAST:event_ButtonAddSelectedArticleActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

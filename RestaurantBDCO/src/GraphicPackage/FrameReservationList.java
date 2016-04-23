@@ -4,6 +4,7 @@ import InterfaceMVC.EnumView;
 import InterfaceMVC.Exceptions.*;
 import Modele.*;
 import java.util.*;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
@@ -41,8 +42,9 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     @Override
     public void dispose(){
         if(SingletonListCommande.singletonListCommande().isEmpty()){
-            super.dispose();
+            super.dispose();    // If the list of Commandes is empty, so the application can be closed
         }else{
+            // If the list of Commandes is not empty, it means there are commandes in need of payment 
             JOptionPane.showMessageDialog(this.getParent(), new CommandesNotSaved().getMessage());
         }
     }
@@ -61,11 +63,31 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         TableModel model = new SpecialJavaTableModel(tableMap, Reservation.class);
         
         this.ReservationsTable.setModel(model);
-        this.ReservationsTable.setAutoCreateRowSorter(true);
+        
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model) {
+            @Override
+            public boolean isSortable(int column) {
+                if (column <= 3) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        ;
+        };
+        this.ReservationsTable.setRowSorter(sorter);
+        
+        //this.ReservationsTable.setAutoCreateRowSorter(true);
 
         try{
             this.ReservationsTable.getColumnModel().getColumn(0).setMaxWidth(60);
+            this.ReservationsTable.getColumnModel().getColumn(3).setMaxWidth(200);
             this.ReservationsTable.getColumnModel().getColumn(4).setMaxWidth(60);
+            this.ReservationsTable.getColumnModel().getColumn(5).setMaxWidth(60);
+            
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            this.ReservationsTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
         }catch(Exception e){}
     }
     
@@ -79,7 +101,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         if(this.ReservationsTable.getSelectedRow() == -1){
             this.OpenSelectedReservation.setEnabled(false);
         }else{
-            this.selectedReservationCode = (Integer) this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0);
+            this.selectedReservationCode = Integer.valueOf(((String)this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0)).replace(".", ""));
             this.OpenSelectedReservation.setEnabled(true);
         }
     }

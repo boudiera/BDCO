@@ -29,13 +29,13 @@ public class SpecialJavaTableModel extends AbstractTableModel {
     public SpecialJavaTableModel(LinkedHashMap<String, Object> objects, Class type) {
         this.type = type;
         
-        if(     type.equals(Reservation.class) ||
+        if(     type.equals(Reservation.class) ||       // TableModel designed to receive Reservations, Commandes and Articles
                 type.equals(Commande.class)    ||
                 type.equals(Article.class)     ){
             this.objects = new LinkedHashMap<>(objects);
         }else{
             try {
-                throw new Exception("Not a valid type os objects");
+                throw new Exception("Not a valid type of objects");
             } catch (Exception ex) {
                 Logger.getLogger(SpecialJavaTableModel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -103,7 +103,9 @@ public class SpecialJavaTableModel extends AbstractTableModel {
         if(type.equals(Reservation.class)){
             switch (columnIndex) {
                 case 0:
-                    value = ((Reservation) obj).getCodeReservation();
+                    String code = Integer.toString(((Reservation) obj).getCodeReservation());
+                    String parse = ".....";
+                    value = parse.substring(code.length()) + code;
                     break;
                 case 1:
                     value = ((Reservation) obj).getDate().writeDateSortable();
@@ -182,27 +184,18 @@ public class SpecialJavaTableModel extends AbstractTableModel {
         return null;
     }
 
-    /* Override this if you want the values to be editable...
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        //....
-    }
-     */
-    /**
-     * This will return the user at the specified row...
-     *
-     * @param row
-     * @return
-     */
-    
+
+    // It returns the object stored in the row
     public Object getObjectAt(int row) {
         return (objects.values().toArray())[row];
     }
     
+    // It returns the object by its key
     public Object getObjectByKey(String key) {
         return objects.get(key);
     }
     
+    // It returns all the objects stored in the table
     public LinkedHashMap<String, Object> getAll(){
         return this.objects;
     }
