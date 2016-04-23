@@ -20,7 +20,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- *
+ * Vue textuelle d'ajout de reservation et de prise d'informations associées
  * @author mourinf
  */
 public class TextualAjoutReservation extends AbstractView {
@@ -29,6 +29,11 @@ public class TextualAjoutReservation extends AbstractView {
         this.setController(controller);
     }
 
+    /**
+     * Affichage de la vue: consigne et lecture des entrées clavier. Gestion des erreurs d'entrées.
+     * @param b 
+     *      boolean
+     */
     @Override
     public void showView(boolean b) {
         String jour, mois, annee, heure, minutes;
@@ -37,15 +42,16 @@ public class TextualAjoutReservation extends AbstractView {
         String nomClient;
         String tel;
         String choix;
+        String choix2;//pour l'exception de reservation existante
         boolean verificationFini = false;
         String service;
-        String localisation="";
+        String localisation = "";
         ReservationDate date;
         boolean choixLocalisationfini;
         int valeurChoix = 0;
 
         // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
-        System.out.println("----------------------Creation d'une réservation ---------------- \n");
+        System.out.println("----------------------Création d'une réservation ---------------- \n");
         System.out.println(" Veuillez entrer la date de la reservation : (xx/xx/xxxx) ");
         System.out.println(" Jour ( Entier ): ");
         jour = lectureEntree();
@@ -80,46 +86,47 @@ public class TextualAjoutReservation extends AbstractView {
                 // On demande au controlleur de vérifier la validité des champs rentrés
                 this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
 
+
                 // 0n cherche une localisation possible, on récupère grâce au controlleur une HashMap indexé sur le nom des localisation et qui renvoit une liste de tables qui peuvent être occupées
                 HashMap<String,ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
   
                 Set<String> s =  listTablesOccupeesParLocalisation.keySet();
+
                 Iterator<String> iterator = s.iterator();
                 
                 // Tableau qui contient les nomes de zones , indexé par des entiers 
                 ArrayList<String> nomZone = new ArrayList<>();
                 System.out.println("Endroit(s) de localisation possible --->");
                 int i = 1;
-                while(iterator.hasNext()){
+                while (iterator.hasNext()) {
                     String nomLocalisation = iterator.next();
                     nomZone.add(nomLocalisation);
-                    System.out.println(i+". " + nomLocalisation);
+                    System.out.println(i + ". " + nomLocalisation);
                     i++;
-                    
                 }
-              
-                do {   
-                   choixLocalisationfini = false; 
-                   System.out.println("Choississez la localisation voulue");
-                   choix = lectureEntree();
-                   try {
-                       valeurChoix = Integer.parseInt(choix);
-                       choixLocalisationfini = true;
-                   }
-                   catch (Exception e){  
-                       System.out.println(" La valeur entrée doit être un entier positif");
-                   }   
-                } while (!choixLocalisationfini || valeurChoix <= 0 || valeurChoix > listTablesOccupeesParLocalisation.size());
-                
-                localisation = nomZone.get(valeurChoix-1);
+
+
+               
+                do {
+                    choixLocalisationfini = false;
+                    System.out.println("Choississez la localisation voulue");
+                    choix = lectureEntree();
+                    try {
+                        valeurChoix = Integer.parseInt(choix);
+                        choixLocalisationfini = true;
+                    } catch (Exception e) {
+                        System.out.println(" La valeur entrée doit être un entier positif");
+                    }
+                } while (!choixLocalisationfini && valeurChoix > 0 && valeurChoix < listTablesOccupeesParLocalisation.size());
+
+                localisation = nomZone.get(valeurChoix - 1);
                 codeTable = listTablesOccupeesParLocalisation.get(localisation);
-                System.out.println("Vous avez choisis la zone " + localisation );
-                for( Table a : listTablesOccupeesParLocalisation.get(localisation)){
-                     System.out.println(a.getCodeTable() + " Location " + a.getLocation());
-                    
+                System.out.println("Vous avez choisis la zone " + localisation);
+                for (Table a : listTablesOccupeesParLocalisation.get(localisation)) {
+                    System.out.println(a.getCodeTable() + " Location " + a.getLocation());
+
                 }
-                
-   
+
                 verificationFini = true;
             } catch (ReservationException e) {
                 System.out.println(e.getMessage());
@@ -164,6 +171,13 @@ public class TextualAjoutReservation extends AbstractView {
                     System.out.println(" Veuillez entrer le numero de telephone ");
                     tel = lectureEntree();
                 }
+                else if (e instanceof ExistReservationException){
+                    do{
+                        System.out.println(e.getMessage());
+                        choix2=lectureEntree();
+                    }while (!choix2.equalsIgnoreCase("v"));
+                }
+                    
 
             }
 
@@ -180,18 +194,13 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println("7.Telephone : " + tel);
 
         do {
-            //On vérifie si une meme personne a pas déjà reservé pour le même jour et pour le même service
-            for (Reservation r : this.getController().getReservationList()){
-                if (r.getClientName().equals(nomClient) && r.getDate().isSameDay(date) && r.getService().equals(Service.valueOf(service))){
-                    System.out.println("Une réservation au nom de "+nomClient+" pour le même jour et le même service a déjà été enregistrée, voulez-vous valider quand même?");
-                }
-            }
+           
             System.out.println("Appuyer sur v pour valider ou q pour l'annuler : ");
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
-                this.getController().creerReservation(codeTable,Integer.parseInt(nbPersonnes),Integer.parseInt(heure),Integer.parseInt(minutes),nomClient,tel,new java.sql.Date(Integer.parseInt(annee)-1900, Integer.parseInt(mois)-1, Integer.parseInt(jour)),Service.valueOf(service));
+                this.getController().creerReservation(codeTable, Integer.parseInt(nbPersonnes), Integer.parseInt(heure), Integer.parseInt(minutes), nomClient, tel, new java.sql.Date(Integer.parseInt(annee) - 1900, Integer.parseInt(mois) - 1, Integer.parseInt(jour)), Service.valueOf(service));
                 System.out.println(">>>>>>>>>>>>>>>> Reservation validée ! <<<<<<<<<<<<<<<<<<<");
-               
+
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
                 return;
             } else if (choix.equalsIgnoreCase("q")) {
@@ -202,6 +211,11 @@ public class TextualAjoutReservation extends AbstractView {
 
     }
 
+    /**
+     * 
+     * @return 
+     *      String. Retourne le choix entré par l'utilisateur. Quitte l'application si on entre le caractère q. 
+     */
     private String lectureEntree() {
 
         Scanner sc = new Scanner(System.in);
