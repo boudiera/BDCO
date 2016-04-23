@@ -42,6 +42,7 @@ public class TextualAjoutReservation extends AbstractView {
         String nomClient;
         String tel;
         String choix;
+        String choix2;//pour l'exception de reservation existante
         boolean verificationFini = false;
         String service;
         String localisation = "";
@@ -95,7 +96,6 @@ public class TextualAjoutReservation extends AbstractView {
                     nomZone.add(nomLocalisation);
                     System.out.println(i + ". " + nomLocalisation);
                     i++;
-
                 }
 
                 boolean choixLocalisationfini;
@@ -181,6 +181,13 @@ public class TextualAjoutReservation extends AbstractView {
                     System.out.println(" Veuillez entrer le numero de telephone ");
                     tel = lectureEntree();
                 }
+                else if (e instanceof ExistReservationException){
+                    do{
+                        System.out.println(e.getMessage());
+                        choix2=lectureEntree();
+                    }while (!choix2.equalsIgnoreCase("v"));
+                }
+                    
 
             }
 
@@ -197,12 +204,7 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println("7.Telephone : " + tel);
 
         do {
-            //On vérifie si une meme personne a pas déjà reservé pour le même jour et pour le même service
-            for (Reservation r : this.getController().getReservationList()) {
-                if (r.getClientName().equals(nomClient) && r.getDate().isSameDay(date) && r.getService().equals(Service.valueOf(service))) {
-                    System.out.println("Une réservation au nom de " + nomClient + " pour le même jour et le même service a déjà été enregistrée, voulez-vous valider quand même?");
-                }
-            }
+           
             System.out.println("Appuyer sur v pour valider ou q pour l'annuler : ");
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
