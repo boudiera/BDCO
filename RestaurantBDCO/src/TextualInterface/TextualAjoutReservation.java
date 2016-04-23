@@ -84,9 +84,11 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println(" Veuillez entrer le numero de telephone ");
         tel = lectureEntree();
 
+        //Verification des informations rentrées, en appelant la fonction du controller VerifyAddReservation
         while (!verificationFini) {
             try {
                 // On demande au controlleur de vérifier la validité des champs rentrés
+
                 if (!validationConfirm) // On verifie que l'on ne vient pas de deja valider le reservation
                 {
                     this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
@@ -102,7 +104,10 @@ public class TextualAjoutReservation extends AbstractView {
                 // Tableau qui contient les nomes de zones , indexé par des entiers 
                 ArrayList<String> nomZone = new ArrayList<>();
                 System.out.println("Endroit(s) de localisation possible --->");
+
                 i = 1;
+
+                //Affichage des choix à l'utilisateur
                 while (iterator.hasNext()) {
                     String nomLocalisation = iterator.next();
                     nomZone.add(nomLocalisation);
@@ -110,6 +115,7 @@ public class TextualAjoutReservation extends AbstractView {
                     i++;
                 }
 
+                //Gestion du choix de localisation. Cette étape se lance si toutes les informations sont valides
                 do {
                     choixLocalisationfini = false;
                     System.out.println("Choississez la localisation voulue");
@@ -127,20 +133,18 @@ public class TextualAjoutReservation extends AbstractView {
                 System.out.println("Vous avez choisis la zone " + localisation);
                 for (Table a : listTablesOccupeesParLocalisation.get(localisation)) {
                     System.out.println(a.getCodeTable() + " Location " + a.getLocation());
-
                 }
+                verificationFini = true; //
 
-                verificationFini = true;
+                //Recupération des exceptions
             } catch (ReservationException e) {
                 System.out.println(e.getMessage());
                 if (e instanceof WrongDateException || e instanceof MonthException || e instanceof JourException || e instanceof ParseDateException || e instanceof RestaurantCompletException) {
                     System.out.println(" Veuillez entrer la date de la reservation : (xx/xx/xxxx) ");
                     System.out.println(" Jour ( Entier ): ");
                     jour = lectureEntree();
-
                     System.out.println(" Mois ( Entier ): ");
                     mois = lectureEntree();
-
                     System.out.println(" Année ( Entier ) :  ");
                     annee = lectureEntree();
 
@@ -149,16 +153,13 @@ public class TextualAjoutReservation extends AbstractView {
                         System.out.println(" Veuillez entrer l'horaire de la reservation au format 24h");
                         System.out.println("Heure ( Entier ) : ");
                         heure = lectureEntree();
-
                         System.out.println("Minutes (Entier)  :");
                         minutes = lectureEntree();
-
                     }
                 } else if (e instanceof HeureException || e instanceof MinuteException || e instanceof ParseHeureException) {
                     System.out.println(" Veuillez entrer l'horaire de la reservation au format 24h");
                     System.out.println("Heure ( Entier ) : ");
                     heure = lectureEntree();
-
                     System.out.println("Minutes (Entier)  :");
                     minutes = lectureEntree();
                 } else if (e instanceof ParseServiceException) {
@@ -179,11 +180,10 @@ public class TextualAjoutReservation extends AbstractView {
                     } while (!choix.equalsIgnoreCase("v"));
                     validationConfirm = true;
                 }
-
             }
-
         }
 
+        //Toutes les informations sont bonnes, on affiche le récapitulatif avant la validation
         date = new ReservationDate(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Integer.parseInt(heure), Integer.parseInt(minutes));
         System.out.println("----------------------- RECAPITULATIF DE LA RESERVATION ------------------------ ");
         System.out.println("1.Date : " + date.writeDayMonth());
@@ -194,14 +194,13 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println("6.Nom client : " + nomClient);
         System.out.println("7.Telephone : " + tel);
 
+        // on peut créer l'objet reservation si on a la validation
         do {
-
             System.out.println("Appuyer sur v pour valider ou q pour l'annuler : ");
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
                 this.getController().creerReservation(codeTable, Integer.parseInt(nbPersonnes), Integer.parseInt(heure), Integer.parseInt(minutes), nomClient, tel, new java.sql.Date(Integer.parseInt(annee) - 1900, Integer.parseInt(mois) - 1, Integer.parseInt(jour)), Service.valueOf(service));
                 System.out.println(">>>>>>>>>>>>>>>> Reservation validée ! <<<<<<<<<<<<<<<<<<<");
-
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
                 return;
             } else if (choix.equalsIgnoreCase("q")) {
@@ -209,7 +208,6 @@ public class TextualAjoutReservation extends AbstractView {
                 this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
             }
         } while (true);
-
     }
 
     /**
