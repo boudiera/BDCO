@@ -70,6 +70,7 @@ public class TextualSelectionReservation extends AbstractView{
                 + "Appuyez sur q pour quitter");
     }
     
+    // Permet de gerer les evenements crée par la lecture du clavier
     public void gestionEvent(){
         int valeurChoix=0;
         

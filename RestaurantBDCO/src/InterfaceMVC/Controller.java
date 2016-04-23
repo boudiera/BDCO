@@ -183,11 +183,13 @@ public class Controller {
         c.addArticle(a);
     }
 
-    public void removeArticleCommande(Article a, Commande c) {
+    // Enleve un article dans une commande
+    public void removeArticleCommande(Article a, Commande c){
         c.removeArticle(a);
     }
-
-    public void endCommande(Commande comm) {
+    
+    // Finalisation de la commande on envoit les données à la base de donnée
+    public void endCommande(Commande comm){
         Factory.singletonFactory().getInsertionFactory().addCommande(comm);
     }
 
@@ -201,11 +203,14 @@ public class Controller {
         return (m.contientPlat()) && (m.contientAutreQuePlat());
     }
 
-    public ArrayList<Article> getArticles(int codeCarte, TypeArticle typeArticle) {
+    
+    // Permet d'obtenir tout les articles d'un type donnée et d'une carte donnée
+    public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
         return Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle);
     }
-
-    public HashMap<String, Article> getArticlesByName(int codeCarte, TypeArticle typeArticle) {
+    
+    // Permet d'obtenir tout les articles d'un type donnée et d'une carte donnée indexé par leur nom dans une hashmap
+    public HashMap<String, Article> getArticlesByName (int codeCarte, TypeArticle typeArticle){
         HashMap<String, Article> list = new HashMap<>();
         for (Article a : Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle)) {
             list.put(a.getName(), a);
@@ -213,7 +218,9 @@ public class Controller {
         return list;
     }
 
-    public HashMap<String, Article> getArticlesMenuByName(TypeArticle typeArticle, String nomMenu) {
+    //  Permet d'obtenir tout les articles d'un type donnée et d'une carte donnée et d'un menu donné indexé par leur nom dans une hashmap
+    public HashMap<String, Article> getArticlesMenuByName(TypeArticle typeArticle, String nomMenu){
+
         HashMap<String, Article> list = new HashMap<>();
         for (Article a : Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu)) {
             list.put(a.getName(), a);
@@ -221,15 +228,16 @@ public class Controller {
         return list;
     }
 
-    public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu) {
-        ArrayList<Article> listArticles = new ArrayList<>();
-        listArticles = Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu);
+     //  Permet d'obtenir tout les articles d'un type donnée et d'un menu donné 
+    public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu){
+        ArrayList<Article> listArticles=new ArrayList<>();
+        listArticles=Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu);
         return listArticles;
     }
-
-    public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu) {
-        ArrayList<TypeArticle> list = new ArrayList<>();
-        list = Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
+    //  Permet d'obtenir tout les articles d'un menu donné          
+    public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu){
+        ArrayList<TypeArticle> list=new ArrayList<>();
+        list=Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
         return list;
     }
 
@@ -243,18 +251,38 @@ public class Controller {
         SingletonListCommande.singletonListCommande().removeCommand(codeReservation, commande.getIdentifier());
     }
 
-    public boolean containsAtLeastOneInteger(String chaine) {
-        int index = 0;
-        while (index < chaine.length()) {
-            try {
-                Integer.parseInt(chaine.substring(index, index + 1));
-                return true;
-            } catch (NumberFormatException e) {
-                index++;
-            }
-        }
-        return false;
+    
+    // Permet de verifier si une chaine de caract-re contient uniquement que des caractères
+    public boolean contientUniquementLettre(String chaine) {
+                int index =0;
+                while(index < chaine.length()) {
+                    try { 
+                        Integer.parseInt(chaine.substring(index,index+1));
+                             return false;
+                        }    
+                    catch (NumberFormatException e){
+                            index++;
+                    }
+                }    
+		return true;
+	}
+    
+    
+     // Permet de verifier si une chaine de caract-re contient uniquement que des caractères
+    public boolean contientUniquementChiffre(String chaine) {
+                int index =0;
+                while(index < chaine.length()) {
+                    try { 
+                        Integer.parseInt(chaine.substring(index,index+1));
+                         index++;       
+                        }    
+                    catch (NumberFormatException e){
+                        return false;   
+                    }
+                }    
+		return true;
     }
+    
 
     // Recupère les tables libres, renvoit une exception si il n'y en pas pas
     public ArrayList<Table> getTablesLibres(int year, int month, int day, Service service) throws RestaurantCompletException {
@@ -363,15 +391,16 @@ public class Controller {
         }
 
         // Verification du bon format pour le client
-        if (containsAtLeastOneInteger(nomClient)) {
+        if( !contientUniquementLettre(nomClient)){
             throw new ParseNomClientException();
         }
+        
+    
+       if (!contientUniquementChiffre(phone)){
 
-        try {
-            Integer.parseInt(phone);
-        } catch (Exception e) {
             throw new ParseTelephoneException();
         }
+      
         //gestion téléphone
         if (phone.length() != 10) {
             throw new TelephoneException();

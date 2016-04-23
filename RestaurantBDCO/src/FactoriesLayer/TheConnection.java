@@ -13,13 +13,13 @@ public class TheConnection {
     public void open () {
         try {
             //  Enregistrement  du  driver  Oracle
-            System.out.print("Loading Oracle driver... ");
+          //  System.out.print("Loading Oracle driver... ");
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            System.out.println("loaded");
+            //System.out.println("loaded");
             //  Etablissement  de la  connexion
-            System.out.print("Connecting  to the database ... ");
+           // System.out.print("Connecting  to the database ... ");
             conn = DriverManager.getConnection(info.CONN_URL, info.USER, info.PASSWD);
-            System.out.println("connected");
+            //System.out.println("connected");
         } catch (SQLException  e) {
             System.err.println("failed");
             e.printStackTrace (System.err);

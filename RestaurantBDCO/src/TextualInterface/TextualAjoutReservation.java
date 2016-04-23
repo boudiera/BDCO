@@ -47,6 +47,8 @@ public class TextualAjoutReservation extends AbstractView {
         String service;
         String localisation = "";
         ReservationDate date;
+        boolean choixLocalisationfini;
+        int valeurChoix = 0;
 
         // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
         System.out.println("----------------------Création d'une réservation ---------------- \n");
@@ -82,13 +84,16 @@ public class TextualAjoutReservation extends AbstractView {
         //Verification des informations rentrées, en appelant la fonction du controller VerifyAddReservation
         while (!verificationFini) {
             try {
+                // On demande au controlleur de vérifier la validité des champs rentrés
                 this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
-                
-                //Gestion de la localisation
-                HashMap<String, ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
-                Set<String> s = listTablesOccupeesParLocalisation.keySet();
+ 
+                // 0n cherche une localisation possible, on récupère grâce au controlleur une HashMap indexé sur le nom des localisation et qui renvoit une liste de tables qui peuvent être occupées
+                HashMap<String,ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
+  
+                Set<String> s =  listTablesOccupeesParLocalisation.keySet();
                 Iterator<String> iterator = s.iterator();
-                // Tableau qui contient les nomes de zones , indexé par des entiers ( pour la selection des zones après )
+                
+                // Tableau qui contient les nomes de zones , indexé par des entiers 
                 ArrayList<String> nomZone = new ArrayList<>();
                 System.out.println("Endroit(s) de localisation possible --->");
                 int i = 1;
@@ -99,9 +104,6 @@ public class TextualAjoutReservation extends AbstractView {
                     System.out.println(i + ". " + nomLocalisation);
                     i++;
                 }
-
-                boolean choixLocalisationfini;
-                int valeurChoix = 0;
 
                 //Gestion du choix de localisation
                 do {
@@ -117,21 +119,6 @@ public class TextualAjoutReservation extends AbstractView {
                 } while (!choixLocalisationfini && valeurChoix > 0 && valeurChoix < listTablesOccupeesParLocalisation.size());
 
                 localisation = nomZone.get(valeurChoix - 1);
-
-                do {   
-                   choixLocalisationfini = false; 
-                   System.out.println("Choississez la localisation voulue");
-                   choix = lectureEntree();
-                   try {
-                       valeurChoix = Integer.parseInt(choix);
-                       choixLocalisationfini = true;
-                   }
-                   catch (Exception e){  
-                       System.out.println(" La valeur entrée doit être un entier positif");
-                   }   
-                } while (!choixLocalisationfini || valeurChoix <= 0 || valeurChoix > listTablesOccupeesParLocalisation.size());
-                
-                localisation = nomZone.get(valeurChoix-1);
                 codeTable = listTablesOccupeesParLocalisation.get(localisation);
                 System.out.println("Vous avez choisis la zone " + localisation);
                 for (Table a : listTablesOccupeesParLocalisation.get(localisation)) {
@@ -163,7 +150,6 @@ public class TextualAjoutReservation extends AbstractView {
                         minutes = lectureEntree();
 
                     }
-
                 } else if (e instanceof HeureException || e instanceof MinuteException || e instanceof ParseHeureException) {
                     System.out.println(" Veuillez entrer l'horaire de la reservation au format 24h");
                     System.out.println("Heure ( Entier ) : ");

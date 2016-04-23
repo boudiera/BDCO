@@ -125,25 +125,15 @@ public class TextualPriseDeMenu extends AbstractView {
             case ENTREE:
                 // Appel d'une fonction du controller qui nous renvois une liste d'article d'entrées pour un menu donné
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.ENTREE, this.menu.getName());
-                //choixArticles.add(new Article("Salade", TypeArticle.ENTREE, 12, "caca"));
-                //choixArticles.add(new Article("Saucisse", TypeArticle.ENTREE, 10, "ppp"));
-                //choixArticles.add(new Article("Carotte", TypeArticle.ENTREE, 5, "lol"));
                 titreSousMenu = "--------------------- Affichage des entrées disponibles -------------------------\n";
 
                 break;
             case PLAT:
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.PLAT, this.menu.getName());
-
-                //choixArticles.add(new Article("Steak", TypeArticle.PLAT, 12, "viande"));
-                //choixArticles.add(new Article("Poulet", TypeArticle.PLAT, 10, "viande"));
-                //choixArticles.add(new Article("Poisson panné", TypeArticle.PLAT, 5, "poisson"));
-                // Appel d'une fonction du controller qui nous renvois une liste d'article de plats  pour un menu donné
                 titreSousMenu = "--------------------- Affichage des plats disponibles -------------------------\n";
                 break;
             case DESSERT:// Appel d'une fonction du controller qui nous renvois une liste d'article de desserts  pour un menu donné
                 choixArticles= this.getController().getArticlesMenu(TypeArticle.DESSERT, this.menu.getName());
-                //choixArticles.add(new Article("creme", TypeArticle.DESSERT, 12, "viande"));
-                //choixArticles.add(new Article("chocolat", TypeArticle.DESSERT, 10, "viande"));
                 titreSousMenu = "--------------------- Affichage des desserts disponibles -------------------------\n";
                 break;
             case BOISSON:// Appel d'une fonction du controller qui nous renvois une liste d'article de boissons  pour un menu donné
