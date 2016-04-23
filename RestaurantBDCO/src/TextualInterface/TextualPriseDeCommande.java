@@ -166,7 +166,7 @@ public class TextualPriseDeCommande extends AbstractView {
                 System.out.println("la valeur entrée est un entier positif et doit etre affiché dans la liste des articles ");
             }
         }
-        // Si on a choisi un menu comme article la quantité est 1 // Si on est dans une vue de menu la quantité d'article est forcément 1
+        // Si on a choisi un menu comme article la quantité est 1 
         if (!estVueMenu) {
             while (!quantiteSelectione) {
                 try {
@@ -190,11 +190,10 @@ public class TextualPriseDeCommande extends AbstractView {
         else {
             this.getController().setView(new TextualPriseDeMenu(this.getController(), (Menu) choixArticles.get(articleIndex - 1), this, commande));
         }
-        // Ajout a la liste des articles + actualisation du prix
+        // Ajout à la liste des articles + actualisation du prix
         for (int i = 0; i < quantite; i++) {
             this.getController().addArticleCommande(choixArticles.get(articleIndex - 1), commande);
         }
-       
         System.out.println(" ------ >> Article " + choixArticles.get(articleIndex - 1).getName() + " selectionné en quantité " + quantite );
        
     }

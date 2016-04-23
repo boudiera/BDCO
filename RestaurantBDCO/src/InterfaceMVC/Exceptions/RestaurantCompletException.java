@@ -12,7 +12,7 @@ package InterfaceMVC.Exceptions;
 public class RestaurantCompletException extends ReservationException {
 
     public RestaurantCompletException() {
-        message = " Restaurant complet pour cette date là ";
+        message = " Il n'y a pas assez de place dans le restaurant à cette date là ";
     }
     
     
