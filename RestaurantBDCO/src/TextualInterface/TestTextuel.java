@@ -44,12 +44,12 @@ public class TestTextuel {
         Factory.singletonFactory().setRequeteFactory(new ConcreteRequeteFactory(connection));
         Factory.singletonFactory().setInsertionFactory(new ConcreteInsertionFactory(connection));
         // Decomenter pour lancer le test sur l'executable des reservations
-        TextualReservationList.singletonViewTextualReservationList().setController(controller);
-        controller.setView(TextualReservationList.singletonViewTextualReservationList());
+        //TextualReservationList.singletonViewTextualReservationList().setController(controller);
+        //controller.setView(TextualReservationList.singletonViewTextualReservationList());
        
         // Decomenter pour lancer le test sur l'executable des commandes
-      //TextualSelectionReservation.singletonViewTextualReservationList().setController(controller);
-       //controller.setView(TextualSelectionReservation.singletonViewTextualReservationList());
+      TextualSelectionReservation.singletonViewTextualReservationList().setController(controller);
+       controller.setView(TextualSelectionReservation.singletonViewTextualReservationList());
     }
 
 }

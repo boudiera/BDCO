@@ -12,6 +12,7 @@ import Modele.Commande;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -30,18 +31,24 @@ public class TextualFacture extends AbstractView {
 
     @Override
     public void showView(boolean b) {
+        String choix;
         System.out.println("----------------------- FACTURE --------------------");
-        ArrayList<Article> listArticle= this.getController().getFacture(codeReservation);
+        ArrayList<Article> listArticle = this.getController().getFacture(codeReservation);
 
         HashMap<String, Integer> regroupeQuantite = new HashMap<>();
         HashMap<String, Float> regroupePrix = new HashMap<>();
-        for (Article a  : listArticle) {  
+        for (Article a : listArticle) {
             a.printArticle();
-            prix = prix + a.getPrice()*a.getQuantity();
+            prix = prix + a.getPrice() * a.getQuantity();
         }
 
-        System.out.println("Prix total : " + prix);
+        System.out.println("--->>> Prix total : " + prix);
+        do {
+            System.out.println("Appuyer sur v pour valider et revenir au menu des réservations");
+            Scanner sc = new Scanner(System.in);
+            choix = sc.nextLine();
 
+        } while (!choix.equalsIgnoreCase("v"));
         this.getController().setView(TextualSelectionReservation.singletonViewTextualReservationList());
     }
 

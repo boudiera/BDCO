@@ -397,7 +397,6 @@ public class Controller {
         
     
        if (!contientUniquementChiffre(phone)){
-
             throw new ParseTelephoneException();
         }
       
@@ -407,7 +406,7 @@ public class Controller {
         }
 
         //On vérifie si une meme personne a pas déjà reservé pour le même jour et pour le même service
-               ReservationDate date = new ReservationDate(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute));
+        ReservationDate date = new ReservationDate(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute));
 
         for (Reservation r : this.getReservationList()) {
             if (r.getClientName().equals(nomClient) && r.getDate().isSameDay(date) && r.getService().equals(Service.valueOf(service))) {

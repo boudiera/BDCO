@@ -21,6 +21,7 @@ import java.util.Set;
 
 /**
  * Vue textuelle d'ajout de reservation et de prise d'informations associées
+ *
  * @author mourinf
  */
 public class TextualAjoutReservation extends AbstractView {
@@ -30,9 +31,10 @@ public class TextualAjoutReservation extends AbstractView {
     }
 
     /**
-     * Affichage de la vue: consigne et lecture des entrées clavier. Gestion des erreurs d'entrées.
-     * @param b 
-     *      boolean
+     * Affichage de la vue: consigne et lecture des entrées clavier. Gestion des
+     * erreurs d'entrées.
+     *
+     * @param b boolean
      */
     @Override
     public void showView(boolean b) {
@@ -42,14 +44,15 @@ public class TextualAjoutReservation extends AbstractView {
         String nomClient;
         String tel;
         String choix;
-        String choix2;//pour l'exception de reservation existante
-        boolean verificationFini = false;
+
         String service;
         String localisation = "";
         ReservationDate date;
         boolean choixLocalisationfini;
+        boolean verificationFini = false;
+        boolean validationConfirm = false;
         int valeurChoix = 0;
-
+        int i;
         // Creation de l'objet Textual_AjoutReservation au fur et à mesure que l'on rentre les champs de donnée
         System.out.println("----------------------Création d'une réservation ---------------- \n");
         System.out.println(" Veuillez entrer la date de la reservation : (xx/xx/xxxx) ");
@@ -84,20 +87,22 @@ public class TextualAjoutReservation extends AbstractView {
         while (!verificationFini) {
             try {
                 // On demande au controlleur de vérifier la validité des champs rentrés
-                this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
-
+                if (!validationConfirm) // On verifie que l'on ne vient pas de deja valider le reservation
+                {
+                    this.getController().verifyAddReservation(annee, mois, jour, heure, minutes, nbPersonnes, tel, service, nomClient);
+                }
 
                 // 0n cherche une localisation possible, on récupère grâce au controlleur une HashMap indexé sur le nom des localisation et qui renvoit une liste de tables qui peuvent être occupées
-                HashMap<String,ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
-  
-                Set<String> s =  listTablesOccupeesParLocalisation.keySet();
+                HashMap<String, ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes);
+
+                Set<String> s = listTablesOccupeesParLocalisation.keySet();
 
                 Iterator<String> iterator = s.iterator();
-                
+
                 // Tableau qui contient les nomes de zones , indexé par des entiers 
                 ArrayList<String> nomZone = new ArrayList<>();
                 System.out.println("Endroit(s) de localisation possible --->");
-                int i = 1;
+                i = 1;
                 while (iterator.hasNext()) {
                     String nomLocalisation = iterator.next();
                     nomZone.add(nomLocalisation);
@@ -105,8 +110,6 @@ public class TextualAjoutReservation extends AbstractView {
                     i++;
                 }
 
-
-               
                 do {
                     choixLocalisationfini = false;
                     System.out.println("Choississez la localisation voulue");
@@ -170,14 +173,12 @@ public class TextualAjoutReservation extends AbstractView {
                 } else if (e instanceof TelephoneException || e instanceof ParseTelephoneException) {
                     System.out.println(" Veuillez entrer le numero de telephone ");
                     tel = lectureEntree();
+                } else if (e instanceof ExistReservationException) {
+                    do {
+                        choix = lectureEntree();
+                    } while (!choix.equalsIgnoreCase("v"));
+                    validationConfirm = true;
                 }
-                else if (e instanceof ExistReservationException){
-                    do{
-                        System.out.println(e.getMessage());
-                        choix2=lectureEntree();
-                    }while (!choix2.equalsIgnoreCase("v"));
-                }
-                    
 
             }
 
@@ -194,7 +195,7 @@ public class TextualAjoutReservation extends AbstractView {
         System.out.println("7.Telephone : " + tel);
 
         do {
-           
+
             System.out.println("Appuyer sur v pour valider ou q pour l'annuler : ");
             choix = lectureEntree();
             if (choix.equalsIgnoreCase("v")) {
@@ -212,9 +213,9 @@ public class TextualAjoutReservation extends AbstractView {
     }
 
     /**
-     * 
-     * @return 
-     *      String. Retourne le choix entré par l'utilisateur. Quitte l'application si on entre le caractère q. 
+     *
+     * @return String. Retourne le choix entré par l'utilisateur. Quitte
+     * l'application si on entre le caractère q.
      */
     private String lectureEntree() {
 
