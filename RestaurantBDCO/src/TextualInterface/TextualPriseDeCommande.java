@@ -25,6 +25,7 @@ public class TextualPriseDeCommande extends AbstractView {
     private Commande commande;
     private int numCommande;
     private int codeReservation;
+    private int codeCarte;
 
     public TextualPriseDeCommande(Controller controller, int codeReservation, int numCommande) {
         this.numCommande = numCommande;
@@ -35,7 +36,8 @@ public class TextualPriseDeCommande extends AbstractView {
 
     @Override
     public void showView(boolean b) {
-
+        
+        this.codeCarte = this.getController().getCodeCarte(codeReservation);
         while (!commandeFinie) {
 
             System.out.println("--------------------- PRISE DE COMMANDE -------------------------");
@@ -56,8 +58,7 @@ public class TextualPriseDeCommande extends AbstractView {
             lectureEntreeMenu();
 
         }
-        
-       
+            
         System.out.println("------------- Commande numéro " + this.commande.getIdentifier() + " Enregistrée ------------");
          // Appel d'une fonction du controller qui enregistre la commande dans l'application
         this.getController().addCommande(commande);

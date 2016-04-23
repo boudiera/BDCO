@@ -105,7 +105,7 @@ public class TextualAjoutReservation extends AbstractView {
                    catch (Exception e){  
                        System.out.println(" La valeur entrée doit être un entier positif");
                    }   
-                } while (!choixLocalisationfini && valeurChoix > 0 && valeurChoix < listTablesOccupeesParLocalisation.size());
+                } while (!choixLocalisationfini || valeurChoix <= 0 || valeurChoix > listTablesOccupeesParLocalisation.size());
                 
                 localisation = nomZone.get(valeurChoix-1);
                 codeTable = listTablesOccupeesParLocalisation.get(localisation);
