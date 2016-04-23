@@ -407,4 +407,45 @@ connexion.open();
         }       
        }
     
+    @Override
+    public ArrayList<Article> getFacture(int codeReservation) {
+        connexion.open();
+        String STMT_1 = "select distinct A.NomArticle, A.TypeArticle, P.PrixActuel, A.Specialite, C.Quantite "
+                        + "from Reservation R, Article A, EstElement P, Service S, Commande C "
+                        + "where R.Jour = S.Jour "
+                        + "and R.NomService = S.NomService "
+                        + "and S.CodeCarte = P.CodeCarte "
+                        + "and R.CodeReservation = ? "
+                        + "and A.NomArticle = P.NomArticle "
+                        + "and C.CodeReservation = R.CodeReservation "
+                        + "and C.NomArticle = A.NomArticle";
+                
+        
+        try {
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1, codeReservation);
+            
+            //  Execution  de la  requete
+            ResultSet rsetFacture = stmt.executeQuery ();
+            
+            //  Conversion  du  resultat  en ArrayList <Table>
+            ArrayList <Article> resListArt = new ArrayList<> ();
+            while (rsetFacture.next()) {
+                Article a;
+                a = new ConcreteArticle(rsetFacture.getString(1), TypeArticle.valueOf(rsetFacture.getString(2)), rsetFacture.getFloat(3), rsetFacture.getString(4));
+                a.setQuantity(rsetFacture.getInt(5));
+                resListArt.add(a);
+            }
+            
+            //  Fermeture
+            rsetFacture.close();
+            stmt.close();
+            connexion.close();
+            return resListArt;
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }    
+    }
 }
