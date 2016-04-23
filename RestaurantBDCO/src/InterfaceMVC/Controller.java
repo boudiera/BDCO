@@ -58,31 +58,6 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().getCodeCarte(codeReservation);
     }
     
-    //fonction de tri de Reservation, de la plus récente à la plus éloignée
-      public ArrayList<Reservation> triListeReservation(ArrayList<Reservation> listNonTriee){
-        ArrayList<Reservation> listTriee=new ArrayList<>();
-        //tant qu'on a pas tous les éléments de la liste non triée
-        while(listTriee.size()<listNonTriee.size()){
-            
-            for(Reservation res : listNonTriee){
-                if(listTriee.isEmpty())
-                    listTriee.add(res);
-                else{
-                    boolean ok=false;
-                    int indexTriee=0; // l'indice de la liste triee, afin de placer une reservation avant ou apres
-                    while(!ok){
-                        if(res.EstPlusRecente(listTriee.get(indexTriee))|| listTriee.size()==indexTriee){ //si la date est plus recente ou si elle est plus ancienne que toutes les dates de la liste
-                            listTriee.add(indexTriee, res);
-                            ok=true;
-                            }
-                        else
-                            indexTriee++;
-                    }    
-                } 
-            }
-        }
-        return listTriee;
-    }
     
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces){
