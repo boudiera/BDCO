@@ -410,7 +410,7 @@ connexion.open();
     @Override
     public ArrayList<Article> getFacture(int codeReservation) {
         connexion.open();
-        String STMT_1 = "select distinct A.NomArticle, A.TypeArticle, P.PrixActuel, A.Specialite, C.Quantite "
+        String STMT_1 = "select distinct A.NomArticle, A.TypeArticle, P.PrixActuel, A.NomSpecialite, C.Quantite "
                         + "from Reservation R, Article A, EstElement P, Service S, Commande C "
                         + "where R.Jour = S.Jour "
                         + "and R.NomService = S.NomService "

@@ -72,11 +72,9 @@ public class TextualSelectionReservation extends AbstractView{
     
     public void gestionEvent(){
         int valeurChoix=0;
-        boolean finChoix=false;
+        
         ArrayList<Reservation> listReservation=this.getController().getReservationList();
         do { 
-            afficheChoix();
-            boolean choixOK=false;
             afficheChoix();
             Scanner sc = new Scanner(System.in);
             String choix = sc.nextLine();
@@ -87,13 +85,13 @@ public class TextualSelectionReservation extends AbstractView{
                     valeurChoix = Integer.parseInt(choix);
                     for(Reservation res : listReservation){
                         if (res.getCodeReservation()==valeurChoix)
-                            finChoix=true;    
-                }
+                            this.getController().setView(new TextualMenuCommande(res.getCodeReservation(),0,this.getController()));
+                    }
                 }
                 catch (Exception e){  
                     System.out.println(" La valeur entrée doit être un entier positif");
                 }    
             }  
-        } while (!finChoix); 
+        } while (true); 
     }
 }

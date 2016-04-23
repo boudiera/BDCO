@@ -43,6 +43,10 @@ public abstract class Article {
         this.type = type;
     }
 
+    public void printArticle(){
+        System.out.println(name + "x"+quantity);
+    }
+    
     @Override
     public String toString() {
         String res = "NomArticle : " + name + " Prix : " + price + " Spécialité : " + speciality;
