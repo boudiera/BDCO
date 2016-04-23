@@ -58,6 +58,10 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().getCodeCarte(codeReservation);
     }
     
+    public  ArrayList<Article> getFacture(int codeReservation){
+        return Factory.singletonFactory().getRequeteFactory().getFacture(codeReservation);
+    }
+    
     
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces){
@@ -165,6 +169,7 @@ public class Controller {
         
         // Ajout dans la mémoire de l'application
         SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(),commande);
+    
     }
     
     // Ajoute un article dans une commande

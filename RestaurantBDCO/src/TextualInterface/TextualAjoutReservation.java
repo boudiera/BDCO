@@ -100,6 +100,7 @@ public class TextualAjoutReservation extends AbstractView {
 
                 boolean choixLocalisationfini;
                 int valeurChoix = 0;
+<<<<<<< HEAD
                 do {
                     choixLocalisationfini = false;
                     System.out.println("Choississez la localisation voulue");
@@ -113,6 +114,21 @@ public class TextualAjoutReservation extends AbstractView {
                 } while (!choixLocalisationfini && valeurChoix > 0 && valeurChoix < listTablesOccupeesParLocalisation.size());
 
                 localisation = nomZone.get(valeurChoix - 1);
+
+                do {   
+                   choixLocalisationfini = false; 
+                   System.out.println("Choississez la localisation voulue");
+                   choix = lectureEntree();
+                   try {
+                       valeurChoix = Integer.parseInt(choix);
+                       choixLocalisationfini = true;
+                   }
+                   catch (Exception e){  
+                       System.out.println(" La valeur entrée doit être un entier positif");
+                   }   
+                } while (!choixLocalisationfini || valeurChoix <= 0 || valeurChoix > listTablesOccupeesParLocalisation.size());
+                
+                localisation = nomZone.get(valeurChoix-1);
                 codeTable = listTablesOccupeesParLocalisation.get(localisation);
                 System.out.println("Vous avez choisis la zone " + localisation);
                 for (Table a : listTablesOccupeesParLocalisation.get(localisation)) {

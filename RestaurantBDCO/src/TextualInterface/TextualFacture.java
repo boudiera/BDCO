@@ -31,36 +31,18 @@ public class TextualFacture extends AbstractView {
     @Override
     public void showView(boolean b) {
         System.out.println("----------------------- FACTURE --------------------");
-        ArrayList<Commande> listCommande = this.getController().getCommande(codeReservation);
+        ArrayList<Article> listArticle= this.getController().getFacture(codeReservation);
 
         HashMap<String, Integer> regroupeQuantite = new HashMap<>();
         HashMap<String, Float> regroupePrix = new HashMap<>();
-        for (Commande c : listCommande) {
-
-            for (Article a : c.getListArticles()) {
-                if (!regroupeQuantite.containsKey(a.getName())) {
-                    regroupeQuantite.put(a.getName(), 1);
-                    regroupePrix.put(a.getName(), a.getPrice());
-                } else {
-                    regroupeQuantite.put(a.getName(), regroupeQuantite.get(a.getName()) + 1);
-                }
-            }
-
-            prix = prix + c.getPrice();
-        }
-
-        Set<String> s = regroupeQuantite.keySet();
-        Iterator<String> it = s.iterator();
-
-        while (it.hasNext()) {
-            String nomArticle = it.next();
-            System.out.println(nomArticle + " x" + regroupeQuantite.get(nomArticle) + " : " + (regroupePrix.get(nomArticle) * regroupeQuantite.get(nomArticle)));
-
+        for (Article a  : listArticle) {  
+            a.printArticle();
+            prix = prix + a.getPrice()*a.getQuantity();
         }
 
         System.out.println("Prix total : " + prix);
 
-        System.exit(0);
+        this.getController().setView(TextualSelectionReservation.singletonViewTextualReservationList());
     }
 
 }

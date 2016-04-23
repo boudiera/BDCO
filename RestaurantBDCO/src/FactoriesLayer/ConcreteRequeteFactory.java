@@ -26,8 +26,8 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             String STMT_1 = "select R.CodeReservation, R.NbPersonnes, R.Jour, "
                     + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
                     + "from Reservation R, Client C "
-                    + "where R.CodeClient = C.CodeClient";
-                   // + "order by R.Jour, R.Heure, R.Minutes";
+                    + "where R.CodeClient = C.CodeClient "
+                   + "order by R.Jour, R.Heure, R.Minutes";
             
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
@@ -410,7 +410,7 @@ connexion.open();
     @Override
     public ArrayList<Article> getFacture(int codeReservation) {
         connexion.open();
-        String STMT_1 = "select distinct A.NomArticle, A.TypeArticle, P.PrixActuel, A.Specialite, C.Quantite "
+        String STMT_1 = "select distinct A.NomArticle, A.TypeArticle, P.PrixActuel, A.NomSpecialite, C.Quantite "
                         + "from Reservation R, Article A, EstElement P, Service S, Commande C "
                         + "where R.Jour = S.Jour "
                         + "and R.NomService = S.NomService "
