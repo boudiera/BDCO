@@ -31,4 +31,6 @@ public abstract class RequeteFactory{
 
     // Renvoie la liste des tables voisines
     public abstract HashMap<Integer, ArrayList<Integer>> tablesVoisines();
+    
+    public abstract ArrayList<Article> getFacture(int codeReservation);
 }
