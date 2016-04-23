@@ -59,6 +59,15 @@ public class ReservationDate {
             return false;
         }
     }
+    public boolean isSameDay(ReservationDate rd){
+        if(     this.year  == rd.getYear() &&
+                this.month == rd.getMonth() &&
+                this.day   == rd.getDay())
+                return true;
+        else
+            return false;
+       
+    }
     
     public ReservationDate(int year, int month, int day){
         this.year = year;
