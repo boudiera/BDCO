@@ -100,7 +100,7 @@ public class TextualAjoutReservation extends AbstractView {
 
                 boolean choixLocalisationfini;
                 int valeurChoix = 0;
-<<<<<<< HEAD
+
                 do {
                     choixLocalisationfini = false;
                     System.out.println("Choississez la localisation voulue");
