@@ -10,9 +10,9 @@ package InterfaceMVC;
  * @author trentini
  */
 public enum EnumView {
-    ReservationList,
-    ReservationCreation,
-    ResevationDetails,
-    Commande,
-    Menu
+    ReservationList,        // Window that shows the list of Reservations (primary View)
+    ReservationCreation,    // Window for the creation of a Reservation
+    ResevationDetails,      // Window that shows the Commandes (and its Articles) of a specific Reservation
+    Commande,               // Window where we can create a Commande (adding Articles to it)
+    Menu                    // Window to choose the articles for a specific Menu
 }

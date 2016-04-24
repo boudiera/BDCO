@@ -77,13 +77,13 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
         }
 
         TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
-        
         this.SelectedArticlesTable.setModel(model);
     }
 
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().showView(windowReservationDetails);
+        // When closing, goes back to the last View (that is a ReservationDetails view)
+        GlobalGraphicView.singletonGlobalGraphicView().showView(this.windowReservationDetails);
         super.dispose();
     }
      
@@ -312,6 +312,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
             case BOISSON: table = this.Boissons.getModel(); row = this.Boissons.getSelectedRow(); break;
             case MENU:    table = this.Menus.getModel();    row = this.Menus.getSelectedRow();    break;
         }
+        
         if(row >= 0){
             a = (Article) ((SpecialJavaTableModel) table).getObjectAt(row);
 
@@ -321,6 +322,7 @@ public class FrameCommande extends javax.swing.JFrame implements WindowView {
                 GlobalGraphicView.singletonGlobalGraphicView().getController().addArticleCommande(a, this.thisCommande);
                 a.setQuantity(this.thisCommande.getRegroupeArticle().get(a.getName()));
 
+                // If the selected article is a Menu, then opens the window Menu (to selected the items of the Menu)
                 if (a.getType().equals(TypeArticle.MENU)) {
                     this.selectedMenu = a;
                     WindowView frameMenu = new FrameMenu(this);

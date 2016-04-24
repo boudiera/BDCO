@@ -11,7 +11,7 @@ package InterfaceMVC;
  */
 public abstract class AbstractView{
     
-    private Controller controller;
+    private Controller controller;      // The View knows its Controller
     
     public void setController(Controller c){
         this.controller = c;
@@ -21,6 +21,6 @@ public abstract class AbstractView{
         return this.controller;
     }
 
-    public abstract void showView(boolean b);
+    public abstract void showView(boolean b);   // A View can be shown
 
 }

@@ -16,6 +16,7 @@ import java.util.Observable;
 public class SingletonListCommande extends Observable{
     final private static SingletonListCommande SINGLETON_LIST_COMMANDE = new SingletonListCommande();
     
+    // Liste de commandes avec le "Identificateur" comme clé
     private HashMap<Integer, HashMap<String, Commande>> listCommande = new HashMap<>();
     
     private SingletonListCommande(){
@@ -25,10 +26,12 @@ public class SingletonListCommande extends Observable{
         return SingletonListCommande.SINGLETON_LIST_COMMANDE;
     }
     
+    // Says if the list of commandes is empty or not (if not empty, it can be used to prevent the closing of the application
     public boolean isEmpty(){
         return this.listCommande.isEmpty();
     }
     
+    // Add a commande in the list (not in the database)
     public void addCommand(int codeReservation, Commande commande){
         if(this.listCommande.containsKey(codeReservation)){
             this.listCommande.get(codeReservation).put(commande.getIdentifier(), commande);
@@ -41,6 +44,7 @@ public class SingletonListCommande extends Observable{
         this.notifyObservers();
     }
     
+    // Remove a commande from the list (not from the database)
     public void removeCommand(int codeReservation, String identifier){
         this.listCommande.get(codeReservation).remove(identifier);
         if(this.listCommande.get(codeReservation).isEmpty()){
@@ -51,6 +55,7 @@ public class SingletonListCommande extends Observable{
         this.notifyObservers();
     }
     
+    // Returns a list of Commandes inside a Reservation
     public ArrayList<Commande> getListCommandByReservationCode(int codeReservation){
         HashMap<String, Commande> hash = this.listCommande.get(codeReservation);
                 
@@ -62,6 +67,7 @@ public class SingletonListCommande extends Observable{
         }
     }
     
+    // Returns the list of articles inside a Commande (that is, of course, inside a Reservation)
     public ArrayList<Article> getListArticlesByReservationCodeAndCommandeIdentifier(int codeReservation, String identifierCommande){
         
         ArrayList<Commande> array = this.getListCommandByReservationCode(codeReservation);

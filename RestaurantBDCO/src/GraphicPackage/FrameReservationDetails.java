@@ -34,9 +34,11 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     public FrameReservationDetails() {
         initComponents();
         
+        // Sets the Reservation Code of the selected Reservation and shows it in the View
         this.reservationCode = FrameReservationList.singletonFrameReservationList().getSelectedReservationCode();        
         this.TextCodeReservation.setText("Reservation #" + this.reservationCode);
         
+        // Update tables and values
         updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         updateArticleTable(new ArrayList<Article>());
         updateTotalValue();
@@ -44,6 +46,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public void dispose() {
+        // When closing, calls the Reservation List window and deletes itself from the list of observers of the list of Commandes
         GlobalGraphicView.singletonGlobalGraphicView().getController().setView(EnumView.ReservationList);
         SingletonListCommande.singletonListCommande().deleteObserver(this);
         super.dispose();
@@ -51,10 +54,10 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     
     @Override
     public void update(Observable o, Object arg) {
-        updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
+        this.updateCommandeTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getCommande(this.reservationCode));
         this.updateSelectedCommande();
-        updateMenuArticleTable();
-        updateTotalValue();
+        this.updateMenuArticleTable();
+        this.updateTotalValue();
     }
     
     @Override
@@ -65,7 +68,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     private void updateTotalValue(){
         float total=0;
         for(int i=0; i<CommandeTable.getRowCount(); i++){
-           total+=((Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(i)).getPrice();
+           total += ((Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(i)).getPrice();
         }
         TextTotalBillValue.setText("€ " + Float.toString(total));
     }
@@ -74,6 +77,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         if (this.ArticleTable.getSelectedRow() >= 0) {
             LinkedHashMap<String, Object> tableMap = new LinkedHashMap<>();
             
+            // If the article is of the type "Menu", it updates the table of articles of this selected Menu
             if(((Article)((SpecialJavaTableModel) this.ArticleTable.getModel()).getObjectAt(this.ArticleTable.getSelectedRow())).getType().equals(TypeArticle.MENU)){
                 for (Article a : ((Menu) ((SpecialJavaTableModel) this.ArticleTable.getModel()).getObjectAt(this.ArticleTable.getSelectedRow())).getList()) {
                     tableMap.put(a.getName(), a);
@@ -83,7 +87,6 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
 
             this.MenuArticleTable.setModel(model);
-            this.MenuArticleTable.setAutoCreateRowSorter(true);
 
             try {
                 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -91,6 +94,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 this.ArticleTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
             } catch (Exception e) {}
         }else{
+            // If the selected article is not a Menu, then just cleans the table of articles of menu
             TableModel model = new SpecialJavaTableModel(new LinkedHashMap<String, Object>(), Article.class);
             this.MenuArticleTable.setModel(model);
         }
@@ -105,7 +109,6 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TableModel model = new SpecialJavaTableModel(tableMap, Article.class);
         
         this.ArticleTable.setModel(model);
-        this.ArticleTable.setAutoCreateRowSorter(true);
         
         try{
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -123,7 +126,6 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         TableModel model = new SpecialJavaTableModel(tableMap, Commande.class);
         
         this.CommandeTable.setModel(model);
-        this.CommandeTable.setAutoCreateRowSorter(true);
         
         try{
             this.CommandeTable.getColumnModel().getColumn(0).setPreferredWidth(180);

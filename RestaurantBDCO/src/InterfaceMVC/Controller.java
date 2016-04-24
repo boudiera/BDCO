@@ -167,12 +167,10 @@ public class Controller {
     public int getClient(String nomClient, String numTel) {
         return Factory.singletonFactory().getRequeteFactory().clientConnu(nomClient, numTel);
     }
-
-    public void addCommande(Commande commande) {
-
-        // Ajout dans la mémoire de l'application
-        SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(), commande);
-
+    
+    // Ajout dans la mémoire de l'application    
+    public void addCommande(Commande commande){
+        SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(),commande);
     }
 
     // Ajoute un article dans une commande
