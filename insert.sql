@@ -131,15 +131,15 @@ INSERT INTO Service
 
 -- Creation de reservations
 INSERT INTO Reservation
-	VALUES (SeqReservation.nextval, 2, 20, 00, 5, to_date('2016-04-16', 'YYYY-MM-DD'), 'SOIR');
+	VALUES (SeqReservation.nextval, 2, 20, 00, 5, to_date('2016-04-16', 'YYYY-MM-DD'), 'SOIR',0);
 INSERT INTO Reservation
-	VALUES (SeqReservation.nextval, 2, 20, 00, 2, to_date('2016-04-30', 'YYYY-MM-DD'), 'SOIR');
+	VALUES (SeqReservation.nextval, 2, 20, 00, 2, to_date('2016-04-30', 'YYYY-MM-DD'), 'SOIR',0);
 INSERT INTO Reservation
-	VALUES (SeqReservation.nextval, 5, 20, 00, 4, to_date('2016-04-30', 'YYYY-MM-DD'), 'SOIR');
+	VALUES (SeqReservation.nextval, 5, 20, 00, 4, to_date('2016-04-30', 'YYYY-MM-DD'), 'SOIR',0);
 INSERT INTO Reservation
-	VALUES (SeqReservation.nextVal, 8, 12, 30, 1, to_date('2016-04-30', 'YYYY-MM-DD'), 'MIDI');
+	VALUES (SeqReservation.nextVal, 8, 12, 30, 1, to_date('2016-04-30', 'YYYY-MM-DD'), 'MIDI',0);
 INSERT INTO Reservation
-	VALUES (SeqReservation.nextval, 1, 12, 10, 3, to_date('2016-04-28', 'YYYY-MM-DD'), 'MIDI');
+	VALUES (SeqReservation.nextval, 1, 12, 10, 3, to_date('2016-04-28', 'YYYY-MM-DD'), 'MIDI',0);
 
 
 -- Creation de occupe

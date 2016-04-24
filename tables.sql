@@ -55,6 +55,7 @@ CREATE TABLE Reservation (
     CodeClient INTEGER,
     Jour DATE,
     NomService VARCHAR(5),
+    Prix INT CHECK(PRIX >= 0),
     CONSTRAINT codeReservation_pk PRIMARY KEY (CodeReservation),
     CONSTRAINT nbPersonnes_c CHECK (NbPersonnes > 0),
     CONSTRAINT codeClient_fk FOREIGN KEY (CodeClient) REFERENCES Client (CodeClient),
