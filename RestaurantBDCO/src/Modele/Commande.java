@@ -27,13 +27,15 @@ public class Commande {
     
     // Fonction qui permet de regrouper tous les articles de meme types d'une commande en vue de les afficher
     private void regroupe() {
-
+        this.regroupeArticle.clear();
         for (Article a : this.listArticles) {
             if (!regroupeArticle.containsKey(a.getName())) {
                 regroupeArticle.put(a.getName(), 1);
             } else {
+                
                 regroupeArticle.put(a.getName(), regroupeArticle.get(a.getName()) + 1);
             }
+            
 
         }
     }

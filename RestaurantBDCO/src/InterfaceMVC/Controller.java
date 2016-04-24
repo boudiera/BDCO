@@ -50,7 +50,7 @@ public class Controller {
         this.view = v;
         this.view.showView(true);
     }
-
+    // Renvoit la liste des réservations que l'on a pas encore facturée
     public ArrayList<Reservation> getReservationList() {
         return Factory.singletonFactory().getRequeteFactory().getReservationsList();
     }
@@ -58,14 +58,13 @@ public class Controller {
     public int getCodeCarte(int codeReservation) {
         return Factory.singletonFactory().getRequeteFactory().getCodeCarte(codeReservation);
     }
-
+    
+     // Renvoit la liste des articles contenus dans les commandes de la base de donnée
     public ArrayList<Article> getFacture(int codeReservation) {
         return Factory.singletonFactory().getRequeteFactory().getFacture(codeReservation);
     }
     
-    public void AjoutPrix(int codeReservation, float prix){
-        Factory.singletonFactory().getInsertionFactory().ajoutPrix(codeReservation, prix);
-    }
+   
 
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces) {
@@ -172,25 +171,35 @@ public class Controller {
         return Factory.singletonFactory().getRequeteFactory().clientConnu(nomClient, numTel);
     }
     
-    // Ajout dans la mémoire de l'application    
+    // Ajout dans la mémoire de l'application   + bd  
     public void addCommande(Commande commande){
         SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(),commande);
+        Factory.singletonFactory().getInsertionFactory().addCommande(commande);
     }
 
+       // Permet de supprimer une commande d'une reservation dans la memoire + bd
+    public void deleteCommande(Commande commande) {
+        SingletonListCommande.singletonListCommande().removeCommand(commande.getCodeReservation(), commande.getIdentifier());
+        Factory.singletonFactory().getInsertionFactory().supprimeCommande(commande);
+    }
+    
     // Ajoute un article dans une commande
     public void addArticleCommande(Article a, Commande c) {
         c.addArticle(a);
+       
     }
 
     // Enleve un article dans une commande
     public void removeArticleCommande(Article a, Commande c){
         c.removeArticle(a);
+        
     }
     
     // Finalisation de la commande on envoit les données à la base de donnée
     public void endCommande(Commande comm){
         Factory.singletonFactory().getInsertionFactory().addCommande(comm);
     }
+  
 
     // Ajoute un article dans un menu
     public void addArticleMenu(Article a, Menu m) {
@@ -245,10 +254,7 @@ public class Controller {
         return SingletonListCommande.singletonListCommande().getListCommandByReservationCode(codeReservation);
     }
 
-    // Permet de supprimer une commande d'une reservation
-    public void deleteCommande(int codeReservation, Commande commande) {
-        SingletonListCommande.singletonListCommande().removeCommand(codeReservation, commande.getIdentifier());
-    }
+ 
 
     
     // Permet de verifier si une chaine de caract-re contient uniquement que des caractères

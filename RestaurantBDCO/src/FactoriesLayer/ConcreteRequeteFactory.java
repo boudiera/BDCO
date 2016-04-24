@@ -421,7 +421,7 @@ connexion.open();
                         + "and C.CodeReservation = R.CodeReservation "
                         + "and C.NomArticle = A.NomArticle";
                 
-      
+        float prix = 0;
         try {
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
             stmt.setInt(1, codeReservation);
@@ -436,12 +436,22 @@ connexion.open();
                 a = new ConcreteArticle(rsetFacture.getString(1), TypeArticle.valueOf(rsetFacture.getString(2)), rsetFacture.getFloat(3), rsetFacture.getString(4));
                 a.setQuantity(rsetFacture.getInt(5));
                 resListArt.add(a);
-                
+                prix = prix + rsetFacture.getInt(5)*rsetFacture.getFloat(3);
             }
+            
+            String STMT_2 = "update Reservation "
+                + "set Reservation.Prix = ? "
+                + "where Reservation.CodeReservation = ? ";
+            PreparedStatement stmt2 = connexion.getConnection().prepareStatement(STMT_2);
+            stmt2.setFloat(1, prix);
+            stmt2.setInt(2, codeReservation);
+            stmt2.executeQuery();
+            stmt2.close();
             
             //  Fermeture
             rsetFacture.close();
             stmt.close();
+            
             connexion.close();
             return resListArt;
         } catch (SQLException e) {

@@ -32,5 +32,9 @@ public abstract class RequeteFactory{
     // Renvoie la liste des tables voisines
     public abstract HashMap<Integer, ArrayList<Integer>> tablesVoisines();
     
+    // Renvoie une liste d'articles d'une reservation pour avoir la facture
     public abstract ArrayList<Article> getFacture(int codeReservation);
+    
+   
+    
 }

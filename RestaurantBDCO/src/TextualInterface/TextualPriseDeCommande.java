@@ -59,9 +59,10 @@ public class TextualPriseDeCommande extends AbstractView {
 
         }
             
-        System.out.println("------------- Commande numéro " + this.commande.getIdentifier() + " Enregistrée ------------");
+        System.out.println("------------- Commande numéro " + this.numCommande + " Enregistrée ------------");
          // Appel d'une fonction du controller qui enregistre la commande dans l'application
         this.getController().addCommande(commande);
+        // Appel de la fonction du controlleur qui enregistre la commande dans la BD    
         this.getController().setView(new TextualMenuCommande(this.commande.getCodeReservation(), numCommande + 1, this.getController()));
     }
 

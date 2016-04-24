@@ -34,14 +34,16 @@ public class TextualMenuCommande extends AbstractView {
         commandes = this.getController().getCommande(codeReservation);
         System.out.println("--------- Réservation numéro : " + codeReservation + " ---------------\n");
 
-        System.out.println("Nouvelle(s) commande(s)  : ");
+        System.out.println("Commande(s) de la réservation  : ");
 
         if (commandes.isEmpty()) {
-            System.out.println("Aucune \n");
+            System.out.println("Aucune prise sur cette machine \n");
         } else {
             System.out.println("");
+            int i = 1;
             for (Commande c : commandes) {
-                System.out.println("Commande " + c.getIdentifier());
+                System.out.println("Commande " + i);
+                i++;
                 c.printArticle();
                 System.out.println("");
             }
@@ -53,8 +55,7 @@ public class TextualMenuCommande extends AbstractView {
         System.out.println("Appuyez sur 'c' pour prendre une nouvelle commande \n"
                 + "Entrez 'delete' puis selectionnez un numero de commande pour la supprimer \n"
                 + "Appuyez sur 'f' pour produire la facture des commandes de cette reservation \n"
-                + "Appuyer sur 'v' pour valider la et les nouvelles commandes prises \n"
-                + "Appuyez sur 'q' pour quitter et annuler toutes les nouvelles commandes prises");
+                + "Appuyez sur 'q' pour quitter et revenir au menu");
     }
 
     private void gestionChoix() {
@@ -64,25 +65,12 @@ public class TextualMenuCommande extends AbstractView {
             Scanner sc = new Scanner(System.in);
             String choix = sc.nextLine();
             if (choix.equalsIgnoreCase("c")) {
-                this.getController().setView(new TextualPriseDeCommande(this.getController(), codeReservation, nbcommandes));
+                this.getController().setView(new TextualPriseDeCommande(this.getController(), codeReservation,commandes.size()+1));
             } else if (choix.equalsIgnoreCase("f")) {
                 this.getController().setView(new TextualFacture(this.getController(), codeReservation));
             } else if (choix.equalsIgnoreCase("delete")) {
-                gestionAnnulationCommande();
-            } else if (choix.equalsIgnoreCase("v")) {
-                for (Commande c : commandes) {
-                    // On ajoute toutes les commandes à la BD
-                    this.getController().endCommande(c);
-                    // On supprime les commandes du niveau applicatif qui ne nous sont plus utiles
-                    this.getController().deleteCommande(codeReservation, c);
-                }
-                this.getController().setView(TextualSelectionReservation.singletonViewTextualReservationList());
+                gestionAnnulationCommande(); 
             } else if (choix.equalsIgnoreCase("q")) {
-                System.out.println("-------------- Annulation des commandes ! ------------");
-                for (Commande c : commandes) {
-                    // On supprime les commandes du niveau applicatif qui ne nous sont plus utiles  
-                    this.getController().deleteCommande(codeReservation, c);
-                }
                 this.getController().setView(TextualSelectionReservation.singletonViewTextualReservationList());
             }
 
@@ -107,7 +95,7 @@ public class TextualMenuCommande extends AbstractView {
             return -1;
         }
         System.out.println(" ------- > Suppresion de la commande " + numCommande);
-        this.getController().deleteCommande(codeReservation, commandes.get(numCommande - 1));
+        this.getController().deleteCommande(commandes.get(numCommande - 1));
         this.getController().setView(this.getController().getView());        // Actualisation de la vue
 
         return 0;

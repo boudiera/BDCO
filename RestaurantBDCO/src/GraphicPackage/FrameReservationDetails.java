@@ -343,7 +343,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     private void ButtonDeleteSelectedCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteSelectedCommandActionPerformed
         if(this.CommandeTable.getSelectedRow() >= 0) {
             Commande comm = (Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(this.CommandeTable.getSelectedRow());
-            GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(this.reservationCode, comm);
+            GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(comm);
         }
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
@@ -371,7 +371,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
                 
                 GlobalGraphicView.singletonGlobalGraphicView().getController().endCommande(comm);
                 
-                GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(this.reservationCode, comm);
+                GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(comm);
             }
             this.updateSelectedCommande();
             this.updateMenuArticleTable();
