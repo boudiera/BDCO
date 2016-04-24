@@ -26,7 +26,8 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             String STMT_1 = "select R.CodeReservation, R.NbPersonnes, R.Jour, "
                     + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
                     + "from Reservation R, Client C "
-                    + "where R.CodeClient = C.CodeClient "
+                    + "where R.CodeClient = C.CodeClient and "
+                    + "R.prix = 0 "
                    + "order by R.Jour, R.Heure, R.Minutes";
             
             //  Creation de la requete

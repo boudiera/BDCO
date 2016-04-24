@@ -41,6 +41,7 @@ public class TestTextuel {
 
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
+
         Factory.singletonFactory().setRequeteFactory(new ConcreteRequeteFactory(connection));
         Factory.singletonFactory().setInsertionFactory(new ConcreteInsertionFactory(connection));
         // Decomenter pour lancer le test sur l'executable des reservations
@@ -48,8 +49,10 @@ public class TestTextuel {
         //controller.setView(TextualReservationList.singletonViewTextualReservationList());
        
         // Decomenter pour lancer le test sur l'executable des commandes
+
       TextualSelectionReservation.singletonViewTextualReservationList().setController(controller);
        controller.setView(TextualSelectionReservation.singletonViewTextualReservationList());
+
     }
 
 }

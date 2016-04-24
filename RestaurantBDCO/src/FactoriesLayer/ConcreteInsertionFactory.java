@@ -242,5 +242,10 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             e.printStackTrace (System.err);
         }
     }
+
+    @Override
+    public void ajoutePrix(int CodeReservation, int Prix) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
