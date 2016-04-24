@@ -13,7 +13,9 @@ import java.util.Observer;
  */
 public interface WindowView extends Observer{
 
-    public void setEnabled(boolean b);
-    public void setVisible(boolean b);
+    public void setEnabled(boolean b);  //makes the window enabled or not; if false, the window cannot be edited/touched
+    public void setVisible(boolean b);  //makes the window visible or not; if false, the window will still exists, but will be hidden
+    
+    public boolean isSingleton();   //tells if a window is singleton, it means we can only have one instance; it is good for the main window of the application
 
 }

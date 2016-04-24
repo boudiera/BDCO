@@ -12,6 +12,7 @@ import Modele.Commande;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -30,37 +31,25 @@ public class TextualFacture extends AbstractView {
 
     @Override
     public void showView(boolean b) {
+        String choix;
         System.out.println("----------------------- FACTURE --------------------");
-        ArrayList<Commande> listCommande = this.getController().getCommande(codeReservation);
+        ArrayList<Article> listArticle = this.getController().getFacture(codeReservation);
 
         HashMap<String, Integer> regroupeQuantite = new HashMap<>();
         HashMap<String, Float> regroupePrix = new HashMap<>();
-        for (Commande c : listCommande) {
-
-            for (Article a : c.getListArticles()) {
-                if (!regroupeQuantite.containsKey(a.getName())) {
-                    regroupeQuantite.put(a.getName(), 1);
-                    regroupePrix.put(a.getName(), a.getPrice());
-                } else {
-                    regroupeQuantite.put(a.getName(), regroupeQuantite.get(a.getName()) + 1);
-                }
-            }
-
-            prix = prix + c.getPrice();
+        for (Article a : listArticle) {
+            a.printArticle();
+            prix = prix + a.getPrice() * a.getQuantity();
         }
 
-        Set<String> s = regroupeQuantite.keySet();
-        Iterator<String> it = s.iterator();
+        System.out.println("--->>> Prix total : " + prix);
+        do {
+            System.out.println("Appuyer sur v pour valider et revenir au menu des réservations");
+            Scanner sc = new Scanner(System.in);
+            choix = sc.nextLine();
 
-        while (it.hasNext()) {
-            String nomArticle = it.next();
-            System.out.println(nomArticle + " x" + regroupeQuantite.get(nomArticle) + " : " + (regroupePrix.get(nomArticle) * regroupeQuantite.get(nomArticle)));
-
-        }
-
-        System.out.println("Prix total : " + prix);
-
-        System.exit(0);
+        } while (!choix.equalsIgnoreCase("v"));
+        this.getController().setView(TextualSelectionReservation.singletonViewTextualReservationList());
     }
 
 }

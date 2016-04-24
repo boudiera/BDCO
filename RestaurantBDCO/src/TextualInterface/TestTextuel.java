@@ -41,23 +41,18 @@ public class TestTextuel {
 
         ConnectionInfo info = new ConnectionInfo();
         TheConnection connection = new TheConnection(info);
-<<<<<<< HEAD
-        Factory.reservations = new ConcreteRequeteFactory(connection);
-       
-        IT_text.setController(controller);
-        controller.setView(IT_text);
 
-=======
         Factory.singletonFactory().setRequeteFactory(new ConcreteRequeteFactory(connection));
         Factory.singletonFactory().setInsertionFactory(new ConcreteInsertionFactory(connection));
         // Decomenter pour lancer le test sur l'executable des reservations
-        //  TextualReservationList.singletonViewTextualReservationList().setController(controller);
-        //  controller.setView(TextualReservationList.singletonViewTextualReservationList());
+        //TextualReservationList.singletonViewTextualReservationList().setController(controller);
+        //controller.setView(TextualReservationList.singletonViewTextualReservationList());
        
         // Decomenter pour lancer le test sur l'executable des commandes
-        TextualMenuCommande menuCommande = new TextualMenuCommande(1,0,controller);
-        controller.setView(menuCommande);
->>>>>>> bf8dbc6046b3a6fe78c3e3716170565d0a859f84
+
+      TextualSelectionReservation.singletonViewTextualReservationList().setController(controller);
+       controller.setView(TextualSelectionReservation.singletonViewTextualReservationList());
+
     }
 
 }

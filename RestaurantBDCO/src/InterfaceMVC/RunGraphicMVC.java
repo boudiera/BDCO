@@ -5,9 +5,6 @@
  */
 package InterfaceMVC;
 
-import FactoriesLayer.ConcreteRequeteFactory;
-import FactoriesLayer.ConnectionInfo;
-import FactoriesLayer.TheConnection;
 import GraphicPackage.*;
 
 /**
@@ -21,12 +18,10 @@ public class RunGraphicMVC {
      */
     public static void run(String[] args) {
 
-        AbstractView MainView = GlobalGraphicView.singletonGlobalGraphicView();
-        Controller GC = new Controller();
+        AbstractView MainView = GlobalGraphicView.singletonGlobalGraphicView();     // Create the instance of the View (Graphic view is a Singleton)
+        Controller Ctrl = new Controller();     // Create the instance of the Controller
         
-        ((GlobalGraphicView) MainView).setActiveView(EnumWindow.ReservationList);
-        MainView.setController(GC);
-        
-        GC.setView(MainView);
+        MainView.setController(Ctrl);   // Tells the View which Controller is going to control it
+        Ctrl.setView(MainView);         // Tells the Controller what is the primary View it is going to control
     }
 }

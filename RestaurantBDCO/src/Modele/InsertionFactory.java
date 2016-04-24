@@ -6,8 +6,6 @@
 package Modele;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -30,4 +28,16 @@ public abstract class InsertionFactory {
     
     // Insertion de tables occupees 
     public abstract void creerOccTable(ArrayList<Table> tablesOcc, int codeReservation);
+    
+    // Insert dans la base de donnée une commande ( attention a update et pas insert ) si une commande de la meme reservation contient des articles similaires
+    public abstract void creeCommande(Commande commande);
+        
+    public abstract void addCommande(Commande commande);
+    
+    // Supprime dans la base de donnée une commande faire attention de update et non delete si la quantité d'article commandé de la reservation ( d'ou vient la commande ) est > 0 (voir google drive)
+    public abstract void supprimeCommande(Commande commande);
+    
+    // Ajoute le prix à une reservation qui vient d'être facturée
+    public abstract void ajoutePrix(int CodeReservation, int Prix);
+    
 }

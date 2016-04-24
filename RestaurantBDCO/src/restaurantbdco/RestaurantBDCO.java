@@ -7,6 +7,7 @@ package restaurantbdco;
 
 import InterfaceMVC.RunGraphicMVC;
 import TextualInterface.TestTextuel;
+import java.util.Scanner;
 
 /**
  *
@@ -18,10 +19,16 @@ public class RestaurantBDCO {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        TestTextuel.main(args);
-        //RunGraphicMVC.run(args);
         
+        System.out.println("Type 't' for TEXT interface or 'g' for GRAPHIC interface:");
+        Scanner sc = new Scanner(System.in);
+        String choix = sc.nextLine();
+        
+        if(choix.equalsIgnoreCase("t")){
+            TestTextuel.main(args);
+        }else{
+            RunGraphicMVC.run(args);
+        }
     }
     
 }
