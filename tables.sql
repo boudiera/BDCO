@@ -1,7 +1,7 @@
 -- Creation des differentes tables
 
 CREATE TABLE PrixTotal (
-    Valeur INTEGER,
+    Valeur FLOAT,
     CONSTRAINT valeur_pk PRIMARY KEY (Valeur),
     CONSTRAINT valeur_c CHECK (Valeur >= 0)
 );
@@ -55,6 +55,7 @@ CREATE TABLE Reservation (
     CodeClient INTEGER,
     Jour DATE,
     NomService VARCHAR(5),
+    Prix INT CHECK(PRIX >= 0)
     CONSTRAINT codeReservation_pk PRIMARY KEY (CodeReservation),
     CONSTRAINT nbPersonnes_c CHECK (NbPersonnes > 0),
     CONSTRAINT codeClient_fk FOREIGN KEY (CodeClient) REFERENCES Client (CodeClient),
@@ -63,7 +64,7 @@ CREATE TABLE Reservation (
 
 CREATE TABLE Coute (
     CodeReservation INTEGER,
-    PrixTotal INTEGER,
+    PrixTotal FLOAT,
     CONSTRAINT coute_pk PRIMARY KEY (CodeReservation),
     CONSTRAINT codeReservation_fk FOREIGN KEY (CodeReservation) REFERENCES Reservation (CodeReservation) ON DELETE CASCADE,
     CONSTRAINT prixTotal_fk FOREIGN KEY (PrixTotal) REFERENCES PrixTotal(Valeur)
@@ -89,16 +90,16 @@ CREATE TABLE ContientPlat (
     NomArticleMenu VARCHAR(50),
     NomArticlePlat VARCHAR(50),
     CONSTRAINT contientPlat_pk PRIMARY KEY (NomArticleMenu, NomArticlePlat),
-    CONSTRAINT nomArticleMenu_fk FOREIGN KEY (NomArticleMenu) REFERENCES Article (NomArticle ) ON DELETE CASCADE,
-    CONSTRAINT nomArticlePlat_fk FOREIGN KEY (NomArticlePlat) REFERENCES Article (NomArticle ) ON DELETE CASCADE
+    CONSTRAINT nomArticleMenu_fk FOREIGN KEY (NomArticleMenu) REFERENCES Article (NomArticle) ON DELETE CASCADE,
+    CONSTRAINT nomArticlePlat_fk FOREIGN KEY (NomArticlePlat) REFERENCES Article (NomArticle) ON DELETE CASCADE
 );
 
 CREATE TABLE ContientAutreArticle (
     NomArticleMenu VARCHAR(50),
     NomArticleAutre VARCHAR(50),
     CONSTRAINT contientAutre_pk PRIMARY KEY (NomArticleMenu, NomArticleAutre),
-    CONSTRAINT nomArticleMenuAutre_fk FOREIGN KEY (NomArticleMenu) REFERENCES Article (NomArticle ) ON DELETE CASCADE,
-    CONSTRAINT nomArticleAutre_fk FOREIGN KEY (NomArticleAutre) REFERENCES Article (NomArticle ) ON DELETE CASCADE
+    CONSTRAINT nomArticleMenuAutre_fk FOREIGN KEY (NomArticleMenu) REFERENCES Article (NomArticle) ON DELETE CASCADE,
+    CONSTRAINT nomArticleAutre_fk FOREIGN KEY (NomArticleAutre) REFERENCES Article (NomArticle) ON DELETE CASCADE
 );
 
 CREATE TABLE EstElement (
@@ -120,5 +121,3 @@ CREATE TABLE Commande (
     CONSTRAINT nomArticleCommande_fk FOREIGN KEY (NomArticle) REFERENCES Article (NomArticle) ON DELETE CASCADE,
     CONSTRAINT quantite_c CHECK (Quantite > 0)
 );
-
-

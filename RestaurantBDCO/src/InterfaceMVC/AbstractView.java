@@ -5,15 +5,13 @@
  */
 package InterfaceMVC;
 
-import InterfaceMVC.Controller;
-
 /**
  *
  * @author Iago Felipe Trentin
  */
-public abstract class AbstractView {
+public abstract class AbstractView{
     
-    Controller controller;
+    private Controller controller;
     
     public void setController(Controller c){
         this.controller = c;

@@ -1,18 +1,21 @@
 package FactoriesLayer;
 
+import Modele.Article;
 import java.sql.*;
 import Modele.Reservation;
 import Modele.ReservationDate;
 import Modele.RequeteFactory;
 import Modele.Service;
 import Modele.Table;
+import Modele.TypeArticle;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ConcreteRequeteFactory extends RequeteFactory{
-    private TheConnection connexion;
+    
+    private static TheConnection connexion;
 
-    public ConcreteRequeteFactory(TheConnection connexion) {
+    public ConcreteRequeteFactory(TheConnection connexion) { 
         this.connexion = connexion;
     }
 
@@ -73,7 +76,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                 //Fermeture
                 rsetTable.close();
             }
-            //  Fermeture
+            //Fermeture
             rsetReservation.close();
             stmt.close();
             connexion.close();
@@ -85,8 +88,39 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         }
     }
     
+    @Override
+    public ArrayList<Article> getArticlesCarte(int codeCarte){
+        connexion.open();
+        ArrayList<Article> articles= new ArrayList<Article>();
+        String STMT_1 = "select E.NomArticle, A.TypeArticle, E.PrixActuel, A.NomSpecialite "
+                + " from Article A, EstElement E "
+                + " where A.NomArticle = E.NomArticle"
+                + " and E.CodeCarte = ?";
+        try{
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            stmt.setInt(1,codeCarte);
+            ResultSet resCarte = stmt.executeQuery();
+            while(resCarte.next()){
+                articles.add(new ConcreteArticle(resCarte.getString(1), TypeArticle.valueOf(resCarte.getString(2)), resCarte.getFloat(3),resCarte.getString(4)));
+            }
+            resCarte.close();
+            stmt.close();
+            connexion.close();
+            return articles;
+        }
+        catch(SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }
+    }
+    
+    
+    
+    
     @Override // Renvoie les tables libres pour un certain service d'un certain jour
     public ArrayList<Table> tablesLibres(int year, int month, int day, Service service){
+        connexion.open();
         try {
             String STMT = "select T.CodeTable, T.NbPlace0, T.NbPlace1, "
                     + "T.NbPlace2, T.Localisation "
@@ -108,7 +142,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             ResultSet rsetTable = stmt.executeQuery ();
             
             //  Conversion  du  resultat  en ArrayList <Table>
-            ArrayList <Table> resTable = new ArrayList<Table> ();
+            ArrayList <Table> resTable = new ArrayList<> ();
             while (rsetTable.next()) {
                 resTable.add(new Table(
                         rsetTable.getInt("CodeTable"),
@@ -121,6 +155,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             //  Fermeture
             rsetTable.close();
             stmt.close();
+            connexion.close();
             return resTable;
         } catch (SQLException e) {
             System.err.println("failed");
@@ -128,4 +163,35 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             return null;
         }
     }
+    
+    @Override
+    public ArrayList<Integer[]> tablesVoisines(){
+        connexion.open();
+        ArrayList<Integer[]> tablesVoisines = new ArrayList<>();
+        
+        String STMT_1 = "select *"
+                + " from EstVoisine ";
+        try{
+            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
+            ResultSet resVoisines = stmt.executeQuery();
+            while(resVoisines.next()){
+                Integer[] t = new Integer[2];
+                t[0] = resVoisines.getInt(1);
+                t[1] = resVoisines.getInt(2);
+                tablesVoisines.add(t);
+            }
+            resVoisines.close();
+            stmt.close();
+            connexion.close();
+            return tablesVoisines;
+        }
+        catch(SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace (System.err);
+            return null;
+        }
+    }
+    
+    
+    
 }

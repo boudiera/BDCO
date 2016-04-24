@@ -14,16 +14,16 @@ import InterfaceMVC.*;
  *
  * @author mourinf
  */
-public class Textual_ReservationList extends AbstractView {
+public class TextualReservationList extends AbstractView {
 
   
-    private final static Textual_ReservationList viewTextualReservation = new Textual_ReservationList();
+    private final static TextualReservationList viewTextualReservation = new TextualReservationList();
     
-    private Textual_ReservationList (){
+    private TextualReservationList (){
     }
     
-    public static Textual_ReservationList singletonViewTextualReservationList(){
-        return Textual_ReservationList.viewTextualReservation;
+    public static TextualReservationList singletonViewTextualReservationList(){
+        return TextualReservationList.viewTextualReservation;
     }
     public void showView(boolean view){
         
@@ -61,13 +61,13 @@ public class Textual_ReservationList extends AbstractView {
             
             System.out.println("---------------------------------------------------------------------------------------------------------");
             System.out.print("|      "+reservation.getCodeReservation()+"      |");
-            System.out.print(" "+reservation.AffichageNomClient()+"|");
+            System.out.print(" "+reservation.printClientName()+"|");
             System.out.print("  "+reservation.getDate().writeDay()+"/"+ reservation.getDate().writeMonth()+"/"+reservation.getDate().getYear()+"  |");
             System.out.print("  "+reservation.getPhone()+"  |");
             System.out.print("     "+reservation.getDate().writeHour()+"h"+reservation.getDate().writeMin()+"    |");
             
             
-            System.out.print(reservation.AfficheNombrePersonnes());
+            System.out.print(reservation.printNbPeople());
             // affichage code Table
             System.out.print("       ");
             for (Table table : reservation.getCodeTable()){
@@ -80,19 +80,19 @@ public class Textual_ReservationList extends AbstractView {
           gestionEvent();
     }
     
-    public void afficheMenu(){
-        System.out.println("Appuyez sur c pour entrer une nouvelle reservation \n"
+    private void afficheChoix(){
+        System.out.println("Appuyez sur r pour entrer une nouvelle reservation \n"
                 + "Appuyez sur q pour quitter");
     }
     
     public void gestionEvent(){
 
         do { 
-            afficheMenu();
+            afficheChoix();
             Scanner sc = new Scanner(System.in);
             String choix = sc.nextLine();
-             if (choix.equalsIgnoreCase("c")){
-                   this.getController().setView(new Textual_AjoutReservation(this.getController()));          
+             if (choix.equalsIgnoreCase("r")){
+                   this.getController().setView(new TextualAjoutReservation(this.getController()));          
              }       
              else if (choix.equalsIgnoreCase("q"))
                    System.exit(0);

@@ -5,8 +5,10 @@
  */
 package InterfaceMVC;
 
+import FactoriesLayer.ConcreteRequeteFactory;
+import FactoriesLayer.ConnectionInfo;
+import FactoriesLayer.TheConnection;
 import GraphicPackage.*;
-import static GraphicPackage.GlobalGraphicView.singletonGlobalGraphicView;
 
 /**
  *
@@ -18,15 +20,13 @@ public class RunGraphicMVC {
      * @param args the command line arguments
      */
     public static void run(String[] args) {
-        // TODO code application logic here
 
-        AbstractView MainView = singletonGlobalGraphicView();
-        ControllerGraphic GC = new ControllerGraphic();
+        AbstractView MainView = GlobalGraphicView.singletonGlobalGraphicView();
+        Controller GC = new Controller();
         
-        ((GlobalGraphicView) MainView).setWindow(EnumWindow.ReservationList);
+        ((GlobalGraphicView) MainView).setActiveView(EnumWindow.ReservationList);
         MainView.setController(GC);
-
+        
         GC.setView(MainView);
-        GC.startView();
     }
 }

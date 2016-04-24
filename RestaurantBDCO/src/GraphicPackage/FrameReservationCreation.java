@@ -5,21 +5,14 @@
  */
 package GraphicPackage;
 
-import InterfaceMVC.Controller;
-import InterfaceMVC.AbstractView;
-import InterfaceMVC.ControllerGraphic;
-import Modele.Service;
-import java.util.Date;
-import javax.swing.JOptionPane;
+import java.util.Observable;
 
 /**
  *
  * @author trentini
  */
-public class FrameReservationCreation extends javax.swing.JFrame {
+public class FrameReservationCreation extends javax.swing.JFrame implements WindowView{
 
-    private ControllerGraphic GC = null;
-    
     /**
      * Creates new form FrameReservationCreation
      */
@@ -29,10 +22,13 @@ public class FrameReservationCreation extends javax.swing.JFrame {
     
     @Override
     public void dispose() {
-        GlobalGraphicView.singletonGlobalGraphicView().setWindow(EnumWindow.ReservationList);
-        GlobalGraphicView.singletonGlobalGraphicView().showView(true);
-
+        GlobalGraphicView.singletonGlobalGraphicView().setActiveView(EnumWindow.ReservationList);
         super.dispose();
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     /**

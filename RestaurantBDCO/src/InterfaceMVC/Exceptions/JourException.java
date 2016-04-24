@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
+
+import InterfaceMVC.Exceptions.ReservationException;
 
 /**
  *
  * @author mourinf
  */
-public class JourException extends AddReservationException {
+public class JourException extends ReservationException {
 
     /**
      * Creates a new instance of <code>JourException</code> without detail

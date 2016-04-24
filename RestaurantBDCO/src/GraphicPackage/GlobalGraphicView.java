@@ -5,31 +5,44 @@
  */
 package GraphicPackage;
 
+import FactoriesLayer.*;
 import InterfaceMVC.*;
+import java.util.*;
 
 /**
  *
  * @author trentini
  */
-public class GlobalGraphicView extends AbstractView {
+public class GlobalGraphicView extends AbstractView implements Observer{
 
-    final private static GlobalGraphicView globalGraphicView = new GlobalGraphicView();
+    final private static GlobalGraphicView GLOBAL_GRAPHIC_VIEW = new GlobalGraphicView();
 
-    private javax.swing.JFrame activeWindow;
+    private WindowView activeWindow;
+    private EnumWindow enumWindow;
     
     private GlobalGraphicView(){
     }
     
     public static GlobalGraphicView singletonGlobalGraphicView(){
-        return GlobalGraphicView.globalGraphicView;
+        return GlobalGraphicView.GLOBAL_GRAPHIC_VIEW;
     }
     
-    public void setWindow(EnumWindow window){
+    public WindowView getActiveView(){
+        return this.activeWindow;
+    }
+    
+    public EnumWindow getEnumWindowOfActiveView(){
+        return this.enumWindow;
+    }
+    
+    public void setActiveView(EnumWindow window){
         
         if(this.activeWindow != null) this.activeWindow.setEnabled(false);
         
+        this.enumWindow = window;
         switch(window){
             case ReservationList:
+                //ConcreteRequeteFactory.singletonConcreteRequeteFactory().deleteObserver(this.activeWindow);
                 this.activeWindow = FrameReservationList.singletonFrameReservationList();
                 break;
             case ReservationCreation:
@@ -39,14 +52,22 @@ public class GlobalGraphicView extends AbstractView {
                 this.activeWindow = new FrameReservationDetails();
                 break;
             case Commande:
-                this.activeWindow = null;
+                this.activeWindow = (WindowView) new FrameCommande(); //TO-DO: make cast not needed!
                 break;
         }
+
+        //ConcreteRequeteFactory.singletonConcreteRequeteFactory().addObserver(this.activeWindow);
+        showView(true);
     }
     
     @Override
     public void showView(boolean b) {
-        this.activeWindow.setEnabled(true);
+        this.activeWindow.setEnabled(b);
         this.activeWindow.setVisible(b);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        this.activeWindow.update(o, arg);
     }
 }

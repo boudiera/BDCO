@@ -1,9 +1,13 @@
 package Modele;
 
+/**
+ *
+ * @author flore
+ */
 public enum TypeArticle {
-	Entry,
-	Plate,
+	Entrée,
+	Plat,
 	Dessert,
-	Drink,
+	Boisson,
         Menu
 }

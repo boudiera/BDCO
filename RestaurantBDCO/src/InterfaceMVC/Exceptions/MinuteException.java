@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
 
 /**
  *
  * @author mourinf
  */
-public class MinuteException extends AddReservationException {
+public class MinuteException extends ReservationException {
     /**
      * Creates a new instance of <code>MinuteException</code> without detail
      * message.

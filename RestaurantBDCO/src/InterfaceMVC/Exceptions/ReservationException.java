@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package InterfaceMVC;
+package InterfaceMVC.Exceptions;
 
 /**
  *
  * @author mourinf
  */
-public abstract class AddReservationException extends Exception {
-protected String message;
+public abstract class ReservationException extends Exception {
+    
+    protected String message;
+    
     /**
      * Creates a new instance of <code>AddReservationException</code> without
      * detail message.
      */
-    public AddReservationException() {
+    public ReservationException() {
     }
 
     /**
@@ -24,13 +26,13 @@ protected String message;
      *
      * @param msg the detail message.
      */
-    public AddReservationException(String msg) {
+    public ReservationException(String msg) {
         super(msg);
     }
 
   
+    @Override
     public String getMessage() {
         return message; //To change body of generated methods, choose Tools | Templates.
     }
-    
 }
