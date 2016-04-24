@@ -43,6 +43,7 @@ public class TextualFacture extends AbstractView {
         }
 
         System.out.println("--->>> Prix total : " + prix);
+        this.getController().AjoutPrix(codeReservation, prix);
         do {
             System.out.println("Appuyer sur v pour valider et revenir au menu des réservations");
             Scanner sc = new Scanner(System.in);

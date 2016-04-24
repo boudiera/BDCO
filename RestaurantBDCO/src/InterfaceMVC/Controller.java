@@ -62,6 +62,10 @@ public class Controller {
     public ArrayList<Article> getFacture(int codeReservation) {
         return Factory.singletonFactory().getRequeteFactory().getFacture(codeReservation);
     }
+    
+    public void AjoutPrix(int codeReservation, float prix){
+        Factory.singletonFactory().getInsertionFactory().ajoutPrix(codeReservation, prix);
+    }
 
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces) {
