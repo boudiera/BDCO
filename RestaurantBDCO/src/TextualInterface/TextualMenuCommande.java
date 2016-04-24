@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
+ * Vue textuelle permettant de prendre une commande ou sortir une facture
+ * associée à une réservation.
  *
  * @author Arnaud
  */
@@ -26,9 +28,13 @@ public class TextualMenuCommande extends AbstractView {
         this.nbcommandes = nbcommandes;
         commandes = new ArrayList<>();
         this.setController(controller);
-
     }
 
+    /**
+     * Méthode affichant les commandes actuelles, liées à la réservation
+     *
+     * @param b boolean
+     */
     @Override
     public void showView(boolean b) {
         commandes = this.getController().getCommande(codeReservation);
@@ -49,14 +55,11 @@ public class TextualMenuCommande extends AbstractView {
         gestionChoix();
     }
 
-    private void afficheChoix() {
-        System.out.println("Appuyez sur 'c' pour prendre une nouvelle commande \n"
-                + "Entrez 'delete' puis selectionnez un numero de commande pour la supprimer \n"
-                + "Appuyez sur 'f' pour produire la facture des commandes de cette reservation \n"
-                + "Appuyer sur 'v' pour valider la et les nouvelles commandes prises \n"
-                + "Appuyez sur 'q' pour quitter et annuler toutes les nouvelles commandes prises");
-    }
-
+    /**
+     * Gestion des entrées clavier. Ajoute les commandes à la BD si nécessaire,
+     * et les supprime au niveau applicatif dans les cas où elles ne sont plus
+     * utiles.
+     */
     private void gestionChoix() {
 
         do {
@@ -90,6 +93,24 @@ public class TextualMenuCommande extends AbstractView {
 
     }
 
+    /**
+     * Affichage des consignes pour les entrées clavier.
+     */
+    private void afficheChoix() {
+        System.out.println("Appuyez sur 'c' pour prendre une nouvelle commande \n"
+                + "Entrez 'delete' puis selectionnez un numero de commande pour la supprimer \n"
+                + "Appuyez sur 'f' pour produire la facture des commandes de cette reservation \n"
+                + "Appuyer sur 'v' pour valider la et les nouvelles commandes prises \n"
+                + "Appuyez sur 'q' pour quitter et annuler toutes les nouvelles commandes prises");
+    }
+
+    /**
+     * Interface textuelle pour la supression d'une commande dont le numéro sera
+     * précisé par l'utilisateur.
+     *
+     * @return int. Retourne 0 si une commande a été supprimée et met à jour la
+     * vue,-1 en cas d'erreur.
+     */
     private int gestionAnnulationCommande() {
         int numCommande = 0;
         try {
