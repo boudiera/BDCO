@@ -70,9 +70,6 @@ public class Controller {
         Integer[] tabNum = new Integer[liste.size()];
         for (int n = 0; n < liste.size(); n++) {
             tabNum[n] = liste.get(n).getCodeTable();
-            System.out.println(
-                    liste.get(n).getCodeTable() + " => " + liste.get(n).getNbPlace0() + " , " + liste.get(n).getNbPlace1() + " , "
-                    + liste.get(n).getNbPlace2());
         }
         for (int j = 1; j < liste.size(); j++) {
             i = new TypedSepaPnkIterator<>(tabNum, j);
