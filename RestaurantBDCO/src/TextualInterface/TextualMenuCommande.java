@@ -57,6 +57,17 @@ public class TextualMenuCommande extends AbstractView {
         gestionChoix();
     }
 
+     /**
+     * Affichage des consignes pour les entrées clavier.
+     */
+   
+
+    private void afficheChoix() {
+        System.out.println("Appuyez sur 'c' pour prendre une nouvelle commande \n"
+                + "Entrez 'delete' puis selectionnez un numero de commande pour la supprimer \n"
+                + "Appuyez sur 'f' pour produire la facture des commandes de cette reservation \n"
+                + "Appuyez sur 'q' pour quitter et revenir au menu");
+    }
 
 
     /**
@@ -85,16 +96,7 @@ public class TextualMenuCommande extends AbstractView {
 
     }
 
-    /**
-     * Affichage des consignes pour les entrées clavier.
-     */
-    private void afficheChoix() {
-        System.out.println("Appuyez sur 'c' pour prendre une nouvelle commande \n"
-                + "Entrez 'delete' puis selectionnez un numero de commande pour la supprimer \n"
-                + "Appuyez sur 'f' pour produire la facture des commandes de cette reservation \n"
-                + "Appuyer sur 'v' pour valider la et les nouvelles commandes prises \n"
-                + "Appuyez sur 'q' pour quitter et annuler toutes les nouvelles commandes prises");
-    }
+  
 
     /**
      * Interface textuelle pour la supression d'une commande dont le numéro sera
