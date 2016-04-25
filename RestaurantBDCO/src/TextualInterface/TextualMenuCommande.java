@@ -113,7 +113,7 @@ public class TextualMenuCommande extends AbstractView {
             numCommande = sc.nextInt();
 
         } catch (Exception e) {
-            System.out.println(" Le numéro de la commande a supprimer doit être un entier");
+            System.out.println(" Le numéro de la commande à supprimer doit être un entier");
             return -1;
         }
 

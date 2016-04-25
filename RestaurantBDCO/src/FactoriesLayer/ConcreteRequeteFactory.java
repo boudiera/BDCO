@@ -159,7 +159,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             stmt.setDate(1, d);
             stmt.setString(2, service.name());
             stmt.setFloat(3, heure + minutes/60 + 1);
-            stmt.setFloat(3, heure + minutes/60 - 1);
+            stmt.setFloat(4, heure + minutes/60 - 1);
             //  Execution  de la  requete
             ResultSet rsetTable = stmt.executeQuery ();
             
