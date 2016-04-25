@@ -131,8 +131,16 @@ public class ConcreteRequeteFactory extends RequeteFactory{
         }
     }
     
+    /**
+     * Renvoie la liste de tables libres à l'heure h
+     * @param year
+     * @param month
+     * @param day
+     * @param service
+     * @return
+     */
     @Override // Renvoie les tables libres pour un certain service d'un certain jour
-    public ArrayList<Table> tablesLibres(int year, int month, int day, Service service){
+    public ArrayList<Table> tablesLibres(int year, int month, int day, Service service, int heure, int minutes){
         connexion.open();
         try {
             String STMT = "select T.CodeTable, T.NbPlace0, T.NbPlace1, "
@@ -145,13 +153,17 @@ public class ConcreteRequeteFactory extends RequeteFactory{
                     + "where T2.CodeTable = O.CodeTable "
                     + "and O.CodeReservation = R.CodeReservation "
                     + "and R.Jour = ? "
-                    + "and R.NomService = ? )";
+                    + "and R.NomService = ? "
+                    + "and R.heure + R.Minutes/60 < ? "
+                    + "and R.heure + R.Minutes/60 > ? )";
             java.sql.Date d = new java.sql.Date(year-1900, month-1, day);
             
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT);
             stmt.setDate(1, d);
             stmt.setString(2, service.name());
+            stmt.setFloat(3, heure + minutes/60 + 1);
+            stmt.setFloat(4, heure + minutes/60 - 1);
             //  Execution  de la  requete
             ResultSet rsetTable = stmt.executeQuery ();
             

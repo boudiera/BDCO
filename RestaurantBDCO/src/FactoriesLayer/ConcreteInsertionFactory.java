@@ -25,6 +25,11 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         this.connexion = connexion;
     }
 
+    /**
+     * Ajoute le client (nom, numTel) dans la BD 
+     * @param nomClient
+     * @param numTel
+     */
     @Override
     public void creerClient(String nomClient, String numTel) {
         //connexion.open();
@@ -43,6 +48,9 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
+    /**
+     * Génère un codeCarte et l'ajoute dans la BD
+     */
     @Override
     public void creerCarte() {
         connexion.open();
@@ -59,6 +67,12 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
+    /**
+     * Ajoute l'article nomArticle à la carte codeCarte
+     * @param nomArticle 
+     * @param codeCarte
+     * @param prix
+     */
     @Override
     public void ajoutArticleCarte(String nomArticle, int codeCarte, float prix) {
         connexion.open();
@@ -78,6 +92,16 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
+    /**
+     * Méthode qui crée la réservation
+     * @param tablesOcc Liste des tables allouées à la réservation
+     * @param nbPersonnes
+     * @param heure heure d'arrivée
+     * @param minutes minutes d'arrivée
+     * @param codeClient
+     * @param jour
+     * @param nomService
+     */
     @Override
     public void creerReservation(ArrayList<Table> tablesOcc, int nbPersonnes, int heure, int minutes, int codeClient, Date jour, Service nomService) {
         connexion.open();
@@ -112,6 +136,11 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
+    /**
+     * 
+     * @param tablesOcc
+     * @param codeReservation
+     */
     @Override
     public void creerOccTable(ArrayList<Table> tablesOcc, int codeReservation) {
         //connexion.open();

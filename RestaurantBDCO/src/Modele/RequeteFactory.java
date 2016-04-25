@@ -9,7 +9,7 @@ public abstract class RequeteFactory{
     public abstract ArrayList<Reservation> getReservationsList();
     
     // Renvoie les tables libres pour un service donné
-    public abstract ArrayList<Table> tablesLibres(int year, int month, int day, Service service);
+    public abstract ArrayList<Table> tablesLibres(int year, int month, int day, Service service, int heure, int minutes);
   
     // Renvoie tous les articles d'une carte en fonction d'un type
     public abstract ArrayList<Article> getArticlesCarte(int codeCarte, TypeArticle typeArticle);
