@@ -134,7 +134,7 @@ public class Controller {
         // On récupère toutes les tables libres
         ArrayList<Table> tablesLibres = getTablesLibres(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Service.valueOf(service),heure,minutes);
 
-        // On les tries par localisation
+        // On les trie par localisation
         HashMap<String, ArrayList<Table>> tableZones = new HashMap<>();
         for (Table t : tablesLibres) {
             System.out.println(t.getCodeTable() + " " + t.getLocation());
@@ -226,7 +226,7 @@ public class Controller {
         return list;
     }
 
-    //  Permet d'obtenir tout les articles d'un type donnée et d'une carte donnée et d'un menu donné indexé par leur nom dans une hashmap
+    //  Permet d'obtenir tous les articles d'un type donnée et d'une carte donnée et d'un menu donné indexé par leur nom dans une hashmap
     public HashMap<String, Article> getArticlesMenuByName(TypeArticle typeArticle, String nomMenu){
 
         HashMap<String, Article> list = new HashMap<>();
@@ -236,13 +236,13 @@ public class Controller {
         return list;
     }
 
-     //  Permet d'obtenir tout les articles d'un type donnée et d'un menu donné 
+     //  Permet d'obtenir tous les articles d'un type donnée et d'un menu donné 
     public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu){
         ArrayList<Article> listArticles=new ArrayList<>();
         listArticles=Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu);
         return listArticles;
     }
-    //  Permet d'obtenir tout les articles d'un menu donné          
+    //  Permet d'obtenir tous les articles d'un menu donné          
     public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu){
         ArrayList<TypeArticle> list=new ArrayList<>();
         list=Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
