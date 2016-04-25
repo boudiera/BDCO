@@ -36,7 +36,7 @@ public class Commande {
                 regroupeArticle.put(a.getName(), regroupeArticle.get(a.getName()) + 1);
             }
             
-
+                
         }
     }
     // Ajoute l'article a à la liste d'article et met à jour le regroupe
