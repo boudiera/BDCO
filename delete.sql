@@ -19,8 +19,6 @@ DELETE FROM EstVoisine;
 
 DELETE FROM Coute;
 
-DELETE FROM PrixTotal;
-
 DELETE FROM Occupe;
 
 DELETE FROM Reservation;

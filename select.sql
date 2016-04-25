@@ -43,3 +43,12 @@ where R.Jour = S.Jour
 and R.NomService = S.NomService
 and R.CodeReservation = 4;
 
+select R.CodeReservation, R.NbPersonnes, R.Jour, R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel
+from Reservation R, Client C
+where R.CodeClient = C.CodeClient
+minus ( select R2.CodeReservation, R2.NbPersonnes, R2.Jour, R2.Heure, R2.Minutes, R2.NomService, C2.NomClient, C2.NumTel
+from Reservation R2, Client C2, Coute Co
+where R2.CodeClient = C2.CodeClient
+and Co.CodeReservation = R2.CodeReservation)
+order by Jour, Heure, Minutes;
+

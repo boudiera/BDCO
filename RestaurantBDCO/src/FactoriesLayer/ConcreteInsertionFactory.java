@@ -84,7 +84,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         int codeReservation;
 
         String STMT_1 = "insert into Reservation "
-                + "values (seqReservation.nextval, ?, ?, ?, ?, ?, ?, 0)";
+                + "values (seqReservation.nextval, ?, ?, ?, ?, ?, ?)";
         String STMT_2 = "select seqReservation.currval from Dual";
 
         try {

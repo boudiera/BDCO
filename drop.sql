@@ -19,8 +19,6 @@ DROP TABLE EstElement;
 
 DROP TABLE Commande;
 
-DROP TABLE PrixTotal;
-
 DROP TABLE Article;
 
 DROP TABLE Reservation;

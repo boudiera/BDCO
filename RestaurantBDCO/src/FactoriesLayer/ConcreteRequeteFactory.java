@@ -26,9 +26,13 @@ public class ConcreteRequeteFactory extends RequeteFactory{
             String STMT_1 = "select R.CodeReservation, R.NbPersonnes, R.Jour, "
                     + "R.Heure, R.Minutes, R.NomService, C.NomClient, C.NumTel "
                     + "from Reservation R, Client C "
-                    + "where R.CodeClient = C.CodeClient and "
-                    + "R.prix = 0 "
-                   + "order by R.Jour, R.Heure, R.Minutes";
+                    + "where R.CodeClient = C.CodeClient "
+                    + "minus ( select R2.CodeReservation, R2.NbPersonnes, R2.Jour, "
+                    + "R2.Heure, R2.Minutes, R2.NomService, C2.NomClient, C2.NumTel "
+                    + "from Reservation R2, Client C2, Coute Co "
+                    + "where R2.CodeClient = C2.CodeClient "
+                    + "and Co.CodeReservation = R2.CodeReservation ) "
+                    + "order by Jour, Heure, Minutes";
             
             //  Creation de la requete
             PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
@@ -376,7 +380,7 @@ public class ConcreteRequeteFactory extends RequeteFactory{
 
     @Override
     public int getCodeCarte(int codeReservation) {
-connexion.open();
+        connexion.open();
         String STMT_1 = "select S.CodeCarte " +
                 "from Reservation R, Service S " +
                 "where R.Jour = S.Jour " +
@@ -439,12 +443,11 @@ connexion.open();
                 prix = prix + rsetFacture.getInt(5)*rsetFacture.getFloat(3);
             }
             
-            String STMT_2 = "update Reservation "
-                + "set Reservation.Prix = ? "
-                + "where Reservation.CodeReservation = ? ";
+            String STMT_2 = "insert into Coute " +
+                    "values (?, ?)";
             PreparedStatement stmt2 = connexion.getConnection().prepareStatement(STMT_2);
-            stmt2.setFloat(1, prix);
-            stmt2.setInt(2, codeReservation);
+            stmt2.setInt(1, codeReservation);
+            stmt2.setFloat(2, prix);
             stmt2.executeQuery();
             stmt2.close();
             

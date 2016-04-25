@@ -1,11 +1,5 @@
 -- Creation des differentes tables
 
-CREATE TABLE PrixTotal (
-    Valeur FLOAT,
-    CONSTRAINT valeur_pk PRIMARY KEY (Valeur),
-    CONSTRAINT valeur_c CHECK (Valeur >= 0)
-);
-
 CREATE TABLE Client (
     CodeClient INTEGER,
     NomClient VARCHAR(20),
@@ -55,7 +49,6 @@ CREATE TABLE Reservation (
     CodeClient INTEGER,
     Jour DATE,
     NomService VARCHAR(5),
-    Prix INT CHECK(PRIX >= 0),
     CONSTRAINT codeReservation_pk PRIMARY KEY (CodeReservation),
     CONSTRAINT nbPersonnes_c CHECK (NbPersonnes > 0),
     CONSTRAINT codeClient_fk FOREIGN KEY (CodeClient) REFERENCES Client (CodeClient),
@@ -66,8 +59,7 @@ CREATE TABLE Coute (
     CodeReservation INTEGER,
     PrixTotal FLOAT,
     CONSTRAINT coute_pk PRIMARY KEY (CodeReservation),
-    CONSTRAINT codeReservation_fk FOREIGN KEY (CodeReservation) REFERENCES Reservation (CodeReservation) ON DELETE CASCADE,
-    CONSTRAINT prixTotal_fk FOREIGN KEY (PrixTotal) REFERENCES PrixTotal(Valeur)
+    CONSTRAINT codeReservation_fk FOREIGN KEY (CodeReservation) REFERENCES Reservation (CodeReservation) ON DELETE CASCADE
 );
 
 CREATE TABLE Occupe (
