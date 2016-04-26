@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Menu extends Article{
+public abstract class Menu extends Article{
 
     private List<Article> list;
     private HashMap<TypeArticle, Article> contientType;
