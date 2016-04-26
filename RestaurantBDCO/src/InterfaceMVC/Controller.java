@@ -75,9 +75,11 @@ public class Controller {
         }
         for (int j = 1; j < liste.size(); j++) {
             i = new TypedSepaPnkIterator<>(tabNum, j);
+            boolean hasCombi = false;
             while (i.hasNext()) {
                 Integer[] tab = i.next();
                 if (verifycombi(tab, tablesVoisines)) {
+                    hasCombi = true;
                     HashMap<Integer, Table> hash = new HashMap<>();
                     for (Table t : liste) {
                         hash.put(t.getCodeTable(), t);
@@ -90,6 +92,8 @@ public class Controller {
                         return res;
                     }
                 }
+                if (hasCombi==false)
+                    return null;
             }
         }
         return null;
