@@ -32,6 +32,8 @@ public abstract class InsertionFactory {
     // Supprime dans la base de donnée une commande faire attention de update et non delete si la quantité d'article commandé de la reservation ( d'ou vient la commande ) est > 0 (voir google drive)
     public abstract void supprimeCommande(Commande commande);
     
+    // Supprime une réservation dans la base de données.
+    public abstract void supprimeReservation(int codeReservation);
    
     
 }

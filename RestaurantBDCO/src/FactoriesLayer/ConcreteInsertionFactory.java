@@ -6,6 +6,7 @@ import Modele.Service;
 import java.sql.Date;
 
 import Modele.InsertionFactory;
+import Modele.Reservation;
 import Modele.Table;
 import Modele.TypeArticle;
 import java.sql.PreparedStatement;
@@ -262,7 +263,27 @@ public class ConcreteInsertionFactory extends InsertionFactory {
             e.printStackTrace(System.err);
         }
     }
+    
+    /**
+     * Supprime une Reservation dans la BD
+     * @param commande
+     */
+    @Override
+    public void supprimeReservation(int codeReservation) {
+        connexion.open();
 
+        try {
+
+            String STMT_1 = "delete from Reservation "
+                    + " where CodeReservation = ? ";
+            PreparedStatement stmt1 = connexion.getConnection().prepareStatement(STMT_1);
+            stmt1.setInt(1, codeReservation);
+            stmt1.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("failed");
+            e.printStackTrace(System.err);
+        }
+    }
 
 
 }
