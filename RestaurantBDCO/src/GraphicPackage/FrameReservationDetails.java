@@ -348,8 +348,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
     }//GEN-LAST:event_ButtonDeleteSelectedCommandActionPerformed
 
     private void ButtonNewCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonNewCommandActionPerformed
-        WindowView frameCommande = new FrameCommande(this);
-        GlobalGraphicView.singletonGlobalGraphicView().showView(frameCommande);
+        GlobalGraphicView.singletonGlobalGraphicView().showView(new FrameCommande(this));
     }//GEN-LAST:event_ButtonNewCommandActionPerformed
 
     private void ButonGetBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButonGetBillActionPerformed
@@ -359,27 +358,25 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             String FinalBill = "- - - - - FACTURE - - - - -\n\n";
             String FinalPrice = this.TextTotalBillValue.getText();
             
+            for (Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getFacture(reservationCode)){
+                FinalBill += "   : " + a.getQuantity() + " " + a.getName() + "\n";
+            }
+            
             for (Object obj : ((SpecialJavaTableModel) this.CommandeTable.getModel()).getAll().values()) {
                 Commande comm = ((Commande) obj);
-                
-                FinalBill += "• " + comm.getIdentifier() + ":\n";
-                FinalBill += "• Sub-Total: € " + comm.getPrice() + "\n";
-                for (String nomA : comm.getRegroupeArticle().keySet()) {
-                    FinalBill += "   : " + comm.getRegroupeArticle().get(nomA) + " " + nomA + "\n";
-                }
-                FinalBill += "\n";
-                
-                GlobalGraphicView.singletonGlobalGraphicView().getController().endCommande(comm);
-                
                 GlobalGraphicView.singletonGlobalGraphicView().getController().deleteCommande(comm);
             }
+            
             this.updateSelectedCommande();
             this.updateMenuArticleTable();
+            FrameReservationList.singletonFrameReservationList().update(null, null);
             
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
             FinalBill += "T O T A L :  " + FinalPrice + "\n";
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
             JOptionPane.showMessageDialog(this.getParent(), FinalBill);
+            
+            this.dispose();
         }
     }//GEN-LAST:event_ButonGetBillActionPerformed
 
