@@ -118,7 +118,7 @@ public class TextualMenuCommande extends AbstractView {
         }
 
         if (numCommande <= 0 || numCommande > commandes.size()) {
-            System.out.println(" Le numéro de la commande à supprimer doit affiché sur la liste des commandes la reservation");
+            System.out.println(" Le numéro de la commande à supprimer doit être affiché sur la liste des commandes la reservation");
             return -1;
         }
         System.out.println(" ------- > Suppresion de la commande " + numCommande);

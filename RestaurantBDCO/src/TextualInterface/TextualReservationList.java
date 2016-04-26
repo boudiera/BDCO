@@ -18,6 +18,7 @@ import InterfaceMVC.*;
 public class TextualReservationList extends AbstractView {
 
     private final static TextualReservationList viewTextualReservation = new TextualReservationList();
+    private ArrayList<Reservation> listReservations;
 
     private TextualReservationList() {
     }
@@ -42,7 +43,7 @@ public class TextualReservationList extends AbstractView {
             return;
         }
         //Récupération de la liste des réservations de la Base de données
-        ArrayList<Reservation> listReservations = this.getController().getReservationList();
+        listReservations = this.getController().getReservationList();
 
         System.out.println("--------------------------------------~AFFICHAGE DES RESERVATIONS~---------------------------------------");
         System.out.println("---------------------------------------------------------------------------------------------------------");
@@ -87,6 +88,8 @@ public class TextualReservationList extends AbstractView {
             String choix = sc.nextLine();
             if (choix.equalsIgnoreCase("r")) {
                 this.getController().setView(new TextualAjoutReservation(this.getController()));
+            } else if (choix.equalsIgnoreCase("delete")) {
+                gestionAnnulationReservation();
             } else if (choix.equalsIgnoreCase("q")) {
                 System.exit(0);
             }
@@ -100,7 +103,34 @@ public class TextualReservationList extends AbstractView {
      */
     private void afficheChoix() {
         System.out.println("Appuyez sur r pour entrer une nouvelle reservation \n"
+                + "Entrez delete puis un numéro de réservation pour supprimer cette réservation \n"
                 + "Appuyez sur q pour quitter");
+    }
+
+    private int gestionAnnulationReservation() {
+        int numReservation = 0;
+        do {
+
+            try {
+                System.out.println(" Numero de la reservation à supprimer : ");
+                Scanner sc = new Scanner(System.in);
+                numReservation = sc.nextInt();
+
+                for (Reservation res : listReservations) {
+                    if (res.getCodeReservation() == numReservation) {
+                        System.out.println(" ------- > Suppresion de la reservation " + numReservation);
+                        this.getController().supprimeReservation(numReservation);
+                        this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
+                    }
+                }
+                System.out.println(" Le numéro de la reservation à supprimer doit être affiché sur la liste des reservations");
+            } catch (Exception e) {
+                System.out.println(" Le numéro de la reservation à supprimer doit être un entier");
+                return -1;
+            }
+            return 0;
+        } while (true);
+
     }
 
 }
