@@ -41,12 +41,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     
     @Override
     public void dispose(){
-        if(SingletonListCommande.singletonListCommande().isEmpty()){
-            super.dispose();    // If the list of Commandes is empty, so the application can be closed
-        }else{
-            // If the list of Commandes is not empty, it means there are commandes in need of payment 
-            JOptionPane.showMessageDialog(this.getParent(), new CommandesNotSaved().getMessage());
-        }
+        super.dispose();
     }
     
     @Override
