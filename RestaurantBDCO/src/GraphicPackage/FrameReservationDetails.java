@@ -356,10 +356,11 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         
         if(answer == JOptionPane.YES_OPTION){
             String FinalBill = "- - - - - FACTURE - - - - -\n\n";
-            String FinalPrice = this.TextTotalBillValue.getText();
+            float FinalPrice = (float) 0.0;
             
             for (Article a : GlobalGraphicView.singletonGlobalGraphicView().getController().getFacture(reservationCode)){
-                FinalBill += "   : " + a.getQuantity() + " " + a.getName() + "\n";
+                FinalBill  += "   : " + a.getQuantity() + " " + a.getName() + "\n";
+                FinalPrice += a.getQuantity() * a.getPrice();
             }
             
             for (Object obj : ((SpecialJavaTableModel) this.CommandeTable.getModel()).getAll().values()) {
@@ -372,7 +373,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             FrameReservationList.singletonFrameReservationList().update(null, null);
             
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
-            FinalBill += "T O T A L :  " + String.format("%1.2f", FinalPrice) + "\n";
+            FinalBill += "T O T A L :  " + FinalPrice + "\n";
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
             JOptionPane.showMessageDialog(this.getParent(), FinalBill);
             

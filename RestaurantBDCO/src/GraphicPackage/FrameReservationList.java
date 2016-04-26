@@ -37,6 +37,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     @Override
     public void update(Observable o, Object arg) {
         updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
+        this.updateSelectedReservation();
     }
     
     @Override
@@ -78,7 +79,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             this.ReservationsTable.getColumnModel().getColumn(0).setMaxWidth(60);
             this.ReservationsTable.getColumnModel().getColumn(3).setMaxWidth(200);
             this.ReservationsTable.getColumnModel().getColumn(4).setMaxWidth(60);
-            this.ReservationsTable.getColumnModel().getColumn(5).setMaxWidth(60);
+            this.ReservationsTable.getColumnModel().getColumn(5).setWidth(60);
             
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);

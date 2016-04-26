@@ -140,7 +140,7 @@ public class Controller {
         // On les trie par localisation
         HashMap<String, ArrayList<Table>> tableZones = new HashMap<>();
         for (Table t : tablesLibres) {
-            System.out.println(t.getCodeTable() + " " + t.getLocation());
+            //System.out.println(t.getCodeTable() + " " + t.getLocation());
             if (tableZones.containsKey(t.getLocation())) {
                 tableZones.get(t.getLocation()).add(t);
             } else {
