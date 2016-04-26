@@ -129,7 +129,7 @@ public class SpecialJavaTableModel extends AbstractTableModel {
                     value = ((Commande) obj).getIdentifier();
                     break;
                 case 1:
-                    value = ((Commande) obj).getPrice();
+                    value = String.format("%1.2f", ((Commande) obj).getPrice());
                     break;
             }
         }else if(type.equals(Article.class)){
@@ -141,7 +141,7 @@ public class SpecialJavaTableModel extends AbstractTableModel {
                     value = ((Article) obj).getType();
                     break;
                 case 2:
-                    value = ((Article) obj).getPrice();
+                    value = String.format("%1.2f", ((Article) obj).getPrice());
                     break;
                 case 3:
                     value = ((Article) obj).getSpeciality();

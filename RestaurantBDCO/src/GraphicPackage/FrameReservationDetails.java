@@ -70,7 +70,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
         for(int i=0; i<CommandeTable.getRowCount(); i++){
            total += ((Commande) ((SpecialJavaTableModel) this.CommandeTable.getModel()).getObjectAt(i)).getPrice();
         }
-        TextTotalBillValue.setText("€ " + Float.toString(total));
+        TextTotalBillValue.setText("€ " + String.format("%1.2f", total));
     }
     
     private void updateMenuArticleTable(){
@@ -372,7 +372,7 @@ public class FrameReservationDetails extends javax.swing.JFrame implements Windo
             FrameReservationList.singletonFrameReservationList().update(null, null);
             
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
-            FinalBill += "T O T A L :  " + FinalPrice + "\n";
+            FinalBill += "T O T A L :  " + String.format("%1.2f", FinalPrice) + "\n";
             FinalBill += "- - - - - - - - - - - - - - - - -\n";
             JOptionPane.showMessageDialog(this.getParent(), FinalBill);
             
