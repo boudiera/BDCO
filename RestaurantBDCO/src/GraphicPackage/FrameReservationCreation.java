@@ -372,7 +372,7 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             HashMap<String, ArrayList<Table>> hash;
             System.out.println(service.name());
             hash = GlobalGraphicView.singletonGlobalGraphicView().getController()
-                    .getTablesLibresByLocalisation(year.getText(), month.getText(), day.getText(),
+                    .getTablesLibresParLocalisation(year.getText(), month.getText(), day.getText(),
                             service.name(), nbPeople.getText(), Integer.parseInt(hour.getText()),Integer.parseInt(minute.getText()));
 
             for (ArrayList<Table> list : hash.values()) {

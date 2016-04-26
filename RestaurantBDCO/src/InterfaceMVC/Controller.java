@@ -50,6 +50,7 @@ public class Controller {
         this.view = v;
         this.view.showView(true);
     }
+
     // Renvoit la liste des réservations que l'on a pas encore facturée
     public ArrayList<Reservation> getReservationList() {
         return Factory.singletonFactory().getRequeteFactory().getReservationsList();
@@ -58,13 +59,11 @@ public class Controller {
     public int getCodeCarte(int codeReservation) {
         return Factory.singletonFactory().getRequeteFactory().getCodeCarte(codeReservation);
     }
-    
-     // Renvoit la liste des articles contenus dans les commandes de la base de donnée
+
+    // Renvoit la liste des articles contenus dans les commandes de la base de donnée
     public ArrayList<Article> getFacture(int codeReservation) {
         return Factory.singletonFactory().getRequeteFactory().getFacture(codeReservation);
     }
-    
-   
 
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces) {
@@ -129,10 +128,10 @@ public class Controller {
     }
 
     // Fonction qui renvoit une hashmap indexe sur le nom des localisation, pour chaque localisation -> on obtient une lise de tables pouvants être occupées en tenant compte du nombre de personne
-    public HashMap<String, ArrayList<Table>> getTablesLibresByLocalisation(String annee, String mois, String jour, String service, String nbPersonnes, int heure, int minutes) throws ReservationException {
+    public HashMap<String, ArrayList<Table>> getTablesLibresParLocalisation(String annee, String mois, String jour, String service, String nbPersonnes, int heure, int minutes) throws ReservationException {
 
         // On récupère toutes les tables libres
-        ArrayList<Table> tablesLibres = getTablesLibres(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Service.valueOf(service),heure,minutes);
+        ArrayList<Table> tablesLibres = getTablesLibres(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour), Service.valueOf(service), heure, minutes);
 
         // On les trie par localisation
         HashMap<String, ArrayList<Table>> tableZones = new HashMap<>();
@@ -170,36 +169,35 @@ public class Controller {
     public int getClient(String nomClient, String numTel) {
         return Factory.singletonFactory().getRequeteFactory().clientConnu(nomClient, numTel);
     }
-    
+
     // Ajout dans la mémoire de l'application   + bd  
-    public void addCommande(Commande commande){
-        SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(),commande);
+    public void addCommande(Commande commande) {
+        SingletonListCommande.singletonListCommande().addCommand(commande.getCodeReservation(), commande);
         Factory.singletonFactory().getInsertionFactory().addCommande(commande);
     }
 
-       // Permet de supprimer une commande d'une reservation dans la memoire + bd
+    // Permet de supprimer une commande d'une reservation dans la memoire + bd
     public void deleteCommande(Commande commande) {
         SingletonListCommande.singletonListCommande().removeCommand(commande.getCodeReservation(), commande.getIdentifier());
         Factory.singletonFactory().getInsertionFactory().supprimeCommande(commande);
     }
-    
+
     // Ajoute un article dans une commande
     public void addArticleCommande(Article a, Commande c) {
         c.addArticle(a);
-       
+
     }
 
     // Enleve un article dans une commande
-    public void removeArticleCommande(Article a, Commande c){
+    public void removeArticleCommande(Article a, Commande c) {
         c.removeArticle(a);
-        
+
     }
-    
+
     // Finalisation de la commande on envoit les données à la base de donnée
-    public void endCommande(Commande comm){
+    public void endCommande(Commande comm) {
         Factory.singletonFactory().getInsertionFactory().addCommande(comm);
     }
-  
 
     // Ajoute un article dans un menu
     public void addArticleMenu(Article a, Menu m) {
@@ -211,14 +209,13 @@ public class Controller {
         return (m.contientPlat()) && (m.contientAutreQuePlat());
     }
 
-    
     // Permet d'obtenir tout les articles d'un type donnée et d'une carte donnée
-    public ArrayList<Article> getArticles (int codeCarte, TypeArticle typeArticle){
+    public ArrayList<Article> getArticles(int codeCarte, TypeArticle typeArticle) {
         return Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle);
     }
-    
+
     // Permet d'obtenir tout les articles d'un type donnée et d'une carte donnée indexé par leur nom dans une hashmap
-    public HashMap<String, Article> getArticlesByName (int codeCarte, TypeArticle typeArticle){
+    public HashMap<String, Article> getArticlesByName(int codeCarte, TypeArticle typeArticle) {
         HashMap<String, Article> list = new HashMap<>();
         for (Article a : Factory.singletonFactory().getRequeteFactory().getArticlesCarte(codeCarte, typeArticle)) {
             list.put(a.getName(), a);
@@ -227,7 +224,7 @@ public class Controller {
     }
 
     //  Permet d'obtenir tous les articles d'un type donnée et d'une carte donnée et d'un menu donné indexé par leur nom dans une hashmap
-    public HashMap<String, Article> getArticlesMenuByName(TypeArticle typeArticle, String nomMenu){
+    public HashMap<String, Article> getArticlesMenuByName(TypeArticle typeArticle, String nomMenu) {
 
         HashMap<String, Article> list = new HashMap<>();
         for (Article a : Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu)) {
@@ -236,16 +233,17 @@ public class Controller {
         return list;
     }
 
-     //  Permet d'obtenir tous les articles d'un type donnée et d'un menu donné 
-    public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu){
-        ArrayList<Article> listArticles=new ArrayList<>();
-        listArticles=Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu);
+    //  Permet d'obtenir tous les articles d'un type donnée et d'un menu donné 
+    public ArrayList<Article> getArticlesMenu(TypeArticle typeArticle, String nomMenu) {
+        ArrayList<Article> listArticles = new ArrayList<>();
+        listArticles = Factory.singletonFactory().getRequeteFactory().getArticlesMenu(typeArticle, nomMenu);
         return listArticles;
     }
+
     //  Permet d'obtenir tous les articles d'un menu donné          
-    public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu){
-        ArrayList<TypeArticle> list=new ArrayList<>();
-        list=Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
+    public ArrayList<TypeArticle> getTypeArticleMenu(String nomMenu) {
+        ArrayList<TypeArticle> list = new ArrayList<>();
+        list = Factory.singletonFactory().getRequeteFactory().getTypesMenu(nomMenu);
         return list;
     }
 
@@ -254,40 +252,33 @@ public class Controller {
         return SingletonListCommande.singletonListCommande().getListCommandByReservationCode(codeReservation);
     }
 
- 
-
-    
     // Permet de verifier si une chaine de caract-re contient uniquement que des caractères
     public boolean contientUniquementLettre(String chaine) {
-                int index =0;
-                while(index < chaine.length()) {
-                    try { 
-                        Integer.parseInt(chaine.substring(index,index+1));
-                             return false;
-                        }    
-                    catch (NumberFormatException e){
-                            index++;
-                    }
-                }    
-		return true;
-	}
-    
-    
-     // Permet de verifier si une chaine de caract-re contient uniquement que des caractères
-    public boolean contientUniquementChiffre(String chaine) {
-                int index =0;
-                while(index < chaine.length()) {
-                    try { 
-                        Integer.parseInt(chaine.substring(index,index+1));
-                         index++;       
-                        }    
-                    catch (NumberFormatException e){
-                        return false;   
-                    }
-                }    
-		return true;
+        int index = 0;
+        while (index < chaine.length()) {
+            try {
+                Integer.parseInt(chaine.substring(index, index + 1));
+                return false;
+            } catch (NumberFormatException e) {
+                index++;
+            }
+        }
+        return true;
     }
-    
+
+    // Permet de verifier si une chaine de caract-re contient uniquement que des caractères
+    public boolean contientUniquementChiffre(String chaine) {
+        int index = 0;
+        while (index < chaine.length()) {
+            try {
+                Integer.parseInt(chaine.substring(index, index + 1));
+                index++;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     // Recupère les tables libres, renvoit une exception si il n'y en pas pas
     public ArrayList<Table> getTablesLibres(int year, int month, int day, Service service, int heure, int minutes) throws RestaurantCompletException {
@@ -309,7 +300,7 @@ public class Controller {
 
     }
 
-    // Verification du bon forma d'entré des données
+    // Verification du bon format d'entré des données
     public void verifyAddReservation(String year, String month, String day, String hour, String minute, String nbPeople, String phone, String service, String nomClient) throws ReservationException {
 
         int yearIn;
@@ -396,15 +387,14 @@ public class Controller {
         }
 
         // Verification du bon format pour le client
-        if( !contientUniquementLettre(nomClient)){
+        if (!contientUniquementLettre(nomClient)) {
             throw new ParseNomClientException();
         }
-        
-    
-       if (!contientUniquementChiffre(phone)){
+
+        if (!contientUniquementChiffre(phone)) {
             throw new ParseTelephoneException();
         }
-      
+
         //gestion téléphone
         if (phone.length() != 10) {
             throw new TelephoneException();

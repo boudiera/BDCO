@@ -95,7 +95,7 @@ public class TextualAjoutReservation extends AbstractView {
                 }
 
                 // 0n cherche une localisation possible, on récupère grâce au controlleur une HashMap indexé sur le nom des localisation et qui renvoit une liste de tables qui peuvent être occupées
-                HashMap<String, ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresByLocalisation(annee, mois, jour, service, nbPersonnes,Integer.parseInt(heure),Integer.parseInt(minutes));
+                HashMap<String, ArrayList<Table>> listTablesOccupeesParLocalisation = this.getController().getTablesLibresParLocalisation(annee, mois, jour, service, nbPersonnes,Integer.parseInt(heure),Integer.parseInt(minutes));
 
                 Set<String> s = listTablesOccupeesParLocalisation.keySet();
 
