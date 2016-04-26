@@ -102,10 +102,8 @@ public class TextualMenuCommande extends AbstractView {
      * Interface textuelle pour la supression d'une commande dont le numéro sera
      * précisé par l'utilisateur.
      *
-     * @return int. Retourne 0 si une commande a été supprimée et met à jour la
-     * vue,-1 en cas d'erreur.
      */
-    private int gestionAnnulationCommande() {
+    private void gestionAnnulationCommande() {
         int numCommande = 0;
         try {
             System.out.println(" Numero de commande à supprimer : ");
@@ -114,18 +112,16 @@ public class TextualMenuCommande extends AbstractView {
 
         } catch (Exception e) {
             System.out.println(" Le numéro de la commande à supprimer doit être un entier");
-            return -1;
         }
 
         if (numCommande <= 0 || numCommande > commandes.size()) {
-            System.out.println(" Le numéro de la commande à supprimer doit être affiché sur la liste des commandes la reservation");
-            return -1;
+            System.out.println(" Le numéro de la commande à supprimer doit être affiché dans la liste des commandes la reservation");
+            
         }
         System.out.println(" ------- > Suppresion de la commande " + numCommande);
         this.getController().deleteCommande(commandes.get(numCommande - 1));
         this.getController().setView(this.getController().getView());        // Actualisation de la vue
 
-        return 0;
     }
 
 }

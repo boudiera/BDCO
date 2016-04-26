@@ -107,12 +107,17 @@ public class TextualReservationList extends AbstractView {
                 + "Appuyez sur 'q' pour quitter");
     }
 
-    private int gestionAnnulationReservation() {
+     /**
+     * Interface textuelle pour la supression d'une r"servation dont le numéro sera
+     * précisé par l'utilisateur.
+     *
+     */
+    private void gestionAnnulationReservation() {
         int numReservation = 0;
         do {
 
             try {
-                System.out.println(" Numero de la reservation à supprimer : ");
+                System.out.println(" Numéro de la réservation à supprimer : ");
                 Scanner sc = new Scanner(System.in);
                 numReservation = sc.nextInt();
 
@@ -123,12 +128,12 @@ public class TextualReservationList extends AbstractView {
                         this.getController().setView(TextualReservationList.singletonViewTextualReservationList());
                     }
                 }
-                System.out.println(" Le numéro de la reservation à supprimer doit être affiché sur la liste des reservations");
+                System.out.println(" Le numéro de la réservation à supprimer doit être affiché dans la liste des reservations");
             } catch (Exception e) {
-                System.out.println(" Le numéro de la reservation à supprimer doit être un entier");
-                return -1;
+                System.out.println(" Le numéro de la réservation à supprimer doit être un entier");
+                
             }
-            return 0;
+           
         } while (true);
 
     }
