@@ -73,8 +73,8 @@ public class TextualPriseDeCommande extends AbstractView {
 
     private void afficheChoixMenu() {
         System.out.println("\nEntrez un chiffre entre 1 et 5 pour afficher une liste d'articles du type souhaité\n"
-                + "Appuyez sur q pour annuler la commande\n"
-                + "Appuyez sur v pour valider la commande");
+                + "Appuyez sur 'q' pour annuler la commande\n"
+                + "Appuyez sur 'v' pour valider la commande");
     }
 
     /**

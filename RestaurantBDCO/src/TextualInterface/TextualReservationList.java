@@ -102,9 +102,9 @@ public class TextualReservationList extends AbstractView {
      * Affichage des consignes
      */
     private void afficheChoix() {
-        System.out.println("Appuyez sur r pour entrer une nouvelle reservation \n"
-                + "Entrez delete puis un numéro de réservation pour supprimer cette réservation \n"
-                + "Appuyez sur q pour quitter");
+        System.out.println("Appuyez sur 'r' pour entrer une nouvelle reservation \n"
+                + "Entrez 'delete' puis un numéro de réservation pour supprimer cette réservation \n"
+                + "Appuyez sur 'q' pour quitter");
     }
 
     private int gestionAnnulationReservation() {

@@ -67,7 +67,7 @@ public class TextualSelectionReservation extends AbstractView{
     
     private void afficheChoix(){
         System.out.println("Entrez un code de reservation pour voir les commandes associées \n"
-                + "Appuyez sur q pour quitter");
+                + "Appuyez sur 'q' pour quitter");
     }
     
     // Permet de gerer les evenements crée par la lecture du clavier
