@@ -1,4 +1,4 @@
-package FactoriesLayer;
+package InterfaceBaseDeDonnees;
 
 import Modele.Article;
 import java.sql.*;

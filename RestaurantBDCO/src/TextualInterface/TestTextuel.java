@@ -5,10 +5,10 @@
  */
 package TextualInterface;
 
-import FactoriesLayer.ConcreteInsertionFactory;
-import FactoriesLayer.ConcreteRequeteFactory;
-import FactoriesLayer.ConnectionInfo;
-import FactoriesLayer.TheConnection;
+import InterfaceBaseDeDonnees.ConcreteInsertionFactory;
+import InterfaceBaseDeDonnees.ConcreteRequeteFactory;
+import InterfaceBaseDeDonnees.ConnectionInfo;
+import InterfaceBaseDeDonnees.TheConnection;
 import InterfaceMVC.Controller;
 import Modele.*;
 import java.util.ArrayList;

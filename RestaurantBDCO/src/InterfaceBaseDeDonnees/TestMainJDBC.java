@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package FactoriesLayer;
+package InterfaceBaseDeDonnees;
 
 import Modele.Reservation;
 import java.util.ArrayList;

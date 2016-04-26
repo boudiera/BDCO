@@ -1,4 +1,4 @@
-package FactoriesLayer;
+package InterfaceBaseDeDonnees;
 
 import Modele.*;
 import java.util.ArrayList;
