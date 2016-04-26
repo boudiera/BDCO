@@ -370,7 +370,6 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
             GlobalGraphicView.singletonGlobalGraphicView().getController().verifyAddReservation(year.getText(), month.getText(),
                     day.getText(), hour.getText(), minute.getText(), nbPeople.getText(), clientPhone.getText(), service.name(), clientName.getText());
             HashMap<String, ArrayList<Table>> hash;
-            System.out.println(service.name());
             hash = GlobalGraphicView.singletonGlobalGraphicView().getController()
                     .getTablesLibresParLocalisation(year.getText(), month.getText(), day.getText(),
                             service.name(), nbPeople.getText(), Integer.parseInt(hour.getText()),Integer.parseInt(minute.getText()));
@@ -379,7 +378,8 @@ public class FrameReservationCreation extends javax.swing.JFrame implements Wind
                 if (list != null) {
                     hashglobal.put(list.get(0).getLocation(), list);
                     for (Table t : list) {
-                        System.out.println(t.getCodeTable() + " " + t.getLocation());
+                        System.out.println(t.getCodeTable() + " " + t.getLocation() + " " + 
+                                t.getNbPlace0() + " " + t.getNbPlace1() + " " + t.getNbPlace2());
                     }
                     ComboBoxPlaces.addItem(list.get(0).getLocation());
                 }

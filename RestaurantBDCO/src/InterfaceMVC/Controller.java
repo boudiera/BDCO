@@ -79,7 +79,7 @@ public class Controller {
         for (int n = 0; n < liste.size(); n++) {
             tabNum[n] = liste.get(n).getCodeTable();
         }
-        for (int j = 1; j < liste.size(); j++) {
+        for (int j = 1; j <= liste.size(); j++) {
             i = new TypedSepaPnkIterator<>(tabNum, j);
             boolean hasCombi = false;
             while (i.hasNext()) {
@@ -146,7 +146,6 @@ public class Controller {
         // On les trie par localisation
         HashMap<String, ArrayList<Table>> tableZones = new HashMap<>();
         for (Table t : tablesLibres) {
-            //System.out.println(t.getCodeTable() + " " + t.getLocation());
             if (tableZones.containsKey(t.getLocation())) {
                 tableZones.get(t.getLocation()).add(t);
             } else {
