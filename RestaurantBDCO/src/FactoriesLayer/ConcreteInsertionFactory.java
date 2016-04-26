@@ -27,8 +27,8 @@ public class ConcreteInsertionFactory extends InsertionFactory {
 
     /**
      * Ajoute le client (nom, numTel) dans la BD 
-     * @param nomClient
-     * @param numTel
+     * @param nomClient Nom du client
+     * @param numTel Numéro de téléphone du client
      */
     @Override
     public void creerClient(String nomClient, String numTel) {
@@ -67,30 +67,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
-    /**
-     * Ajoute l'article nomArticle à la carte codeCarte
-     * @param nomArticle 
-     * @param codeCarte
-     * @param prix
-     */
-    @Override
-    public void ajoutArticleCarte(String nomArticle, int codeCarte, float prix) {
-        connexion.open();
-        String STMT_1 = " insert into EstElement "
-                + "values (?, ?, ?)";
-        try {
-            PreparedStatement stmt = connexion.getConnection().prepareStatement(STMT_1);
-            stmt.setString(1, nomArticle);
-            stmt.setInt(2, codeCarte);
-            stmt.setFloat(3, prix);
-            stmt.executeQuery();
-            stmt.close();
-            connexion.close();
-        } catch (SQLException e) {
-            System.err.println("failed");
-            e.printStackTrace(System.err);
-        }
-    }
+   
 
     /**
      * Méthode qui crée la réservation
@@ -137,7 +114,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
     }
 
     /**
-     * 
+     * Rajoute les tables occupées par la réservation codeReservation dans la BD
      * @param tablesOcc
      * @param codeReservation
      */
@@ -164,30 +141,12 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
-    @Override
-    public void creeCommande(Commande commande) {
-        connexion.open();
-        String STMT_1 = "insert into Commande "
-                + "values (?,?,?)";
-        PreparedStatement stmt = null;
-        try {
-            for (String nomArt : commande.getRegroupeArticle().keySet()) {
 
-                stmt = connexion.getConnection().prepareStatement(STMT_1);
-                stmt.setInt(1, commande.getCodeReservation());
-                stmt.setString(2, nomArt);
-                stmt.setInt(3, commande.getRegroupeArticle().get(nomArt));
-                stmt.executeQuery();
 
-            }
-            stmt.close();
-            connexion.close();
-        } catch (SQLException e) {
-            System.err.println("failed");
-            e.printStackTrace(System.err);
-        }
-    }
-
+    /**
+     * Insert dans la base de donnée une commande ( attention a update et pas insert ) si une commande de la meme reservation contient des articles similaires
+     * @param commande
+     */
     @Override
     public void addCommande(Commande commande) {
         connexion.open();
@@ -244,6 +203,10 @@ public class ConcreteInsertionFactory extends InsertionFactory {
         }
     }
 
+    /**
+     * Supprime une commande dans la BD
+     * @param commande
+     */
     @Override
     public void supprimeCommande(Commande commande) {
         connexion.open();
@@ -274,7 +237,7 @@ public class ConcreteInsertionFactory extends InsertionFactory {
                 ResultSet res1 = stmt1.executeQuery();
                 res1.next();
                 
-                // Si la quantité de cette article est >0 même apres la suppression on update sinon on delete
+                // Si la quantité de cette article est > 0 même apres la suppression on update sinon on delete
                 if (res1.getInt(1) - commande.getRegroupeArticle().get(nomArt) != 0) {
                     stmt3.setInt(1, res1.getInt(1) - commande.getRegroupeArticle().get(nomArt));
                     stmt3.setInt(2, commande.getCodeReservation());
