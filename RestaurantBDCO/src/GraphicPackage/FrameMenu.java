@@ -117,7 +117,6 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         Boissons = new javax.swing.JTable();
         TextCodeReservation = new javax.swing.JLabel();
         WindowTitle1 = new javax.swing.JLabel();
-        WindowTitle2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Nouvelle Commande");
@@ -194,10 +193,6 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
         WindowTitle1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         WindowTitle1.setText("• Il est possible d'ajouter juste 1 article par type;");
 
-        WindowTitle2.setFont(new java.awt.Font("DejaVu Sans", 0, 12)); // NOI18N
-        WindowTitle2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        WindowTitle2.setText("• Il faut choisir au moins 1 PLAT et 1 autre type d'article disponible;");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -216,8 +211,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                             .addComponent(ButtonCreateMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(WindowTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(WindowTitle2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(WindowTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -239,8 +233,7 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(WindowTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(WindowTitle2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonAddSelectedArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,7 +300,6 @@ public class FrameMenu extends javax.swing.JFrame implements WindowView {
     private javax.swing.JLabel TextCodeReservation;
     private javax.swing.JLabel WindowTitle;
     private javax.swing.JLabel WindowTitle1;
-    private javax.swing.JLabel WindowTitle2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
