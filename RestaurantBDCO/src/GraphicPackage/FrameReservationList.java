@@ -168,6 +168,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
 
         DeleteSelectedReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--minus.png"))); // NOI18N
         DeleteSelectedReservation.setText("Supprimer Reservation");
+        DeleteSelectedReservation.setEnabled(false);
         DeleteSelectedReservation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteSelectedReservationActionPerformed(evt);
