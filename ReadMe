@@ -8,6 +8,13 @@ Florent MORIEUX
 Florian MOURIN
 
 
+Execution du projet :
+
+Le projet est dans le dossier restaurantBDCO, il faut l'ouvrir avec l'IDE netbeans.
+Les 3 executables demandés sont dans le package restaurant BDCO.
+
+
+Gestion de la base de données :
 
 Création des différentes tables de la base de donnée :
 	fichier tables.sql
@@ -20,3 +27,5 @@ Suppression des éléments de la base de données :
 
 Suppression des tables :
 	fichier drop.sql
+	
+	
