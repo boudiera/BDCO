@@ -3,30 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TextualInterface;
+package restaurantbdco;
 
 import InterfaceBaseDeDonnees.ConcreteInsertionFactory;
 import InterfaceBaseDeDonnees.ConcreteRequeteFactory;
 import InterfaceBaseDeDonnees.ConnectionInfo;
 import InterfaceBaseDeDonnees.TheConnection;
 import InterfaceMVC.Controller;
-import Modele.*;
-import java.util.ArrayList;
+import Modele.Factory;
+import TextualInterface.TextualReservationList;
 
 /**
  *
  * @author mourinf
  */
-public class TestTextuel {
+public class ExecutablePriseReservations {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-
-  
-
         Controller controller = new Controller();
 
         ConnectionInfo info = new ConnectionInfo();
@@ -34,14 +30,9 @@ public class TestTextuel {
 
         Factory.singletonFactory().setRequeteFactory(new ConcreteRequeteFactory(connection));
         Factory.singletonFactory().setInsertionFactory(new ConcreteInsertionFactory(connection));
-        // Decomenter pour lancer le test sur l'executable des reservations
-        TextualReservationList.singletonViewTextualReservationList().setController(controller);
-       controller.setView(TextualReservationList.singletonViewTextualReservationList());
-       
-        // Decomenter pour lancer le test sur l'executable des commandes
 
-     // TextualSelectionReservation.singletonViewTextualReservationList().setController(controller);
-      // controller.setView(TextualSelectionReservation.singletonViewTextualReservationList());
+        TextualReservationList.singletonViewTextualReservationList().setController(controller);
+        controller.setView(TextualReservationList.singletonViewTextualReservationList());
 
     }
 

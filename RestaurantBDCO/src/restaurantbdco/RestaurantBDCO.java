@@ -6,7 +6,6 @@
 package restaurantbdco;
 
 import InterfaceMVC.RunGraphicMVC;
-import TextualInterface.TestTextuel;
 import java.util.Scanner;
 
 /**
@@ -25,7 +24,7 @@ public class RestaurantBDCO {
         String choix = sc.nextLine();
         
         if(choix.equalsIgnoreCase("t")){
-            TestTextuel.main(args);
+            ExecutablePriseCommandes.main(args);
         }else{
             RunGraphicMVC.run(args);
         }
