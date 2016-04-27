@@ -12,22 +12,15 @@ import java.util.Scanner;
  *
  * @author trentini
  */
-public class RestaurantBDCO {
+public class ExecutableGraphique {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-        System.out.println("Type 't' for TEXT interface or 'g' for GRAPHIC interface:");
-        Scanner sc = new Scanner(System.in);
-        String choix = sc.nextLine();
-        
-        if(choix.equalsIgnoreCase("t")){
-            ExecutablePriseCommandes.main(args);
-        }else{
             RunGraphicMVC.run(args);
-        }
+        
     }
     
 }
