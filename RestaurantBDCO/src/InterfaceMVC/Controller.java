@@ -64,18 +64,22 @@ public class Controller {
     public ArrayList<Article> getFacture(int codeReservation) {
         return Factory.singletonFactory().getRequeteFactory().getFacture(codeReservation);
     }
-    
-    public void supprimeReservation(int codeReservation){
+
+    public void supprimeReservation(int codeReservation) {
         Factory.singletonFactory().getInsertionFactory().supprimeReservation(codeReservation);
     }
-    
-    
 
     //Appel dans FrameCreation bouton trouver
     public ArrayList<Table> findCombinaison(ArrayList<Table> liste, int nbPlaces) {
         Iterator<Integer[]> i = null;
         HashMap<Integer, ArrayList<Integer>> tablesVoisines = Factory.singletonFactory().getRequeteFactory().tablesVoisines();
         Integer[] tabNum = new Integer[liste.size()];
+        /*
+        for (Table t : liste) {
+            System.out.println(t.getCodeTable() + " " + t.getLocation() + " "
+                    + t.getNbPlace0() + " " + t.getNbPlace1() + " " + t.getNbPlace2());
+        }
+        */
         for (int n = 0; n < liste.size(); n++) {
             tabNum[n] = liste.get(n).getCodeTable();
         }
@@ -98,7 +102,8 @@ public class Controller {
                         return res;
                     }
                 }
-                if (hasCombi==false)
+            }
+            if (hasCombi == false) {
                     return null;
             }
         }
