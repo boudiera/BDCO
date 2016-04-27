@@ -1,0 +1,22 @@
+Projet Bases de Données et Conception Objet
+
+Arnaud BOUDIER
+Iago Felipe TRENTIN
+Nicolas LECLAIRE
+Clément MICHEL
+Florent MORIEUX
+Florian MOURIN
+
+
+
+Création des différentes tables de la base de donnée :
+	fichier tables.sql
+
+Initialisation de la base de donnée :
+	fichier insert.sql
+
+Suppression des éléments de la base de données :
+	fichier delete.sql
+
+Suppression des tables :
+	fichier drop.sql

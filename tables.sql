@@ -52,7 +52,11 @@ CREATE TABLE Reservation (
     CONSTRAINT codeReservation_pk PRIMARY KEY (CodeReservation),
     CONSTRAINT nbPersonnes_c CHECK (NbPersonnes > 0),
     CONSTRAINT codeClient_fk FOREIGN KEY (CodeClient) REFERENCES Client (CodeClient),
-    CONSTRAINT service_fk FOREIGN KEY (Jour, NomService) REFERENCES Service (Jour, NomService) ON DELETE CASCADE
+    CONSTRAINT service_fk FOREIGN KEY (Jour, NomService) REFERENCES Service (Jour, NomService) ON DELETE CASCADE,
+	CONSTRAINT HeureMin_c CHECK (Heure >= 0),
+	CONSTRAINT HeureMax_c CHECK (Heure < 24),
+	CONSTRAINT MinutesMin_c CHECK (Minutes >= 0),
+	CONSTRAINT MinutesMax_c CHECK (Minutes < 60)
 );
 
 CREATE TABLE Coute (
