@@ -27,11 +27,13 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="PaneOfReservationTable" pref="590" max="32767" attributes="0"/>
+                  <Component id="PaneOfReservationTable" pref="623" max="32767" attributes="0"/>
                   <Component id="WindowTitle" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="AddNewReservation" min="-2" pref="200" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="DeleteSelectedReservation" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="OpenSelectedReservation" min="-2" pref="210" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -50,6 +52,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="AddNewReservation" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="OpenSelectedReservation" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="DeleteSelectedReservation" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -119,6 +122,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddNewReservationActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="DeleteSelectedReservation">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Modele/Icons/book--minus.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Supprimer Reservation"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteSelectedReservationActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

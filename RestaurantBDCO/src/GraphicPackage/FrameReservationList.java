@@ -4,6 +4,7 @@ import InterfaceMVC.EnumView;
 import InterfaceMVC.Exceptions.*;
 import Modele.*;
 import java.util.*;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
@@ -96,9 +97,12 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
     private void updateSelectedReservation(){
         if(this.ReservationsTable.getSelectedRow() == -1){
             this.OpenSelectedReservation.setEnabled(false);
+            this.DeleteSelectedReservation.setEnabled(false);
+            
         }else{
             this.selectedReservationCode = Integer.valueOf(((String)this.ReservationsTable.getValueAt(this.ReservationsTable.getSelectedRow(), 0)).replace(".", ""));
             this.OpenSelectedReservation.setEnabled(true);
+            this.DeleteSelectedReservation.setEnabled(true);
         }
     }
     
@@ -117,6 +121,7 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         ReservationsTable = new javax.swing.JTable();
         OpenSelectedReservation = new javax.swing.JButton();
         AddNewReservation = new javax.swing.JButton();
+        DeleteSelectedReservation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Restaurant BDCO - Liste de Réservations");
@@ -161,6 +166,14 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             }
         });
 
+        DeleteSelectedReservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Modele/Icons/book--minus.png"))); // NOI18N
+        DeleteSelectedReservation.setText("Supprimer Reservation");
+        DeleteSelectedReservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteSelectedReservationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,11 +181,13 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PaneOfReservationTable, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+                    .addComponent(PaneOfReservationTable, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
                     .addComponent(WindowTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(AddNewReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DeleteSelectedReservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(OpenSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -186,7 +201,8 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddNewReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(OpenSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(OpenSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeleteSelectedReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -209,8 +225,16 @@ public class FrameReservationList extends javax.swing.JFrame implements WindowVi
         this.updateSelectedReservation();
     }//GEN-LAST:event_ReservationsTableKeyPressed
 
+    private void DeleteSelectedReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteSelectedReservationActionPerformed
+        if(JOptionPane.showConfirmDialog(this.getParent(), "Voulez-vous supprimer cette réservation", "Attention", JOptionPane.YES_NO_OPTION)==0){
+            GlobalGraphicView.singletonGlobalGraphicView().getController().supprimeReservation(selectedReservationCode);
+            this.updateReservationTable(GlobalGraphicView.singletonGlobalGraphicView().getController().getReservationList());
+        }
+    }//GEN-LAST:event_DeleteSelectedReservationActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddNewReservation;
+    private javax.swing.JButton DeleteSelectedReservation;
     private javax.swing.JButton OpenSelectedReservation;
     private javax.swing.JScrollPane PaneOfReservationTable;
     private javax.swing.JTable ReservationsTable;
